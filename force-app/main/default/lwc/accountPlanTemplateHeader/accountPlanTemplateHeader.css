@@ -1,0 +1,112 @@
+.main-container {
+    .header {
+        font-size: 18px;
+        font-weight: 600;
+        color: #181818;
+    }
+
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        .header-container-inner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            width: 50%;
+            gap: 4%;
+        }
+    }
+    .logo {
+        /* padding-right: 5rem; */
+        .headerLogo {
+            width: 8rem;
+            height: auto;
+        }
+        .uploadBtn {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .uploadLabel {
+            color: #181818;
+        }
+
+        .hideUploadBtn {
+            display: none;
+        }
+        .editIcon {
+            display: none;
+        }
+
+        .showEditIcon {
+            cursor: pointer;
+            display: block;
+            width: fit-content;
+            float: right;
+        }
+        .showEditIcon:hover {
+            --sds-c-icon-color-foreground-default: #101828;
+        }
+        .imageContainer {
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            display: none;
+        }
+    }
+    .company-logo {
+        border: 1px solid #747474;
+        width: 11rem;
+        height: 5.3rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+        color: #181818;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .input {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        .headerLabel {
+            color: #181818;
+        }
+    }
+
+    .btnCls {
+        background-color: #2d50e2;
+        display: flex;
+        line-height: 2.7rem;
+        gap: 4%;
+        width: 12rem;
+        justify-content: center;
+        align-items: center;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+    }
+    .uploadIcon {
+        --sds-c-icon-color-foreground-default: #fff;
+    }
+    /* --slds-c-icon-color-foreground {
+        co
+    } */
+
+    label {
+        font-size: 1rem;
+    }
+    .input {
+        width: 45%;
+    }
+    .headerInput {
+        line-height: 2.5rem;
+    }
+}
+.slds-scope .slds-button_neutral {
+    --slds-c-button-color-background: #2d50e2 !important;
+    --sds-c-button-text-color: #f4f7f9 !important;
+}

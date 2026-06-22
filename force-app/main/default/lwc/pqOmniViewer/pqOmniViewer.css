@@ -1,0 +1,39 @@
+.loading {
+    text-align: center;
+    padding: 5em;
+}
+
+.content-section {
+    min-height: 0px;
+}
+
+.pq-omni-view-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.pq-omni-view-footer-button {
+    background-color: #999;
+    color: black;
+    border: none;
+    margin-right: 5px;
+    border-radius: 15px;
+    height: 40px;
+    width: 120px;
+}
+
+.pq-omni-view-footer-button.continue {
+    background-color: #2a84d9;
+    color: white;
+}
+
+.pq-omni-view-footer-button.close {
+    background-color: #9a9a9a;
+    color: white;
+}
+
+.pq-omni-view-modal-close {
+    cursor: pointer;
+}

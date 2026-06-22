@@ -1,0 +1,10 @@
+<template>
+    <lightning-layout class="pro-layout" if:true={headerData}>
+        <lightning-layout-item size="1"></lightning-layout-item>
+        <template for:each={headerData} for:item="header">
+            <lightning-layout-item class="pro-layout-item" size="1" key={header.id}>
+                <c-ws-summary-area-grid-header-item header-data={header}></c-ws-summary-area-grid-header-item>
+            </lightning-layout-item>
+        </template>
+    </lightning-layout>
+</template>

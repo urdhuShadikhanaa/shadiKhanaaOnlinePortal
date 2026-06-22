@@ -1,0 +1,50 @@
+hr.top {
+    border-top: 1px solid #ccc;
+    margin: 25px 0px 10px 0px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 1.1em;
+    color: #000000;
+    font-weight: bold;
+    margin: 15px 0px 20px 0px;
+}
+
+.name-title {
+    font-weight: bold;
+    white-space: pre-wrap; /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap; /* Opera <7 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* IE */
+}
+
+.campaign-container {
+    padding: 8px 12px 8px 12px;
+    cursor: pointer;
+}
+
+.campaign-container:hover {
+    background-color: rgb(233, 233, 233);
+    border-radius: 10px;
+}
+
+.campaign-container .icons {
+    padding-left: 8px;
+    opacity: 35%;
+}
+
+.campaign-container:hover .icons {
+    opacity: 100%;
+}
+
+.refresh-layer:hover {
+    cursor: pointer;
+}
+
+.refresh-text-layer {
+    font-size: 1em;
+    color: blue;
+    text-align: center;
+}

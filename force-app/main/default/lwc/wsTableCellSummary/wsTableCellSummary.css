@@ -1,0 +1,46 @@
+/* ------------------------------------------------ */
+/* wsTableCellSummary */
+
+:host {
+    position: relative;
+}
+
+.ws-cell-data {
+    margin: 10px;
+    overflow: hidden;
+    width: 100%;
+    pointer-events: none;
+}
+
+.ws-sum-more {
+    display: block;
+    border-radius: 10px;
+    padding: 2px 10px 2px 10px;
+    margin: 4px 4px 4px 4px;
+    overflow: hidden;
+    color: #fff;
+    border-color: transparent;
+    background-color: rgb(102, 102, 102);
+    font-weight: normal;
+    font-size: 0.8em;
+}
+
+.notes-indicator:hover {
+    background-color: #ffff00;
+    border: 1px solid #5b5b00;
+}
+
+.notes-indicator {
+    position: absolute;
+    border-radius: 50%;
+    background-color: #fcff00;
+    border: 1px solid #b4ae00;
+    width: 8px;
+    height: 8px;
+    left: 0;
+    top: 0;
+    margin: 8px;
+    z-index: 1;
+}
+
+/* ------------------------------------------------ */

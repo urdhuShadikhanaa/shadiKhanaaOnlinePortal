@@ -1,0 +1,44 @@
+<template>
+    <div class="slds-border_top slds-border_bottom slds-var-p-around_large">
+        <div class="summaryBox">
+            <lightning-layout multiple-rows>
+                <template for:each={summaryValues} for:item="summaryValue">
+                    <lightning-layout-item
+                        if:true={summaryValue.visible}
+                        class="slds-var-p-around_x-small"
+                        key={summaryValue.id}
+                    >
+                        <c-ws-summary-item
+                            label={summaryValue.displayName}
+                            type={summaryValue.type}
+                            value={summaryValue.value}
+                            color={summaryValue.color}
+                        ></c-ws-summary-item>
+                    </lightning-layout-item>
+                </template>
+            </lightning-layout>
+
+            <template if:true={showSummaryBreakDown}>
+                <div class="slds-border_top"></div>
+                <lightning-accordion allow-multiple-sections-open>
+                    <lightning-accordion-section
+                        name="row"
+                        label={labels.rowSummaries}
+                        class="pq-print-enabled-button pro-summary-row-item"
+                    >
+                        <c-ws-summary-area-grid header-data={summaryValues} summary-data={rowSummaries}>
+                        </c-ws-summary-area-grid>
+                    </lightning-accordion-section>
+                    <lightning-accordion-section
+                        name="column"
+                        label={labels.columnSummaries}
+                        class="pq-print-enabled-button pro-summary-row-item"
+                    >
+                        <c-ws-summary-area-grid header-data={summaryValues} summary-data={columnSummaries}>
+                        </c-ws-summary-area-grid>
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </template>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,40 @@
+.widget-name {
+    font-size: 1.3em;
+    text-align: center;
+    color: #000;
+}
+
+.task-panel {
+    margin-top: 10px;
+}
+
+.task-list {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    margin-top: 2px;
+}
+
+.task-subject {
+    font-size: 1.0em;
+    text-align: left;
+    color: #000;
+    font-weight: bold;
+}
+
+.task-assigned {
+    font-size: 1.0em;
+    text-align: center;
+    color: #000;
+}
+
+.task-status {
+    font-size: 1.0em;
+    text-align: center;
+    color: #000;
+}
+
+.task-date {
+    font-size: 1.0em;
+    text-align: right;
+    color: #000;
+}

@@ -1,0 +1,33 @@
+<template>
+    <lightning-spinner if:true={_showSpinner}></lightning-spinner>
+    <div class="outer-container-tile-group" onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
+        <div class="tile-group">
+            <template for:each={tiles} for:item="tile">
+                <c-ws-table-cell-tile
+                    key={tile.id}
+                    row={row}
+                    column={column}
+                    row-index={rowIndex}
+                    col-index={colIndex}
+                    cell={cell}
+                    tile={tile}
+                    tile-count={tiles.length}
+                    visible-amount-types={visibleAmountTypes}
+                    oncellhighlight={handleCellHighlight}
+                    oncellunhighlight={handleCellUnHighlight}
+                ></c-ws-table-cell-tile>
+            </template>
+        </div>
+        <span class="button-container" if:false={_showSpinner}>
+            <lightning-button-icon
+                if:true={canAddTiles}
+                icon-name="utility:new"
+                variant="bare"
+                size="medium"
+                alternative-text={labels.add}
+                class="ws-add-button"
+                onclick={handleAddClicked}
+            ></lightning-button-icon>
+        </span>
+    </div>
+</template>

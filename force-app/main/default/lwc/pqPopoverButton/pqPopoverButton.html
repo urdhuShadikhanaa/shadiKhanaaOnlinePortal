@@ -1,0 +1,17 @@
+<template>
+    <div class="slds-is-relative">
+        <lightning-button-icon
+            variant={variant}
+            title={title}
+            alternative-text={title}
+            onclick={toggle}
+            icon-name={iconName}
+        >
+        </lightning-button-icon>
+        <section if:true={showPopover} class="pq-dropdown slds-popover slds-dynamic-menu" role="dialog">
+            <div class="slds-popover__body slds-p-horizontal_none" onclick={handleInsideClick}>
+                <slot name="popover-body"></slot>
+            </div>
+        </section>
+    </div>
+</template>

@@ -1,0 +1,41 @@
+<template>
+
+    <!-- Sub Title Panel -->
+    <c-pq-omni-viewer-widget-header-sub
+        person-map-member-data={personMapMemberData}
+        person-contact-data={personContactData}
+        person-contact-extended-data={personContactExtendedData}
+        profile-image-data={profileImageData}
+    ></c-pq-omni-viewer-widget-header-sub>
+
+    <hr class="top" />
+
+    <div
+        if:true={needsRefresh}
+        class="refresh-layer error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        onclick={refreshClicked}
+    >
+        <div class="refresh-text-layer">{labels.Click_Here_To_Refresh}</div>
+    </div>
+
+    <!-- Hierarchy Listings Panel -->
+     <div class="page-title">{labels.PageTitle}</div>
+
+    <template if:false={loaded}>
+        <div>{labels.Loading}</div>
+    </template>
+    <template if:true={loaded}>
+        <template if:false={hasData}>
+            <div>{labels.No_Reporting_Hierarchy}</div>
+        </template>
+        <template if:true={hasData} for:each={displayList} for:item="displayMap">
+            <c-pq-omni-viewer-widget-hierarchy
+                key={displayMap.id}
+                loaded={loaded}
+                hierarchy-data={displayMap}
+            ></c-pq-omni-viewer-widget-hierarchy>
+        </template>
+    </template>
+
+    <c-event-navigation></c-event-navigation>
+</template>

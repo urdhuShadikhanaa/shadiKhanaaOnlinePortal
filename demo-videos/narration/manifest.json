@@ -1,0 +1,135 @@
+{
+  "language": "te-IN",
+  "voice": "te-IN-ShrutiNeural",
+  "segments": [
+    {
+      "id": "intro",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\01-intro.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 0,
+      "durationMs": 18121,
+      "stepWaitMs": 9000
+    },
+    {
+      "id": "header",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\02-header.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 18621,
+      "durationMs": 10681,
+      "stepWaitMs": 8000
+    },
+    {
+      "id": "venue",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\03-venue.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 29802,
+      "durationMs": 10321,
+      "stepWaitMs": 8500
+    },
+    {
+      "id": "address",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\04-address.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 40623,
+      "durationMs": 9481,
+      "stepWaitMs": 7500
+    },
+    {
+      "id": "form-intro",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\05-form-intro.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 50604,
+      "durationMs": 15265,
+      "stepWaitMs": 9000
+    },
+    {
+      "id": "calendar-dates",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\06-calendar-dates.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 66369,
+      "durationMs": 17569,
+      "stepWaitMs": 10000
+    },
+    {
+      "id": "calendar-panel",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\07-calendar-panel.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 84438,
+      "durationMs": 11881,
+      "stepWaitMs": 8500
+    },
+    {
+      "id": "times",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\08-times.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 96819,
+      "durationMs": 9001,
+      "stepWaitMs": 7500
+    },
+    {
+      "id": "event-info",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\09-event-info.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 106320,
+      "durationMs": 12001,
+      "stepWaitMs": 9000
+    },
+    {
+      "id": "contact",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\10-contact.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 118821,
+      "durationMs": 10081,
+      "stepWaitMs": 8000
+    },
+    {
+      "id": "estimate",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\11-estimate.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 129402,
+      "durationMs": 12481,
+      "stepWaitMs": 8000
+    },
+    {
+      "id": "submit-note",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\12-submit-note.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 142383,
+      "durationMs": 11545,
+      "stepWaitMs": 8000
+    },
+    {
+      "id": "login",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\13-login.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 154428,
+      "durationMs": 10561,
+      "stepWaitMs": 8000
+    },
+    {
+      "id": "admin",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\14-admin.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 165489,
+      "durationMs": 14137,
+      "stepWaitMs": 9000
+    },
+    {
+      "id": "footer",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\15-footer.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 180126,
+      "durationMs": 9241,
+      "stepWaitMs": 8000
+    },
+    {
+      "id": "outro",
+      "wavPath": "C:\\Users\\PSK\\Documents\\OnlineReservation\\demo-videos\\narration\\16-outro.wav",
+      "voice": "te-IN-ShrutiNeural",
+      "startMs": 189867,
+      "durationMs": 13801,
+      "stepWaitMs": 9000
+    }
+  ],
+  "totalMs": 204168
+}

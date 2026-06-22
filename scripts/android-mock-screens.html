@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Android mock</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, sans-serif;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .phone {
+      width: 390px;
+      min-height: 844px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,.45);
+      background: #eef7f1;
+    }
+    .statusbar {
+      background: #0f5132;
+      color: #fff;
+      padding: 10px 16px 8px;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .screen { padding: 20px; color: #1f2937; }
+    h1 { margin: 0; color: #0f5132; font-size: 24px; }
+    .sub { color: #475467; margin: 8px 0 16px; line-height: 1.4; }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .label { font-weight: 700; margin-bottom: 8px; }
+    .muted { color: #475467; font-size: 14px; margin-top: 4px; }
+    .field {
+      width: 100%;
+      border: 1px solid #d0d5dd;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 12px;
+      font-size: 14px;
+      background: #fafafa;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 12px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .btn-primary { background: #146c43; color: #fff; }
+    .btn-outline { background: #fff; color: #146c43; border: 2px solid #146c43; }
+    .success { color: #146c43; font-weight: 700; margin-top: 12px; }
+    .messages { background: #fff; min-height: 760px; }
+    .msg-header {
+      background: #146c43;
+      color: #fff;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .bubble {
+      max-width: 88%;
+      margin: 16px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #e8f5ee;
+      font-size: 14px;
+      line-height: 1.45;
+      white-space: pre-wrap;
+    }
+    .bubble a { color: #0f5132; word-break: break-all; }
+    .time { font-size: 11px; color: #667085; margin: 0 16px 8px; }
+  </style>
+</head>
+<body>
+  <div class="phone" id="phone"></div>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const screen = params.get('screen') || 'app';
+    const phone = document.getElementById('phone');
+
+    if (screen === 'app') {
+      phone.innerHTML = `
+        <div class="statusbar"><span>11:24</span><span>LTE ▮▮▮</span></div>
+        <div class="screen">
+          <h1>Urdu Shadikhana SMS Gateway</h1>
+          <p class="sub">Polls Salesforce for pending SMS and sends them using this phone SIM.</p>
+          <div class="card">
+            <div class="label">Status</div>
+            <div>Running — polling every 60s</div>
+            <div class="muted">Last poll: just now</div>
+            <div class="muted">Last SMS: +919966634403 (Sent)</div>
+          </div>
+          <div class="card">
+            <div class="field">https://urdhushadikhanaa-dev-ed.develop.my.salesforce.com</div>
+            <div class="field">••••••••••••••••</div>
+            <div class="field">••••••••••••••••</div>
+            <div class="field">60</div>
+            <div class="field">+919966634403</div>
+          </div>
+          <button class="btn btn-primary">Save settings</button>
+          <button class="btn btn-outline">Test connection</button>
+          <button class="btn btn-outline">Send test SMS</button>
+          <button class="btn btn-outline">Poll now</button>
+          <button class="btn btn-primary" style="margin-top:16px">Stop gateway</button>
+        </div>`;
+    } else if (screen === 'test') {
+      phone.innerHTML = `
+        <div class="statusbar"><span>11:26</span><span>LTE ▮▮▮</span></div>
+        <div class="screen">
+          <h1>Urdu Shadikhana SMS Gateway</h1>
+          <p class="sub">Polls Salesforce for pending SMS and sends them using this phone SIM.</p>
+          <div class="card">
+            <div class="label">Status</div>
+            <div>Running — polling every 60s</div>
+            <div class="muted">Last poll: 30 seconds ago</div>
+            <div class="muted">Last SMS: +919966634403 (Sent)</div>
+          </div>
+          <div class="card">
+            <div class="field">+919966634403</div>
+          </div>
+          <button class="btn btn-outline">Send test SMS</button>
+          <p class="success">✓ Test SMS queued and sent successfully.</p>
+        </div>`;
+    } else {
+      phone.innerHTML = `
+        <div class="messages">
+          <div class="msg-header">Messages</div>
+          <div class="time">Today 11:18 AM</div>
+          <div class="bubble">Urdu Shadikhana: New booking request SB-0009 from Patan Shabbir Ali Khan for 20/08/2026.
+Review: <a href="#">https://urdhushadikhanaa-dev-ed.develop.my.site.com/urdushadikhana?bookingId=a01&amp;tab=admin</a></div>
+        </div>`;
+    }
+  </script>
+</body>
+</html>

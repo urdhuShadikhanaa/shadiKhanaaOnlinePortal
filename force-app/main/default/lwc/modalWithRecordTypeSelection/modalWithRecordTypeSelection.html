@@ -1,0 +1,41 @@
+<template>
+    <c-modal header={modalTitle} onclosedialog={handleCancel}>
+        <div
+            if:true={error}
+            class="error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        >
+            {error}
+        </div>
+        <div class="record-type-selection-container" if:true={showRecordTypeSelector}>
+            <lightning-combobox
+                name="recordTypes"
+                label={labels.selectRecordType}
+                value={defaultRecordType}
+                placeholder="-Select-"
+                options={recordTypeOptions}
+                class="combobox-container"
+                required="true"
+                onchange={handleChange}
+            >
+            </lightning-combobox>
+        </div>
+
+        <div class="content-section" if:true={showRecordModal}>
+            <slot></slot>
+        </div>
+
+        <div if:true={showRecordTypeSelector} slot="footer">
+            <lightning-button
+                variant="brand"
+                label={labels.continue}
+                title={labels.continue}
+                onclick={handleClick}
+                class="slds-m-left_x-small"
+                disabled={isButtonDisabled}
+            ></lightning-button>
+        </div>
+        <div if:true={showRecordModal} slot="footer">
+            <slot name="footer"></slot>
+        </div>
+    </c-modal>
+</template>

@@ -1,0 +1,30 @@
+.ws-sum {
+    display: block;
+    text-align: left;
+    max-width: 220px;
+}
+
+.pq-block {
+    display: block;
+}
+
+.ws-sum-circle-large {
+    display: block;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+}
+
+.summary-title {
+    font-size: 0.9em;
+    color: #000;
+}
+
+.summary-value {
+    font-weight: bold;
+    font-size: 1.4em;
+    color: #000;
+}

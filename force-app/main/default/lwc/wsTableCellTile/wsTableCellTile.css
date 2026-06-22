@@ -1,0 +1,54 @@
+.ws-tile-main {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.ws-tile-header {
+    flex: 0 0 auto;
+    overflow: hidden;
+    height: 20%;
+    margin: 0;
+    padding: 0;
+}
+
+.ws-tile-info {
+    overflow: auto;
+    padding: 0 8px;
+    margin: 15px 0px;
+    text-align: left;
+    flex: 1 1 auto;
+}
+
+.ws-tile-display-fields {
+    flex: 0 0 auto;
+    padding: 8px;
+    margin: 0;
+}
+
+.ws-tile-display-field-item {
+    width: 100%;
+    display: flex;
+}
+
+.ws-tile-display-fields-more {
+    padding: 0 8px;
+    margin: 0;
+}
+
+.ws-tile-display-field-name {
+    font-weight: bold;
+}
+
+@media (min-height: 150px) {
+    .ws-tile-header {
+        overflow: hidden;
+        height: 30px;
+        margin: 0;
+    }
+}

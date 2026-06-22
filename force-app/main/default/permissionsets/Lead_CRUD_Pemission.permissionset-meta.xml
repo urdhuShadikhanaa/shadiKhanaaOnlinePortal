@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Lead CRUD Pemission</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Lead CRUD Pemission</label>
+</PermissionSet>

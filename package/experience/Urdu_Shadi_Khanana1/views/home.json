@@ -1,0 +1,46 @@
+{
+  "appPageId" : "a2ac1a90-654c-4495-a820-e41a72166275",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "1afadca8-3dd1-4593-adf3-fc699591f570",
+  "label" : "Home",
+  "regions" : [ {
+    "id" : "b0ba8f76-a1d1-45a4-b871-2e7c9195fb07",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:shadikhanaBookingPortal",
+      "id" : "b8e2f4a1-6c3d-4e5f-9a0b-1c2d3e4f5a6b",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "0423b4a0-b228-49b1-bad7-8c846f569c51",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "93cf24bc-cf32-4fbd-b32f-e9c572da12e8",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "Book Urdu Shadi Khanana dates online.",
+        "title" : "Urdu Shadi Khanana Booking Portal"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "c19e71c5-8e85-446c-8b9c-bd61d603e824",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "d67f0eeb-b744-40e6-978f-a1368f12e9b0",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "home"
+}

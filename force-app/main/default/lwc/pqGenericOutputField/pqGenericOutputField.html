@@ -1,0 +1,16 @@
+<template>
+    <lightning-formatted-date-time
+        if:true={isDate}
+        value={displayValue}
+        style={displayStyle}
+    ></lightning-formatted-date-time>
+    <lightning-formatted-number
+        if:true={isNumber}
+        value={displayValue}
+        format-style={numberFormatStyle}
+        currency-code={currencyCode}
+        maximum-fraction-digits={displayDigits}
+        style={displayStyle}
+    ></lightning-formatted-number>
+    <lightning-formatted-text if:true={isText} value={displayValue} style={displayStyle}></lightning-formatted-text>
+</template>

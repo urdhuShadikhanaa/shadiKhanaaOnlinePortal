@@ -1,0 +1,48 @@
+<template>
+    <div class="slds-panel pq-panel slds-size_medium" style={panelStyle} aria-hidden="false">
+        <div class={panelHeaderClass}>
+            <template if:true={hasHeaderString}>
+                <h2 class="slds-panel__header-title slds-text-heading_small slds-truncate">
+                    {header}
+                </h2>
+            </template>
+            <template if:false={hasHeaderString}>
+                <div class="slds-panel__header-title slds-truncate">
+                    <slot name="header"></slot>
+                </div>
+            </template>
+
+            <!-- <template if:true={showUndockOption}>
+                <lightning-button-icon
+                    class="slds-panel__close"
+                    title="Pop Out"
+                    icon-name="utility:new_window"
+                    variant="bare"
+                    size="small"
+                    onclick={handlePanelUnDock}
+                ></lightning-button-icon>
+            </template> -->
+
+            <template if:true={showCloseButton}>
+                <lightning-button-icon
+                    class="slds-panel__close"
+                    title="Close"
+                    icon-name="utility:close"
+                    variant="bare"
+                    size="small"
+                    onclick={handleDialogClose}
+                ></lightning-button-icon>
+            </template>
+        </div>
+        <div class="slds-panel__body panel-body">
+            <!-- A panel body accepts any layout or component -->
+            <slot></slot>
+        </div>
+
+        <template if:true={showFooter}>
+            <footer class="pq-panel-footer">
+                <slot name="footer"></slot>
+            </footer>
+        </template>
+    </div>
+</template>

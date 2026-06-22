@@ -1,0 +1,71 @@
+<template>
+    <div class="page-section page-main">
+        <div
+            if:true={errorMessageForAccount}
+            class="error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        >
+            {errorMessageForAccount}
+        </div>
+        <h3 class="slds-section-title_divider slds-text-heading_small slds-p-horizontal_none">
+            Objects Related to Account
+        </h3>
+        <div class="slds-grid pro-grid slds-p-around_medium">
+            <div class="slds-col">
+                <lightning-spinner if:true={loadingAccount}></lightning-spinner>
+                <template for:each={objectsRelatedToAccountList} for:item="relObject">
+                    <div
+                        key={relObject.label}
+                        class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small"
+                    >
+                        <lightning-formatted-text value={relObject.label}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="toggle"
+                            data-id={relObject.label}
+                            variant="label-hidden"
+                            checked={relObject.value}
+                            message-toggle-active={label.Enabled}
+                            message-toggle-inactive={label.Disabled}
+                            onchange={handleRelatedAccountChange}
+                        ></lightning-input>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+    <div class="slds-p-vertical_small"></div>
+    <div class="page-section page-main">
+        <div
+            if:true={errorMessageForAccountPlan}
+            class="error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        >
+            {errorMessageForAccountPlan}
+        </div>
+        <h3 class="slds-section-title_divider slds-text-heading_small slds-p-horizontal_none">
+            Objects Related to Account Plan
+        </h3>
+        <div class="slds-grid pro-grid slds-p-around_medium">
+            <div class="slds-col">
+                <lightning-spinner if:true={loadingAccountPlan}></lightning-spinner>
+                <template for:each={objectsRelatedToAccountPlanList} for:item="relObject">
+                    <div
+                        key={relObject.label}
+                        class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small"
+                    >
+                        <lightning-formatted-text value={relObject.label}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="toggle"
+                            data-id={relObject.label}
+                            variant="label-hidden"
+                            checked={relObject.value}
+                            message-toggle-active={label.Enabled}
+                            message-toggle-inactive={label.Disabled}
+                            onchange={handleRelatedAccountPlanChange}
+                        ></lightning-input>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

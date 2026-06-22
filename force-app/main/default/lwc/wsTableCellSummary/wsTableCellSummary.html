@@ -1,0 +1,28 @@
+<template>
+    <c-ws-table-cell-background
+        row-id={row.id}
+        column-id={column.id}
+        row-index={rowIndex}
+        col-index={colIndex}
+        tile={tile}
+        tile-count="1"
+        is-empty={isEmpty}
+        type={cell.type}
+        highlight-as-sibling={cell.stateSiblingHighlighted}
+        highlight-as-child={cell.stateHeaderHighlighted}
+    >
+        <template if:true={cellNotes}>
+            <div class="notes-indicator" title={cellNotes}></div>
+        </template>
+        <div class="ws-cell-data" if:false={isEmpty}>
+            <template for:each={displayFieldsTrimmed} for:item="field" for:index="fi">
+                <c-ws-table-cell-summary-display-field
+                    display-field={field}
+                    key={field.id}
+                    field-index={fi}
+                ></c-ws-table-cell-summary-display-field>
+            </template>
+            <div if:true={displayFieldMore} class="ws-sum-more">+{displayFieldMoreCount} more...</div>
+        </div>
+    </c-ws-table-cell-background>
+</template>

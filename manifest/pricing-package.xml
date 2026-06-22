@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>ShadikhanaBookingController</members>
+        <members>ShadikhanaBookingPublicAccess</members>
+        <members>ShadikhanaBookingPricing</members>
+        <members>ShadikhanaBookingPricingTest</members>
+        <members>ShadikhanaBookingControllerTest</members>
+        <members>ShadikhanaBookingSmsServiceTest</members>
+        <members>ShadikhanaBookingPublicAccessTest</members>
+        <members>ShadikhanaBookingNotificationServiceTest</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Shadikhana_Booking__c.Daily_Rate__c</members>
+        <members>Shadikhana_Booking__c.End_Time__c</members>
+        <members>Shadikhana_Booking__c.Estimated_Amount__c</members>
+        <members>Shadikhana_Booking__c.Event_Details__c</members>
+        <members>Shadikhana_Booking__c.Final_Amount__c</members>
+        <members>Shadikhana_Booking__c.Number_of_Days__c</members>
+        <members>Shadikhana_Booking__c.Start_Time__c</members>
+        <members>Shadikhana_Settings__c.Default_Daily_Rate__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>shadikhanaBookingPortal</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>Shadikhana_Booking_User</members>
+        <members>Shadikhana_Community_Booking</members>
+        <members>Shadikhana_Guest_Portal</members>
+        <name>PermissionSet</name>
+    </types>
+    <version>65.0</version>
+</Package>

@@ -1,0 +1,21 @@
+<template>
+    <div class="slds-border_bottom slds-var-p-vertical_x-small slds-var-p-horizontal_small">
+        <div>{filter.label}</div>
+        <lightning-input
+            data-filter-name={filter.name}
+            type="datetime"
+            name="startDate"
+            label="After"
+            value={filter.startDate}
+            onchange={handleDateChange}
+        ></lightning-input>
+        <lightning-input
+            data-filter-name={filter.name}
+            type="datetime"
+            name="endDate"
+            label="Before"
+            value={filter.endDate}
+            onchange={handleDateChange}
+        ></lightning-input>
+    </div>
+</template>

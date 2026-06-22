@@ -1,0 +1,79 @@
+<template>
+    <!-- Sub Title Panel -->
+    <c-pq-omni-viewer-widget-header-sub
+        person-map-member-data={personMapMemberData}
+        person-contact-data={personContactData}
+        person-contact-extended-data={personContactExtendedData}
+        profile-image-data={profileImageData}
+    ></c-pq-omni-viewer-widget-header-sub>
+
+    <hr class="top" />
+
+    <div
+        if:true={needsRefresh}
+        class="refresh-layer error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        onclick={refreshClicked}
+    >
+        <div class="refresh-text-layer">{labels.Click_Here_To_Refresh}</div>
+    </div>
+
+    <!-- Opportunity Listings Panel -->
+    <div class="page-title">{labels.PageTitle}</div>
+
+    <template if:false={loaded}>
+        <div>{labels.Loading}</div>
+    </template>
+    <template if:true={loaded}>
+        <template if:false={hasData}>
+            <div>{labels.No_Related_Opportunities}</div>
+        </template>
+        <lightning-combobox
+            name="filter"
+            variant="label-hidden"
+            value={viewType}
+            options={options}
+            class="slds-p-bottom_x-small slds-p-top_x-small"
+            onchange={handleChange}
+        >
+        </lightning-combobox>
+        <template if:true={hasData} for:each={displayOpps} for:item="opp">
+            <div key={opp.id} class="slds-grid slds-gutters_x-small opp-container" data-id={opp.id}>
+                <div class="slds-col slds-size_6-of-12">
+                    <p class="name-title">{opp.opportunityName}</p>
+                </div>
+                <div class="slds-col slds-size_2-of-12">
+                    <lightning-formatted-number
+                        value={opp.opportunityAmount}
+                        format-style="currency"
+                        currency-code={currencyCode}
+                        maximum-fraction-digits="0"
+                    >
+                    </lightning-formatted-number>
+                </div>
+                <div class="slds-col slds-size_2-of-12">{opp.contactRole}</div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-button-icon
+                        class="icons"
+                        variant="bare"
+                        icon-name="utility:edit"
+                        data-id={opp.id}
+                        onclick={handleEditClicked}
+                        alternative-text={labels.Edit}
+                    ></lightning-button-icon>
+                </div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-button-icon
+                        class="icons"
+                        variant="bare"
+                        icon-name="utility:internal_share"
+                        data-id={opp.id}
+                        onclick={handleRedirectClicked}
+                        alternative-text={labels.Open_In_New_Window}
+                    ></lightning-button-icon>
+                </div>
+            </div>
+        </template>
+    </template>
+
+    <c-event-navigation></c-event-navigation>
+</template>

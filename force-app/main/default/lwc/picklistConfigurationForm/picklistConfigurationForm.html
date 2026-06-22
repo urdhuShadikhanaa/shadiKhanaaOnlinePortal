@@ -1,0 +1,59 @@
+<template>
+    <div>
+        <div if:true={readOnly} class="slds-var-m-bottom_x-small">
+            <span class="slds-form-element__label">{labels.targetObjectType}</span>
+            <div class="slds-form-element__control">{targetObjectTypeLabel}</div>
+        </div>
+        <lightning-combobox
+            if:false={readOnly}
+            data-name="targetObject"
+            name="targetObject"
+            label={labels.targetObjectType}
+            value={targetObject}
+            options={targetObjectOptions}
+            variant="label-stacked"
+            onchange={handleTargetObjectChange}
+            required
+        ></lightning-combobox>
+    </div>
+
+    <div>
+        <div if:true={readOnly} class="slds-var-m-bottom_x-small">
+            <span class="slds-form-element__label">{labels.targetValueField}</span>
+            <div class="slds-form-element__control">{targetValueField}</div>
+        </div>
+        <lightning-combobox
+            if:false={readOnly}
+            name="targetValueField"
+            label="Values From"
+            options={picklistFields}
+            variant="label-stacked"
+            value={targetValueField}
+            onchange={handleTargetValueFieldChange}
+            required
+        ></lightning-combobox>
+    </div>
+
+    <div if:true={targetValueField}>
+        <div if:true={controllingField}>
+            The {controllingField.label} field on this object controls {targetValueFieldLabel} values.
+            <lightning-input
+                type="checkbox"
+                label="Build values based on cell data?"
+                name="usePicklistDependency"
+                checked={usePicklistDependency}
+                onchange={handleControllingFieldOptionChange}
+            ></lightning-input>
+        </div>
+    </div>
+
+    <!-- <div>
+        <template if:true={values}>
+            <ul>
+                <template for:each={values} for:item="value">
+                    <li key={value.value}>{value.label}</li>
+                </template>
+            </ul>
+        </template>
+    </div> -->
+</template>

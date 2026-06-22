@@ -1,0 +1,30 @@
+.fullScreen {
+    position: fixed;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 8888;
+    background-color: white;
+}
+
+.blockout {
+    height: 760px;
+}
+
+.hierarchy-body {
+    border-width: 1px 0px 0px 0px;
+    border-radius: 0 0 0.25rem 0.25rem;
+    padding: 0px;
+}
+
+.label-container {
+    height: 100%;
+    padding-top: 8px;
+}
+
+.global-indicator {
+    color: #f26979;
+    margin: 4px;
+}

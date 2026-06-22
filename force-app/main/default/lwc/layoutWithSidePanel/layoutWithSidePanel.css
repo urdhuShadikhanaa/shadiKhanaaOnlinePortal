@@ -1,0 +1,62 @@
+.sp-container,
+.sp-pusher,
+.sp-content {
+    height: 100%;
+}
+
+.sp-container {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+
+.sp-panel {
+    position: relative;
+    visibility: hidden;
+    width: 0;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.sp-panel-left {
+    order: -1;
+}
+
+.sp-slide-in.sp-panel-open .sp-slide-in.sp-panel {
+    visibility: visible;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    width: fit-content;
+    /* width: 33rem; */
+    /* height: fit-content; */
+    min-width: 25em;
+    border-left: 1px solid rgb(192 192 192);
+    border-bottom: 1px solid rgb(192 192 192);
+    border-top: 1px solid rgb(192 192 192);
+    padding-left: 5px;
+    margin-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    background-color: #e7e7e8;
+    box-shadow: 0px 0px 5px #bebebe;
+    border-radius: 12px 0px 0px 12px;
+    padding-bottom: 20px;
+    margin-top: 10px;
+}
+
+.sp-slide-in.sp-panel-open .sp-slide-in.sp-panel.sp-panel-left {
+    border-right: 1px solid rgba(0, 0, 0, 0.25);
+    border-left: unset;
+}
+
+.sp-pusher {
+    flex: 1 1 auto;
+    position: relative;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    overflow: hidden;
+}
+
+.sp-content {
+    position: relative;
+}

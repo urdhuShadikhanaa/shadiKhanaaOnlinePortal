@@ -1,0 +1,62 @@
+<template>
+    <!-- Sub Title Panel -->
+    <c-pq-omni-viewer-widget-header-sub
+        person-map-member-data={personMapMemberData}
+        person-contact-data={personContactData}
+        person-contact-extended-data={personContactExtendedData}
+        profile-image-data={profileImageData}
+    ></c-pq-omni-viewer-widget-header-sub>
+
+    <hr class="top" />
+
+    <div
+        if:true={error}
+        class="refresh-layer error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+    >
+        <div class="refresh-text-layer">{error}</div>
+    </div>
+
+    <div
+        if:true={needsRefresh}
+        class="refresh-layer error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        onclick={refreshClicked}
+    >
+        <div class="refresh-text-layer">{labels.Click_Here_To_Refresh}</div>
+    </div>
+
+    <!-- Relationships -->
+    <div class="page-title">{labels.PageTitle}</div>
+
+    <template if:false={loaded}>
+        <div>{labels.Loading}</div>
+    </template>
+
+    <template if:true={loaded}>
+
+        <template if:false={hasOtherMapData}>
+            <template if:false={globalRelData}>
+                <template if:false={currentMapRelData}>
+                    <div>{labels.No_Custom_Relationships}</div>
+                </template>
+            </template>
+        </template>
+
+        <template if:true={currentMapRelData}>
+            <c-pq-omni-viewer-widget-relationship relationship-data={currentMapRelData} loaded={loaded} is-highlighted="true">
+            </c-pq-omni-viewer-widget-relationship>
+            <br />
+        </template>
+
+        <template if:true={globalRelData}>
+            <c-pq-omni-viewer-widget-relationship relationship-data={globalRelData} loaded={loaded}>
+            </c-pq-omni-viewer-widget-relationship>
+        </template>
+
+        <template if:true={hasOtherMapData} for:each={otherMapRels} for:item="rel">
+            <c-pq-omni-viewer-widget-relationship key={rel.id} relationship-data={rel} loaded={loaded}>
+            </c-pq-omni-viewer-widget-relationship>
+        </template>
+    </template>
+
+    <c-event-navigation></c-event-navigation>
+</template>

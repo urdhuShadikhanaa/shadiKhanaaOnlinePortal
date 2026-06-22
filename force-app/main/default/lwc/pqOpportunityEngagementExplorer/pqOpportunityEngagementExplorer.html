@@ -1,0 +1,95 @@
+<template>
+    <div class={flexipageRegionWidth}>
+        <template if:false={recordId}>
+            <div class="engagementDiagram">
+                <div class="column">
+                    <div class="column-header">Please add this component to an Opportunity Record Page</div>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={recordId}>
+            <div class="surround">
+                <template if:false={loaded}>
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </template>
+
+                <template if:true={loaded}>
+                    <template if:true={showTitle}>
+                        <div class="diagramTitle">{diagramTitle}</div>
+                    </template>
+
+                    <template if:false={hasData}>
+                        <div>{labels.No_Engagements}</div>
+                    </template>
+
+                    <div class="slds-grid slds-wrap engagementDiagram">
+                        <template if:true={hasData}>
+                            <template if:true={viewModel.users}>
+                                <div class={colStyle}>
+                                    <div class="column-header">{labels.Active_Users}</div>
+                                    <template for:each={viewModel.users} for:item="entry">
+                                        <div key={entry.key} data-item={entry.key} onclick={displayToolTip}>
+                                            <div data-score={entry.score} class={entry.class}>
+                                                {entry.text} ({entry.score})
+                                            </div>
+                                            <c-pq-opportunity-engagement-tooltip
+                                                entry={entry}
+                                                collection="users"
+                                                data-item={entry.key}
+                                            ></c-pq-opportunity-engagement-tooltip>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+
+                            <template if:true={viewModel.activities}>
+                                <div class={colStyle}>
+                                    <div class="column-header">{labels.Activity_Types}</div>
+                                    <template for:each={viewModel.activities} for:item="entry">
+                                        <div key={entry.key} data-item={entry.key} onclick={displayToolTip}>
+                                            <div data-score={entry.score} class={entry.class}>
+                                                {entry.rollup} ({entry.score})
+                                            </div>
+                                            <c-pq-opportunity-engagement-tooltip
+                                                entry={entry}
+                                                collection="activities"
+                                                data-item={entry.key}
+                                            ></c-pq-opportunity-engagement-tooltip>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+
+                            <template if:true={viewModel.contacts}>
+                                <div class={colStyle}>
+                                    <div class="column-header">{labels.Engaged_Contacts}</div>
+                                    <template for:each={viewModel.contacts} for:item="entry">
+                                        <div key={entry.key} data-item={entry.key} onclick={displayToolTip}>
+                                            <div data-score={entry.score} class={entry.class}>
+                                                {entry.text} ({entry.score})
+                                            </div>
+                                            <c-pq-opportunity-engagement-tooltip
+                                                entry={entry}
+                                                collection="contacts"
+                                                data-item={entry.key}
+                                            ></c-pq-opportunity-engagement-tooltip>
+                                        </div>
+                                    </template>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+                </template>
+
+                <div class="refresher">
+                    <lightning-button
+                        label={labels.Refresh_Engagement_Data}
+                        onclick={handleRefresh}
+                        class="slds-align_absolute-center"
+                    ></lightning-button>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

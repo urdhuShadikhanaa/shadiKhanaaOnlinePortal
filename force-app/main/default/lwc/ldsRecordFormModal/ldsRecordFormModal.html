@@ -1,0 +1,71 @@
+<template>
+    <c-modal-with-record-type-selection
+        modal-title={modalTitle}
+        modal-error={error}
+        onrecordtypeselected={handleRecordTypeSelected}
+        oncancel={handleCancel}
+    >
+        <template if:false={isContact}>
+            <lightning-record-form
+                record-id={recordId}
+                object-api-name={objectApiName}
+                columns={columns}
+                mode={mode}
+                layout-type="Full"
+                record-type-id={recordTypeId}
+                onsuccess={handleSuccess}
+                oncancel={handleCancel}
+                onerror={handleError}
+            >
+            </lightning-record-form>
+        </template>
+        <template if:true={isContact}>
+            <lightning-record-form
+            record-id={recordId}
+            object-api-name={objectApiName}
+            record-type-id={recordTypeId}
+            onsubmit={handleSubmit}
+            onsuccess={handleSuccess}
+            oncancel={handleCancel}
+            onerror={handleError}
+            layout-type="Full"
+            mode="edit"
+            columns="2"
+        >
+                <lightning-messages></lightning-messages>
+                <lightning-button type="submit" label="Save"></lightning-button>
+            </lightning-record-form>
+
+           <!-- <lightning-record-edit-form
+                record-id={recordId}
+                object-api-name={objectApiName}
+                record-type-id={recordTypeId}
+                onsuccess={handleSuccess}
+            >
+                <div class="container">
+                    <lightning-messages> </lightning-messages>
+                    <template for:each={reqFieldsMap} for:item="obj">
+                        <div key={obj.key} class="item">
+                            <lightning-input-field field-name={obj.key} required={obj.value}> </lightning-input-field>
+                        </div>
+                    </template>
+                </div>
+                <div style="margin-top: 3%; margin-bottom: 1%; margin-left: 50%">
+                    <lightning-button
+                        variant="neutral"
+                        label="Cancel"
+                        title="titleName"
+                        onclick={handleCancel}
+                    ></lightning-button>
+                    <lightning-button
+                        type="submit"
+                        variant="brand"
+                        label="Save"
+                        title="titleName"
+                        style="margin-left: 1%"
+                    ></lightning-button>
+                </div>
+            </lightning-record-edit-form>  -->
+        </template>
+    </c-modal-with-record-type-selection>
+</template>

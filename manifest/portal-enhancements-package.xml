@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>ShadikhanaBookingController</members>
+        <members>ShadikhanaBookingControllerTest</members>
+        <members>ShadikhanaBookingPricing</members>
+        <members>ShadikhanaBookingPricingTest</members>
+        <members>ShadikhanaPortalBrandingService</members>
+        <members>ShadikhanaPortalBrandingServiceTest</members>
+        <members>ShadikhanaBookingSmsService</members>
+        <members>ShadikhanaBookingSmsServiceTest</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Shadikhana_Settings__c.Portal_Full_Address__c</members>
+        <members>Shadikhana_Settings__c.Portal_Gallery_Dining_Id__c</members>
+        <members>Shadikhana_Settings__c.Portal_Gallery_Exterior_Id__c</members>
+        <members>Shadikhana_Settings__c.Portal_Gallery_Interior_Id__c</members>
+        <members>Shadikhana_Settings__c.Portal_Header_Address__c</members>
+        <members>Shadikhana_Settings__c.Portal_Venue_Name__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>shadikhanaBookingPortal</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <version>61.0</version>
+</Package>

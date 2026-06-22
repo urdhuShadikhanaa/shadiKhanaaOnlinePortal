@@ -1,0 +1,48 @@
+.modal-hidden {
+    display: none;
+}
+
+.pq-omni-view-modal {
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    padding: unset;
+}
+
+.pq-omni-view-modal-surround {
+    border-radius: 20px;
+    background-color: rgb(231,231,231);
+    padding: 14px;
+    max-width: 100em;
+    max-height: 100%;
+    overflow-y: auto;
+    box-shadow: 5px 4px 20px 0px rgb(0 0 0 / 40%);
+}
+
+.pq-omni-view-modal-header {
+    display: grid;
+    font-size: 1.5em;
+    font-weight: 400;
+    margin-bottom: 0.7em;
+}
+
+.pq-omni-view-modal-header > * {
+    grid-row-start: 1;
+}
+
+.pq-omni-view-modal-title {
+    justify-self: center;
+}
+
+.pq-omni-view-modal-header-right {
+    justify-self: right;
+}
+
+.pq-omni-view-modal-dock {
+    cursor: pointer;
+    padding-right: 10px;
+}
+
+.pq-omni-view-modal-close {
+    cursor: pointer;
+}

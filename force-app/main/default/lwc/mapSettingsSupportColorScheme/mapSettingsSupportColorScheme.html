@@ -1,0 +1,22 @@
+<template>
+    <div class="page-section page-main">
+        <h3 class="slds-section-title_divider slds-text-heading_small slds-p-horizontal_none">
+            {label.Support_Color_Scheme}
+        </h3>
+        <div class="slds-grid pro-grid slds-p-around_medium">
+            <div class="slds-col">
+                <lightning-spinner if:true={loading}></lightning-spinner>
+                <template if:false={loading} for:each={colorItems} for:item="object">
+                    <lightning-input
+                        key={object.name}
+                        type="color"
+                        name={object.name}
+                        label={object.value}
+                        value={object.color}
+                        onchange={handleOnColorChange}
+                    ></lightning-input>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

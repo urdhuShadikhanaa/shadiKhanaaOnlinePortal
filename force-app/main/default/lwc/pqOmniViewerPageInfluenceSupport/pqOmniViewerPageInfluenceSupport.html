@@ -1,0 +1,63 @@
+<template>
+    <!-- Sub Title Panel -->
+    <c-pq-omni-viewer-widget-header-sub
+        person-map-member-data={personMapMemberData}
+        person-contact-data={personContactData}
+        person-contact-extended-data={personContactExtendedData}
+        profile-image-data={profileImageData}
+    ></c-pq-omni-viewer-widget-header-sub>
+
+    <hr class="top" />
+
+    <!-- Influence & Support Listings Panel -->
+    <div class="page-title">{labels.PageTitle}</div>
+
+    <div if:false={memberInfluenceData}>{labels.No_Influence_And_Support}</div>
+
+    <div if:true={memberInfluenceData} class="slds-m-bottom_small slds-p-bottom_medium">
+        <lightning-combobox
+            name="filter"
+            variant="label-hidden"
+            value={viewType}
+            options={options}
+            class="slds-p-bottom_x-small slds-p-top_x-small"
+            onchange={handleChange}
+        >
+        </lightning-combobox>
+
+        <div class="sub-title" if:true={showMain}>{labels.Current_Relationship_Map}</div>
+        <c-pq-omni-viewer-widget-influence-support
+            if:true={showMain}
+            title={memberInfluenceData.containerName}
+            influence-value={memberInfluenceData.influence}
+            support-value={memberInfluenceData.support}
+            influence-override-value={memberInfluenceData.influenceOverrideValue}
+            support-override-value={memberInfluenceData.supportOverrideValue}
+            support-color={memberInfluenceData.supportColor}
+            influence-label={memberInfluenceData.influenceLabel}
+            support-label={memberInfluenceData.supportLabel}
+            is-global={memberInfluenceData.isUsingGlobalInfluence}
+            is-highlighted="true"
+        ></c-pq-omni-viewer-widget-influence-support>
+
+        <template if:true={hasOtherMapInfluenceData}>
+            <div class="sub-title">{labels.Other_Relationship_Maps}</div>
+            <template for:each={displayInfluenceList} for:item="mem">
+                <div key={mem.id} class="slds-m-bottom_small slds-p-bottom_medium" data-id={mem.id}>
+                    <c-pq-omni-viewer-widget-influence-support
+                        title={mem.containerName}
+                        influence-value={mem.influence}
+                        support-value={mem.support}
+                        influence-override-value={mem.influenceOverrideValue}
+                        support-override-value={mem.supportOverrideValue}
+                        support-color={mem.supportColor}
+                        influence-label={mem.influenceLabel}
+                        support-label={mem.supportLabel}
+                        is-global={mem.isUsingGlobalInfluence}
+                        is-highlighted="false"
+                    ></c-pq-omni-viewer-widget-influence-support>
+                </div>
+            </template>
+        </template>
+    </div>
+</template>

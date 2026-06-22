@@ -1,0 +1,23 @@
+<template>
+    <c-pq-matrix-member-modal onsuccess={handleMatrixMemberSuccess}></c-pq-matrix-member-modal>
+    <c-relationship-influence-chart
+        can-delete={canDelete}
+        can-drag={canEdit}
+        delete-modal-header={label.Delete_Map_Member}
+        delete-confirmation-message={label.Delete_Map_Member_Confirmation}
+        is-loading={isLoading}
+        influence={influence}
+        member-label={memberLabel}
+        members={members}
+        onmemberdropped={handleMemberMoved}
+        onmemberremoved={handleMemberRemoved}
+        onmemberupdated={handleMemberUpdated}
+        onpqapplicationevent={bubbleEvent}
+        onrefreshmembers={handleRefreshMembers}
+        onshowmembermodal={handleEditMemberClicked}
+        onshoweditmodal={bubbleEvent}
+        support={support}
+        container-id={mapId}
+        map-id={mapId}
+    ></c-relationship-influence-chart>
+</template>

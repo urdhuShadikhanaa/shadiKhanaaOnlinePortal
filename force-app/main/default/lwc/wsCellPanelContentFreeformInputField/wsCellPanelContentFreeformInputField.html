@@ -1,0 +1,24 @@
+<template>
+    <div class="display-element">
+        <c-pq-generic-input-field
+            display-name={displayField.displayName}
+            type={displayField.type}
+            field-value={currentValue}
+            data-objectid={valueObject.objectId}
+            data-displayname={valueObject.displayName}
+            onvaluechanged={handleValueChanged}
+        ></c-pq-generic-input-field>
+        <lightning-button
+            if:true={hasChanges}
+            label={labels.save}
+            variant="brand"
+            onclick={handleSaveValue}
+        ></lightning-button>
+        <lightning-button
+            if:true={hasChanges}
+            label={labels.cancel}
+            class="slds-m-left_xx-small"
+            onclick={handleResetValue}
+        ></lightning-button>
+    </div>
+</template>

@@ -1,0 +1,51 @@
+.ws-highlight-square {
+    border-radius: 4px;
+    border-width: 2px;
+    border-style: solid;
+    width: 20px;
+    height: 20px;
+    float: left;
+}
+
+.ws-highlight-title {
+    font-size: 0.9em;
+    color: #000;
+    padding-left: 8px;
+}
+
+.ws-highlight-container {
+    padding: 10px;
+}
+
+.fullScreen {
+    overflow: auto;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 8888;
+    background-color: white;
+}
+
+.transparent-layer {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(8, 32, 80, 0.85);
+    z-index: 9000;
+    border-radius: 6px;
+    backdrop-filter: blur(3px);
+}
+
+.transparent-layer:hover {
+    cursor: pointer;
+}
+
+.refresh-text-layer {
+    padding: 20%;
+    font-size: 1.8em;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}

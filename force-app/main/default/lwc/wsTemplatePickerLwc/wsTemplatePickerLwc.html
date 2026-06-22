@@ -1,0 +1,41 @@
+<template>
+    <lightning-layout vertical-align="stretch" pull-to-boundary="small" class="picker-container">
+        <template if:true={showContainerSpinner}>
+            <lightning-spinner> </lightning-spinner>
+        </template>
+        <template if:false={templates.length}>
+            <div class="no-templates-label">{labels.noTemplates}</div>
+        </template>
+        <template if:true={templates.length}>
+            <lightning-layout-item padding="horizontal-small" size="6" flexibility="auto">
+                <div class="template-list">
+                    <c-ws-template-list templates={templates} onoptionselected={handleSelect}></c-ws-template-list>
+                </div>
+            </lightning-layout-item>
+
+            <lightning-layout-item padding="horizontal-small" size="6" flexibility="auto" class="picker-container">
+                <template if:true={showTileSpinner}>
+                    <lightning-spinner> </lightning-spinner>
+                </template>
+                <template if:true={selectedTemplateId}>
+                    <c-ws-template-tile
+                        title={selectedTemplate.name}
+                        column-data={selectedTemplate.column}
+                        row-data={selectedTemplate.row}
+                        column-count={selectedTemplate.column.count}
+                        row-count={selectedTemplate.row.count}
+                        show-cell-filter={selectedTemplate.areCellsFilterable}
+                        are-cells-filtered={selectedTemplate.areCellsFiltered}
+                        has-unrelated-cell-types={selectedTemplate.hasUnrelatedCellTypes}
+                        are-unrelated-cells-filtered={selectedTemplate.areUnrelatedCellsFiltered}
+                        picklist-source-object-label={selectedTemplate.picklistSourceObjectLabel}
+                        onheaderfiltercheck={handleHeaderFilter}
+                        oncellfiltercheck={handleCellFilter}
+                        onunrelatedcellfiltercheck={handleUnrelatedCellFilterChanged}
+                    >
+                    </c-ws-template-tile>
+                </template>
+            </lightning-layout-item>
+        </template>
+    </lightning-layout>
+</template>

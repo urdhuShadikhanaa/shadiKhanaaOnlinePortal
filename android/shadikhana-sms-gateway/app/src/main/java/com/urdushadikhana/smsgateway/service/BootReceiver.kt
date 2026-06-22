@@ -1,0 +1,14 @@
+package com.urdushadikhana.smsgateway.service
+
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import com.urdushadikhana.smsgateway.GatewayPreferences
+
+class BootReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context, intent: Intent?) {
+        if (intent?.action == Intent.ACTION_BOOT_COMPLETED && GatewayPreferences.isGatewayEnabled()) {
+            SmsGatewayService.start(context)
+        }
+    }
+}

@@ -1,0 +1,12 @@
+<template>
+    <div class={getContainerClass}>
+        <div class="sp-pusher">
+            <div class="sp-content">
+                <slot name="content"></slot>
+            </div>
+        </div>
+        <div class={getPanelClass}>
+            <slot name="panel"></slot>
+        </div>
+    </div>
+</template>

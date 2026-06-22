@@ -1,0 +1,31 @@
+<template>
+    <div class="container main slds-p-around_medium">
+        <lightning-radio-group
+            label="Import From:"
+            name="searchModeToggle"
+            class="input"
+            options={searchModeOptions}
+            value={searchModeValue}
+            type="button"
+            onchange={handleChangeSearchMode}
+        >
+        </lightning-radio-group>
+        <lightning-radio-group
+            if:true={searchScopeExposed}
+            name="radiogroup"
+            class="input"
+            options={searchOptions}
+            value={searchValue}
+            type="radio"
+            onchange={handleSearchOptionsClick}
+        >
+        </lightning-radio-group>
+        <lightning-input
+            type="text"
+            onfocus={handleFocus}
+            placeholder={searchInputWatermark}
+            onchange={handleSearchTermChange}
+        >
+        </lightning-input>
+    </div>
+</template>

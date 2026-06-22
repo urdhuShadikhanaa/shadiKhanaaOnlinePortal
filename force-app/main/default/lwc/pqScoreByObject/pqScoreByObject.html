@@ -1,0 +1,18 @@
+<template>
+    <lightning-spinner if:true={isLoading}></lightning-spinner>
+    <div if:true={isLoaded} class="pq-score-obj-parent">
+        <template for:each={scoreWrappers} for:item="scoreWrapper">
+            <div class="pq-score-obj-child" key={scoreWrapper.id}>
+                <div class="pq-score-container">
+                    <h3 class="pq-title pq-score-child">{scoreWrapper.label}</h3>
+                    <c-pq-chartjs
+                        class="objChart pq-chart pq-score-child"
+                        width={objectWidth}
+                        height={objectHeight}
+                        chart-config={scoreWrapper.config}
+                    ></c-pq-chartjs>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

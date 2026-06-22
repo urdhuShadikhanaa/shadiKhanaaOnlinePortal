@@ -1,0 +1,46 @@
+# Salesforce CLI / local auth (never commit)
+.sf/
+.sfdx/
+**/auth-info.json
+
+# Secrets and local config
+.env
+.env.*
+*.pem
+*.key
+**/credentials.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Android build output
+android/**/build/
+android/**/.gradle/
+android/**/local.properties
+*.apk
+*.aab
+
+# Logs and temp
+*.log
+tmp/
+temp/
+.cache/
+
+# Generated / large local artifacts
+demo-video/output/
+demo-videos/output/
+docs/screenshots/.cache/
+
+# Word lock files
+~$*.docx

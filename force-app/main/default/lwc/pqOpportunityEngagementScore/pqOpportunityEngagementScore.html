@@ -1,0 +1,35 @@
+<template>
+    <div class={flexipageRegionWidth}>
+        <template if:false={recordId}>
+            <div class="engagementDiagram">
+                <div class="column">
+                    <div class="column-header">Please add this component to an Opportunity Record Page</div>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={recordId}>
+            <div class="surround">
+                <template if:false={_loaded}>
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </template>
+
+                <template if:true={_loaded}>
+                    <template if:true={showTitle}>
+                        <div class="diagramTitle">{diagramTitle}</div>
+                    </template>
+
+                    <div class={engagementScoreCssClass}>{score}</div>
+                </template>
+
+                <div class="refresher">
+                    <lightning-button
+                        label={labels.Refresh_Engagement_Score}
+                        onclick={handleRefresh}
+                        class="slds-align_absolute-center"
+                    ></lightning-button>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

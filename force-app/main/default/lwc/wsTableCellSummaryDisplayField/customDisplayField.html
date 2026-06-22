@@ -1,0 +1,20 @@
+<template>
+    <div if:true={shouldRender} class="ws-sum" style={style}>
+        <div if:true={shouldRenderCount}>
+            <div class="ws-sum-count-container">
+                <span class="ws-counter">{countValue}</span>
+            </div>
+            <div class="ws-sum-value-container">{configuration.mapping.objectLabelPlural}</div>
+        </div>
+
+        <div if:false={shouldRenderCount}>
+            <div class={valueContainerClass}>
+                <c-pq-generic-output-field
+                    display-type={type}
+                    field-value={displayValue}
+                    display-style={displayStyle}
+                ></c-pq-generic-output-field>
+            </div>
+        </div>
+    </div>
+</template>

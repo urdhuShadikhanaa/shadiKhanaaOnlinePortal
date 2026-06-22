@@ -1,0 +1,63 @@
+<template>
+    <div>
+        <lightning-record-edit-form
+            if:true={objectApiName}
+            object-api-name={objectApiName}
+            record-id={objectId}
+            onload={handleLoad}
+            density={density}
+            onsuccess={handleSuccess}
+            onerror={handleError}
+            record-type-id={recordTypeId}
+        >
+            <div class="slds-form" role="list">
+                <lightning-messages></lightning-messages>
+                <div class="slds-is-relative record-form-spinner-holder">
+                    <lightning-spinner if:true={_loading}></lightning-spinner>
+                    <template for:each={_rows} for:item="row">
+                        <div key={row.key} class="slds-grid slds-gutters_small">
+                            <template for:each={row.fields} for:item="field">
+                                <div class="slds-col slds-has-flexi-truncate" role="listitem" key={field.name}>
+                                    <lightning-combobox
+                                        if:true={field.isCustom}
+                                        name={field.name}
+                                        label={field.name}
+                                        value={field.value}
+                                        placeholder={field.name}
+                                        options={field.options}
+                                        onchange={handleChange}
+                                        read-only={field.readOnly}
+                                        data-key={field.dataKey}
+                                    >
+                                    </lightning-combobox>
+                                    <template if:false={field.isCustom}>
+                                        <template if:true={field.updateable}>
+                                            <lightning-input-field
+                                                if:true={field.canPrepopulate}
+                                                field-name={field.name}
+                                                class={computedInputClass}
+                                                value={field.value}
+                                                data-name={field.name}
+                                            ></lightning-input-field>
+                                            <lightning-input-field
+                                                if:false={field.canPrepopulate}
+                                                field-name={field.name}
+                                                class={computedInputClass}
+                                                data-name={field.name}
+                                            ></lightning-input-field>
+                                        </template>
+                                        <lightning-output-field
+                                            if:false={field.updateable}
+                                            field-name={field.name}
+                                            class={computedInputClass}
+                                        ></lightning-output-field>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

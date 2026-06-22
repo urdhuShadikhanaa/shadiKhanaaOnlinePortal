@@ -1,0 +1,120 @@
+.dummy {
+    color: black;
+}
+.main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+.container {
+    padding: 1rem;
+}
+.button-container {
+    padding: 0 1rem 1rem 1rem;
+    gap: 1rem;
+    display: flex;
+    justify-content: center;
+    color: white;
+    color: #fff;
+}
+.btn {
+    width: 20%;
+    /* padding: 5px; */
+}
+.cancelBtn {
+    background-color: #e22d38;
+    border: 1px solid #e22d38;
+    border-radius: 3px;
+}
+.saveBtn {
+    background-color: #0070d2;
+    border: 1px solid #0070d2;
+    border-radius: 3px;
+}
+.searchSuggestion {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    color: #181818;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 11.5rem;
+}
+.itemContainer {
+    padding: 1rem 1rem 0 1rem;
+}
+.items {
+    cursor: pointer;
+}
+.messageDiv {
+    display: block;
+    padding: 1rem;
+    color: red;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+.slds-combobox__form-element {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.inputIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-color: #747474;
+    border: 1px solid #747474;
+    padding: 0 5px;
+}
+.inputField {
+    border: none;
+    outline: none;
+    padding: 0 10px;
+}
+.inputLabel {
+    font-size: 14px;
+    font-weight: 500;
+    color: #181818;
+}
+.dropDownIcon {
+    cursor: pointer;
+}
+
+/* Change Template CSS */
+.ChangeTemplateContainer {
+    padding: 1rem;
+}
+.outerBorder {
+    border: 1px dashed #c9c9c9;
+}
+.changeTemplateinputField {
+    width: 100%;
+    line-height: 2rem;
+    border: none;
+    outline: none;
+    padding: 0 0.75rem 0 1rem;
+    color: #181818;
+}
+.changeTemplatesearchSuggestion {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    color: #181818;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 11.5rem;
+    width: 100%;
+}
+.changeTemplateinputLabel {
+    color: #181818;
+    font-size: 14px;
+    font-weight: 500;
+}
+.changeTemplatebutton-container {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    gap: 1rem;
+    color: #fff;
+    background-color: #fff;
+}
+
+.slds-modal {
+    color: #181818;
+}

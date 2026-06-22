@@ -1,0 +1,17 @@
+/* Ensure the size of the image fit the container perfectly */
+img {
+    display: block;
+
+    /* This rule is very important, please don't ignore this */
+    max-width: 100%;
+}
+
+.imgpreview {
+    display: block;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+
+    /* This rule is very important, please don't ignore this */
+    max-width: 100%;
+}

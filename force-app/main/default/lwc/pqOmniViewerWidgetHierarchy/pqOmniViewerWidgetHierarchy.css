@@ -1,0 +1,33 @@
+.main-container {
+    margin-bottom: 8px;
+}
+
+.hierarchy-container {
+    padding: 8px 12px 8px 12px;
+}
+
+.hierarchy-container.clickable:hover {
+    background-color: rgb(233, 233, 233);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.hierarchy-container .icons {
+    padding-left: 8px;
+    opacity: 35%;
+}
+
+.hierarchy-container:hover .icons {
+    cursor: pointer;
+    opacity: 100%;
+}
+
+.refresh-layer:hover {
+    cursor: pointer;
+}
+
+.refresh-text-layer {
+    font-size: 1em;
+    color: blue;
+    text-align: center;
+}

@@ -1,0 +1,122 @@
+<template>
+    <div class="pq-container slds-card slds-card_boundary">
+        <div class="slds-hide" data-name="transparent-layer" onclick={transparencylLayerClicked}>
+            <div class="refresh-text-layer">
+                {labels.refresh1}<br />
+                {labels.refresh2}<br />
+            </div>
+        </div>
+
+        <lightning-spinner if:false={dataInitialized} variant="brand"></lightning-spinner>
+
+        <c-ws-header
+            if:true={dataInitialized}
+            record-id={whiteSpaceReport.id}
+            highlights={highlights}
+            show-unhighlghted={filterData.showUnhighlighted}
+            show-populated-rows={filterData.showPopulatedRows}
+            show-unpopulated-rows={filterData.showUnpopulatedRows}
+            show-populated-columns={filterData.showPopulatedColumns}
+            show-unpopulated-columns={filterData.showUnpopulatedColumns}
+            amount-types={amountTypes}
+            rows={rows}
+            columns={columns}
+            cell-display-type={whiteSpaceReport.cellDisplayType}
+            ontoggleparents={handleToggleAllParents}
+            show-edit-headers={canEditHeaders}
+            show-create-summary-formulas={permissions.canUpdate}
+            show-create-data-type={canCreateDataTypes}
+            show-delete-ws={canDelete}
+            show-record-page-nav-link={showRecordPageNavLink}
+            onzoomout={handleZoomOut}
+            onzoomin={handleZoomIn}
+            onenterfullscreen={handleEnterFullScreen}
+            onexitfullscreen={handleExitFullScreen}
+            onfilterschange={handleFiltersChange}
+            onshowunhighlightedchange={handleShowUnhighlightedChange}
+            onmenuactionselected={handleMenuActionSelected}
+            onopenpopover={handleOpenFilterPopover}
+            onrefresh={passthroughEvent}
+        ></c-ws-header>
+        <c-ws-summary
+            if:true={dataInitialized}
+            rows={rows}
+            columns={columns}
+            cells={whiteSpaceReport.cells}
+            amount-types={amountTypes}
+            highlights={highlights}
+            summary-formulas={summaryFormulas}
+        ></c-ws-summary>
+        <c-layout-with-side-panel opened={panelData}>
+            <template if:true={panelData}>
+                <c-panel show-close-button onpanelclose={handlePanelClose} panel-style="max-height:783px" slot="panel">
+                    <c-ws-cell-panel-content
+                        column-header-label={panelData.columnHeaderLabel}
+                        column-header-value={panelData.columnHeaderValue}
+                        row-header-label={panelData.rowHeaderLabel}
+                        row-header-value={panelData.rowHeaderValue}
+                        row-object-ids={panelData.rowObjectIds}
+                        notes={panelData.notes}
+                        tile-object={panelData.tileObject}
+                        amount-types={amountTypes}
+                        column-object-ids={panelData.columnObjectIds}
+                        is-free-form={panelData.isFreeForm}
+                        highlights={highlights}
+                        oncreaterecord={handleCreateRecord}
+                        oneditrecord={handleEditRecord}
+                        onupdateinfo={handleUpdateInfo}
+                        onupdatehighlight={handleUpdateHighlight}
+                        onupdatedatatypevalue={handleUpdateDataTypeValue}
+                        ontiledeleted={handleTileDeleted}
+                        onfreeformdatachanged={handleFreeformTileDataChanged}
+                        allow-edit={canEditCells}
+                    ></c-ws-cell-panel-content>
+                </c-panel>
+            </template>
+            <div slot="content">
+                <lightning-layout horizontal-align="center">
+                    <template for:each={highlights} for:item="highlightItem">
+                        <lightning-layout-item
+                            if:true={highlightItem.visible}
+                            key={highlightItem.id}
+                            padding="around-small"
+                        >
+                            <div class="ws-highlight-container">
+                                <span class="ws-highlight-square" style={highlightItem.style}></span>
+                                <span class="ws-highlight-title slds-text-title_caps"> {highlightItem.label} </span>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+
+                <c-ws-table-layout
+                    if:true={dataInitialized}
+                    columns={visibleColumns}
+                    rows={visibleRows}
+                    visible-amount-types={visibleAmountTypes}
+                    total-row-count={rows.length}
+                    total-column-count={columns.length}
+                    onloadmorecolumns={loadMoreColumnsHandler}
+                    onloadmorerows={loadMoreRowsHandler}
+                    is-loading={isLoading}
+                    oncellselected={handleCellSelectedEvent}
+                    onparentheadertoggled={handleParentHeaderToggled}
+                    onparentheaderhighlighted={handleParentHeaderHighlighted}
+                    onparentheaderunhighlighted={handleParentHeaderUnHighlighted}
+                    oncellhighlight={handleCellHighlight}
+                    oncellunhighlight={handleCellUnHighlight}
+                    oncreatecell={handleCreateCell}
+                    permissions={permissions}
+                    tile-size={tileSize}
+                ></c-ws-table-layout>
+            </div>
+        </c-layout-with-side-panel>
+    </div>
+    <c-lds-record-w-s-formula
+        white-space-id={whiteSpaceReport.id}
+        onsuccess={handleFormulaCreated}
+    ></c-lds-record-w-s-formula>
+    <c-data-type-modal white-space-id={whiteSpaceReport.id} onsuccess={handleDataTypeCreated}></c-data-type-modal>
+    <c-create-record-modal onsuccess={handleRecordCreated}></c-create-record-modal>
+    <c-event-navigation></c-event-navigation>
+</template>

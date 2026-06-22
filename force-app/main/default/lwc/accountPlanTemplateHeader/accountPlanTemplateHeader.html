@@ -1,0 +1,41 @@
+<template>
+    <div class="main-container">
+        <p class="header"><span>{Header}</span></p>
+        <div class="header-container">
+            <div class="header-container-inner">
+                <div class="logo">
+                    <lightning-icon
+                        icon-name="utility:close"
+                        alternative-text=""
+                        size="xx-small"
+                        title=""
+                        class="editIcon"
+                        onclick={handleEditIcon}
+                    ></lightning-icon>
+                    <div class="uploadBtn">
+                        <div class="infoIconCls">
+                            <label class="uploadLabel">{Logo}</label>
+                        </div>
+                        <div class="btnCls" onclick={handleFileUpload}>
+                            <lightning-icon icon-name="utility:upload" size="x-small" class="uploadIcon">
+                            </lightning-icon>
+                            <span>{Upload_Files}</span>
+                        </div>
+                        <input
+                            type="file"
+                            accept=".png, .svg"
+                            onchange={openfileUpload}
+                            class="slds-hide"
+                            id="fileInput"
+                            value=""
+                        />
+                    </div>
+                    <div class="imageContainer"></div>
+                </div>
+            </div>
+            <div class="company-logo">
+                <div>{AccountPlanLogoHeading}</div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,66 @@
+.displayDuplicateMsg {
+    color: red;
+}
+.modalBody {
+    justify-content: space-evenly;
+    position: relative;
+}
+.mainDivBorder {
+}
+.required::after {
+    content: '*';
+    color: red;
+}
+.insideBody {
+    position: relative;
+    border: 1px dashed #c9c9c9;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 4px;
+}
+.mainDivModal {
+    background: white;
+    padding: 20px;
+}
+.inputFieldCls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.labelCls {
+    color: #181818;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 23px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+.inputField {
+    border: 1px solid #747474;
+    height: 3rem;
+}
+.cancleBtn {
+    background-color: #fff;
+    border: 1px solid #747474;
+    color: #0176d3;
+}
+.saveBtn {
+    background-color: #0176d3;
+    border: 1px solid #0176d3;
+    color: #fff;
+}
+::placeholder {
+    font-family: Segoe UI;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0px;
+    text-align: left;
+    color: #747474;
+}
+
+.slds-modal__container {
+    max-width: 37rem;
+    color: #181818;
+}

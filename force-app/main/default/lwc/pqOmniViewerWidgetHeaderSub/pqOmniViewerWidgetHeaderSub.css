@@ -1,0 +1,49 @@
+.sub-title-grid {
+    display: grid;
+    grid-template-columns: 85px 1fr;
+    align-items: center;
+}
+
+.sub-title-panel {
+    width: 23em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.profile-image {
+    border-radius: 50%;
+    max-width: 70px;
+    min-width: 70px;
+    min-height: 70px;
+}
+
+.fullname {
+    font-size: 1.5em;
+    line-height: 1.2;
+    font-weight: 700;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.title {
+    font-size: 1.1em;
+    line-height: 1.2em;
+    color: #3f3f3f;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.company {
+    font-size: 1.1em;
+    line-height: 1.2em;
+    color: #3f3f3f;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

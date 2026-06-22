@@ -1,0 +1,50 @@
+<template>
+    <c-modal header={labels.Plan_Overview} onclosedialog={handleCancel}>
+        <div
+            if:true={error}
+            class="error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        >
+            {error}
+        </div>
+        <div class="min-height input-container">
+            <lightning-input
+                class="title-input"
+                type="text"
+                label={labels.Title}
+                placeholder="Enter title"
+                value={title}
+            ></lightning-input>
+        </div>
+        <div class="input-container">
+            <lightning-input-rich-text
+                class="overview-input"
+                value={description}
+                label={labels.Plan_Overview}
+                placeholder={labels.Enter_Overview_Information}
+            >
+            </lightning-input-rich-text>
+        </div>
+        <div class="input-container">
+            <lightning-input
+                class="color-picker"
+                type="color"
+                label={labels.Background_Color}
+                value={backgroundColor}
+            ></lightning-input>
+        </div>
+        <div slot="footer">
+            <lightning-button
+                variant="neutral"
+                label={labels.Cancel}
+                class="slds-button"
+                onclick={handleCancel}
+            ></lightning-button>
+            <lightning-button
+                variant="brand"
+                label={labels.Save}
+                class="slds-button"
+                onclick={handleSave}
+            ></lightning-button>
+        </div>
+    </c-modal>
+</template>

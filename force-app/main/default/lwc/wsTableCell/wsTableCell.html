@@ -1,0 +1,24 @@
+<template>
+    <div style={displayStyle}>
+        <c-ws-table-cell-tile-group
+            if:true={isTileCell}
+            row={row}
+            column={column}
+            row-index={rowIndex}
+            col-index={colIndex}
+            cell={cellData}
+            visible-amount-types={visibleAmountTypes}
+            can-add-tiles={canAddTiles}
+        ></c-ws-table-cell-tile-group>
+        <c-ws-table-cell-summary
+            if:true={isSummaryCell}
+            row={row}
+            column={column}
+            row-index={rowIndex}
+            col-index={colIndex}
+            cell={cellData}
+            tile-size={tileSize}
+            visible-amount-types={visibleAmountTypes}
+        ></c-ws-table-cell-summary>
+    </div>
+</template>

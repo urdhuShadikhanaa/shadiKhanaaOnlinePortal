@@ -1,0 +1,46 @@
+<template>
+    <div class="page-section page-main">
+        <h3 class="slds-section-title_divider slds-text-heading_small slds-p-horizontal_none">
+            {label.Display_Fields}
+        </h3>
+        <div class="slds-grid pro-grid slds-p-around_medium">
+            <div class="slds-col">
+                <lightning-spinner if:true={loading}></lightning-spinner>
+                <table>
+                    <tr>
+                        <th class="pro-text-align-left">Field Name</th>
+                        <th class="pro-text-align-right">Main Section</th>
+                        <th class="pro-text-align-right">Visible</th>
+                    </tr>
+                    <template if:false={loading} for:each={memberFields} for:item="object">
+                        <tr key={object.id}>
+                            <td>
+                                <lightning-formatted-text value={object.fieldLabel}></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    type="checkbox"
+                                    data-object-name={object.objectName}
+                                    data-field-name={object.fieldName}
+                                    checked={object.isMain}
+                                    disabled={object.disabled}
+                                    onchange={onPositionChange}
+                                ></lightning-input>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    type="checkbox"
+                                    data-object-name={object.objectName}
+                                    data-field-name={object.fieldName}
+                                    checked={object.isVisible}
+                                    disabled={object.isRequired}
+                                    onchange={onVisibilityChange}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                    </template>
+                </table>
+            </div>
+        </div>
+    </div>
+</template>

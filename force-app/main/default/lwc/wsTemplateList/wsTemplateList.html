@@ -1,0 +1,18 @@
+<template>
+    <div class="slds-dueling-list__options">
+        <ul class="slds-listbox slds-listbox_vertical slds-has-dividers_bottom">
+            <template for:each={templateItems} for:item="template">
+                <li key={template.id} class="slds-item">
+                    <c-ws-template-list-item
+                        template-id={template.id}
+                        name={template.name}
+                        column-name={template.columnName}
+                        row-name={template.rowName}
+                        is-selected={template.isSelected}
+                        onselect={handleSelect}
+                    ></c-ws-template-list-item>
+                </li>
+            </template>
+        </ul>
+    </div>
+</template>

@@ -1,0 +1,48 @@
+<template>
+    <c-pq-card-lwc title={labels.Account_Plan_Score}>
+        <lightning-spinner if:true={loadingSetting} alternative-text="Loading" size="small"></lightning-spinner>
+        <div slot="actions">
+            <div class="slds-grid">
+                <div class="slds-col">
+                    <lightning-button-icon
+                        icon-name="utility:refresh"
+                        slot="actions"
+                        onclick={handleRefresh}
+                    ></lightning-button-icon>
+                </div>
+            </div>
+        </div>
+        <div class="slds-card__body slds-card__body_inner">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col account-plan-score">
+                    <template if:false={loadPercentComponent}>
+                        <c-pq-score-total record-id={recordId} width="200" height="200"></c-pq-score-total>
+                    </template>
+                    <template if:true={loadPercentComponent}>
+                        <c-pq-score-total-percent
+                            record-id={recordId}
+                            width="200"
+                            height="200"
+                        ></c-pq-score-total-percent>
+                    </template>
+                </div>
+                <div class="slds-col object-score">
+                    <template if:false={loadPercentComponent}>
+                        <c-pq-score-by-object
+                            record-id={recordId}
+                            object-width="100"
+                            object-height="80"
+                        ></c-pq-score-by-object>
+                    </template>
+                    <template if:true={loadPercentComponent}>
+                        <c-pq-score-by-object-percent
+                            record-id={recordId}
+                            object-width="100"
+                            object-height="80"
+                        ></c-pq-score-by-object-percent>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </c-pq-card-lwc>
+</template>

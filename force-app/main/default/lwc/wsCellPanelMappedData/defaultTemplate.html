@@ -1,0 +1,33 @@
+<template>
+    <div class="field-container slds-p-vertical_medium">
+        <div class="display-element">
+            <c-ws-table-display-field-summary-header
+                display-field={field}
+                can-create-object={canCreate}
+                show-count
+                alternative-text={phrase}
+                onaddnewentry={createRecord}
+            ></c-ws-table-display-field-summary-header>
+        </div>
+
+        <template for:each={field.data} for:item="valueObj">
+            <div
+                class="display-subelement"
+                key={valueObj.objectId}
+                data-objectid={valueObj.objectId}
+                data-displayname={objectLabel}
+                onclick={handleEditRecordClick}
+            >
+                <div class="entry-block" title={labels.clickToEdit}>
+                    <p if:true={valueObj.displayName} class="slds-text-title display-name">{valueObj.displayName}</p>
+                    <c-pq-generic-output-field
+                        if:true={valueObj.value}
+                        display-type={displayType}
+                        field-value={valueObj.value}
+                    ></c-pq-generic-output-field>
+                    <p if:false={valueObj.value} class="slds-text-title display-name empty-value">(blank)</p>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,74 @@
+<template>
+    <div class="ws-table-container">
+        <table class="ws-table">
+            <thead>
+                <tr>
+                    <template if:true={isLoading}>
+                        <th>
+                            <div class="spinnerHolder">
+                                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                            </div>
+                        </th>
+                    </template>
+
+                    <template if:false={isLoading}>
+                        <!-- Corner Cap -->
+                        <th class="ws-corner header"></th>
+
+                        <template if:false={columns.length}>
+                            <th class="ws-header-cell">
+                                no columns
+                            </th>
+                        </template>
+
+                        <!-- Column Neaders -->
+                        <template for:each={columns} for:item="col" for:index="ci">
+                            <c-ws-table-column-header-wrapper
+                                if:true={col.visible}
+                                key={col.id}
+                                column={col}
+                                column-index={ci}
+                                tile-size={tileSize}
+                            ></c-ws-table-column-header-wrapper>
+                        </template>
+                    </template>
+                </tr>
+            </thead>
+
+            <tbody>
+                <template if:true={isLoading}>
+                    <tr>
+                        <td>
+                            <div class="spinnerHolder">
+                                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                            </div>
+                        </td>
+                    </tr>
+                </template>
+
+                <template if:false={isLoading}>
+                    <template if:false={rows.length}>
+                        <tr>
+                            <td class="ws-header-cell">
+                                no rows
+                            </td>
+                        </tr>
+                    </template>
+
+                    <template for:each={rows} for:item="row" for:index="ri">
+                        <c-ws-table-row-wrapper
+                            if:true={row.visible}
+                            key={row.id}
+                            row={row}
+                            row-index={ri}
+                            columns={columns}
+                            visible-amount-types={visibleAmountTypes}
+                            permissions={permissions}
+                            tile-size={tileSize}
+                        ></c-ws-table-row-wrapper>
+                    </template>
+                </template>
+            </tbody>
+        </table>
+    </div>
+</template>

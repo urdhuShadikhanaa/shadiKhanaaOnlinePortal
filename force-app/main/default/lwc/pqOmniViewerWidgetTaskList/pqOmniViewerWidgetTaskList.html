@@ -1,0 +1,20 @@
+<template>
+
+    <!-- Task List Panel -->
+    <template if:true={hasData}>
+        <div class="widget-name">{labels.openTasks}</div>
+        <div class="task-panel">
+            <template for:each={taskListSumary} for:item="task">
+                <div key={task.id} data-id={task.id} class="task-list">
+                    <div class="task-subject">{task.subject}</div>
+                    <div class="task-assigned">{task.assignedTo}</div>
+                    <!-- <div class="task-status">{task.status}</div> -->
+                    <div class="task-date">{task.dueDate}</div>
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <c-event-navigation></c-event-navigation>
+
+</template>

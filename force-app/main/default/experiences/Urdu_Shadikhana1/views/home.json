@@ -1,0 +1,46 @@
+{
+  "appPageId" : "1fda8d16-815c-4f32-b72e-34c6e4891727",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "95de930a-dc14-4b87-972b-49fab27c8f15",
+  "label" : "Home",
+  "regions" : [ {
+    "id" : "0ff08cca-f2b7-4bd3-b99d-bd51c9d6dc7c",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:shadikhanaBookingPortal",
+      "id" : "b8e2f4a1-6c3d-4e5f-9a0b-1c2d3e4f5a6b",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "7e79a26f-f3d7-405a-b49d-c79e9222ceb3",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "12c44a9b-801d-4257-84df-5075942eed5c",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "Book Urdu Shadikhana dates online.",
+        "title" : "Urdu Shadikhana Booking Portal"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "e1866442-f8dc-40d8-94ae-fb3db274402a",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "741679ee-107e-4e4b-a263-12cebcc895b4",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "home"
+}

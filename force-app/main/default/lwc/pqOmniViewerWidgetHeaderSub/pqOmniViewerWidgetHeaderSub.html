@@ -1,0 +1,20 @@
+<template>
+    <!-- Home Title Panel -->
+    <lightning-button-icon
+        if:true={showEditContact}
+        icon-name="utility:edit"
+        size="medium"
+        variant="bare"
+        alternative-text="Edit"
+        class="slds-float_right"
+        onclick={handleEditContactClick}
+    ></lightning-button-icon>
+    <div class="sub-title-grid">
+        <img class="profile-image" src={profileImageData} />
+        <div class="sub-title-panel">
+            <span if:true={hasFullName} class="fullname" title={fullName}>{fullName}</span>
+            <span if:true={hasTitle} class="title" title={title}>{title}</span>
+            <span if:true={hasAccountName} class="company" title={accountName}>{accountName}</span>
+        </div>
+    </div>
+</template>

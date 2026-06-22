@@ -1,0 +1,54 @@
+<template>
+    <div>
+        <div
+            if:true={errors}
+            class="slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        >
+            <div>{errors}</div>
+        </div>
+        <lightning-record-edit-form
+            if:true={objectApiName}
+            object-api-name={objectApiName}
+            onload={handleLoad}
+            density={density}
+            onsuccess={handleSuccess}
+            onerror={handleError}
+            record-type-id={recordTypeId}
+        >
+            <div class="slds-form" role="list">
+                <lightning-messages></lightning-messages>
+                <div class="slds-is-relative record-form-spinner-holder">
+                    <lightning-spinner if:true={_loading}></lightning-spinner>
+                    <template for:each={_rows} for:item="row">
+                        <div key={row.key} class="slds-grid slds-gutters_small">
+                            <template for:each={row.fields} for:item="field">
+                                <div class="slds-col slds-has-flexi-truncate" role="listitem" key={field.name}>
+                                    <template if:true={field.updateable}>
+                                        <lightning-input-field
+                                            if:true={field.canPrepopulate}
+                                            field-name={field.name}
+                                            class={computedInputClass}
+                                            required={field.required}
+                                            value={field.value}
+                                        ></lightning-input-field>
+                                        <lightning-input-field
+                                            if:false={field.canPrepopulate}
+                                            field-name={field.name}
+                                            class={computedInputClass}
+                                            required={field.required}
+                                        ></lightning-input-field>
+                                    </template>
+                                    <lightning-output-field
+                                        if:false={field.updateable}
+                                        field-name={field.name}
+                                        class={computedInputClass}
+                                    ></lightning-output-field>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </lightning-record-edit-form>
+    </div>
+</template>

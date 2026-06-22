@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Booking_Date__c</fullName>
+    <description>Date reserved for the Shadikhana. Only one booking per date is allowed.</description>
+    <externalId>false</externalId>
+    <label>Booking Date</label>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

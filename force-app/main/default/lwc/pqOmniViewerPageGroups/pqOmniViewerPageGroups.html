@@ -1,0 +1,75 @@
+<template>
+    <!-- Sub Title Panel -->
+    <c-pq-omni-viewer-widget-header-sub
+        person-map-member-data={personMapMemberData}
+        person-contact-data={personContactData}
+        person-contact-extended-data={personContactExtendedData}
+        profile-image-data={profileImageData}
+    ></c-pq-omni-viewer-widget-header-sub>
+
+    <hr class="top" />
+
+    <div
+        if:true={needsRefresh}
+        class="refresh-layer error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        onclick={refreshClicked}
+    >
+        <div class="refresh-text-layer">{labels.Click_Here_To_Refresh}</div>
+    </div>
+
+    <!-- Group Listings Panel -->
+    <div class="page-title">{labels.PageTitle}</div>
+
+    <template if:false={loaded}>
+        <div>{labels.Loading}</div>
+    </template>
+    <template if:true={loaded}>
+        <template if:false={hasData}>
+            <div>{labels.No_Related_Groups}</div>
+        </template>
+
+        <template if:true={hasData} for:each={groupList} for:item="gr">
+
+            <div
+                if:true={gr.isGlobalGroup}
+                key={gr.id}
+                class="slds-grid group-container"
+                data-id={gr.id}
+                data-accountplanid={gr.accountPlanId}
+                data-rmid={gr.relationshipMapId}
+            >
+                <div class="slds-col slds-size_6-of-12">
+                    <p class="name-title">{gr.groupLabel}</p>
+                </div>
+                <div class="slds-col slds-size_6-of-12">{gr.containerName}</div>
+            </div>
+
+            <div
+                if:false={gr.isGlobalGroup}
+                key={gr.id}
+                class="slds-grid group-container clickable"
+                onclick={handleEditClicked}
+                data-id={gr.id}
+                data-accountplanid={gr.accountPlanId}
+                data-rmid={gr.relationshipMapId}
+                title={labels.Open_In_New_Window}
+            >
+                <div class="slds-col slds-size_6-of-12">
+                    <p class="name-title">{gr.groupLabel}</p>
+                </div>
+                <div class="slds-col slds-size_5-of-12">{gr.containerName}</div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-button-icon
+                        class="icons"
+                        variant="bare"
+                        icon-name="utility:internal_share"
+                        alternative-text={labels.Open_In_New_Window}
+                        title={labels.Open_In_New_Window}
+                    ></lightning-button-icon>
+                </div>
+            </div>
+        </template>
+    </template>
+
+    <c-event-navigation></c-event-navigation>
+</template>

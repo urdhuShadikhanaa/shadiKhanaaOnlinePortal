@@ -1,0 +1,15 @@
+{
+  "orgName": "Urdu Shadi Khanana",
+  "edition": "Developer",
+  "features": [
+    "Communities",
+    "CustomerCommunityPlus",
+    "CustomerCommunityPlusLogin",
+    "Sites"
+  ],
+  "settings": {
+    "lightningExperienceSettings": {
+      "enableS1DesktopEnabled": true
+    }
+  }
+}

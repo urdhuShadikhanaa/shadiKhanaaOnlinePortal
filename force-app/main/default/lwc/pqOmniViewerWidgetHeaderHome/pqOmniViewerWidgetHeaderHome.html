@@ -1,0 +1,11 @@
+<template>
+
+    <!-- Home Title Panel -->
+    <div class="title-panel">
+        <img class="profile-image" src={profileImageData} />
+        <div if:true={hasFullName} class="fullname" title={fullName}>{fullName}</div>
+        <div if:true={hasTitle} class="title" title={title}>{title}</div>
+        <div if:true={hasAccountName} class="company" title={accountName}>{accountName}</div>
+    </div>
+
+</template>

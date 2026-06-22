@@ -1,0 +1,55 @@
+<template>
+    <p if:true={errorMessage} class="slds-text-color_error">
+        <lightning-formatted-rich-text value={errorMessage}></lightning-formatted-rich-text>
+    </p>
+
+    <c-pq-matrix-member-modal onsuccess={handleMatrixMemberSuccess}></c-pq-matrix-member-modal>
+
+    <c-clone-relationship-map-dialog
+        record-id={containerId}
+        object-api-name={objectApiName}
+        is-modal-open={openCloneModal}
+        relationship-map-id={recordId}
+        oncancel={handleCloseClone}
+    ></c-clone-relationship-map-dialog>
+
+    <template if:false={errorMessage}>
+        <c-relationship-map-controller
+            if:true={graphData}
+            graph-data={graphData}
+            can-copy-graph="true"
+            can-edit-graph={canEditGraph}
+            container-record-id={containerId}
+            object-label={objectLabel}
+            chart-settings={chartSettings}
+            rm-org-settings={rmOrgSettings}
+            anchors={anchors}
+            relationship-types={relationshipTypes}
+            record-id={recordId}
+            rm-or-keystakeholder="rm"
+            onrequestobjectviewer={handleObjectViewerRequested}
+            ongrapherror={graphError}
+            onaddnodestochart={addMembers}
+            onaddparentcontactstochart={handleAddParentContactsToChart}
+            oncloneclicked={handleCloneClicked}
+            onremovegraphmember={handleDeleteMembers}
+            ondeletemapmemberusers={handleDeleteMapMemberUsers}
+            onsettingsclicked={editSettings}
+            onupdategraph={handleUpdateGraph}
+            onperformsearch={handlePerformSearch}
+            onpqapplicationevent={handleBubbledApplicationEvent}
+            oncreatenewplaceholder={handleCreateNewPlaceholder}
+            onsettargetanchor={handleSetTargetAnchor}
+            onsavenodecoordinates={handleSaveAllNodeCoordinates}
+            onupdatenodecoordinates={handleUpdateNodeCoordinates}
+            oncreatenewgroup={handleCreateNewGroup}
+            onaddcontactstogroup={handleAddContactsToGroup}
+            onnewcustomlinks={handleNewCustomLinks}
+            onupdatehierarchylinks={handleUpdateHierarchyLinks}
+            oncreatenewtask={passthroughEvent}
+            onassociatebadge={handleAssociateBadge}
+            onremovebadge={handleRemoveBadge}
+            onremoveleadmembers={handleDeleteMapMemberLeads}
+        ></c-relationship-map-controller>
+    </template>
+</template>

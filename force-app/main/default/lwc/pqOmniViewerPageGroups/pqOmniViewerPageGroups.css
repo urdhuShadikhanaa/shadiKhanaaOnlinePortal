@@ -1,0 +1,45 @@
+hr.top {
+    border-top: 1px solid #ccc;
+    margin: 25px 0px 10px 0px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 1.1em;
+    color: #000000;
+    font-weight: bold;
+    margin: 15px 0px 20px 0px;
+}
+
+.name-title {
+    font-weight: bold;
+}
+
+.group-container {
+    padding: 8px 12px 8px 12px;
+}
+
+.group-container.clickable:hover {
+    background-color: rgb(233, 233, 233);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.group-container .icons {
+    padding-left: 8px;
+    opacity: 35%;
+}
+
+.group-container.clickable:hover .icons {
+    opacity: 100%;
+}
+
+.refresh-layer:hover {
+    cursor: pointer;
+}
+
+.refresh-text-layer {
+    font-size: 1em;
+    color: blue;
+    text-align: center;
+}

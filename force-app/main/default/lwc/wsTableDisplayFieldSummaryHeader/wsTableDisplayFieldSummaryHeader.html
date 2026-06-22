@@ -1,0 +1,52 @@
+<template>
+    <div title={alternativeText} class="summary-block" style={buttonStyle}>
+        <div if:true={canCreateObject} class="ws-button-circle">
+            <c-pq-popover-button if:true={hasMultipleRecords} icon-name="utility:add" variant="bare">
+                <div slot="popover-body" class="popover">
+                    <lightning-radio-group
+                        if:true={hasRowSelection}
+                        name="rowSelectionGroup"
+                        label="Row Records"
+                        options={rowOptions}
+                        value={rowSelection}
+                        type="radio"
+                        onchange={handleRowSelectionChange}
+                    ></lightning-radio-group>
+                    <lightning-radio-group
+                        if:true={hasColumnSelection}
+                        name="columnSelectionGroup"
+                        label="Column Records"
+                        options={columnOptions}
+                        value={columnSelection}
+                        type="radio"
+                        onchange={handleColumnSelectionChange}
+                    ></lightning-radio-group>
+                    <lightning-button
+                        class="slds-var-p-top_small slds-float_right"
+                        label="Create"
+                        variant="brand"
+                        onclick={buttonClickHandler}
+                    ></lightning-button>
+                </div>
+            </c-pq-popover-button>
+            <lightning-button-icon
+                if:false={hasMultipleRecords}
+                variant="bare"
+                title=""
+                alternative-text=""
+                onclick={buttonClickHandler}
+                icon-name="utility:add"
+            ></lightning-button-icon>
+        </div>
+        <!-- <div if:true={canCreateObject} class="ws-button-circle" onclick={buttonClickHandler}>+</div> -->
+
+        <div class="summary-title slds-text-title_caps">{displayName}</div>
+
+        <span if:true={showTotal} class="summary-value slds-text-title slds-truncate">
+            <c-pq-generic-output-field
+                display-type={summaryType}
+                field-value={summaryValue}
+            ></c-pq-generic-output-field>
+        </span>
+    </div>
+</template>

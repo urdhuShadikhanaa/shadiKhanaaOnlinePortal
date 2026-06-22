@@ -1,0 +1,14 @@
+.pq-title-container {
+    display: flex;
+    flex-flow: column nowrap;
+    text-align: center;
+}
+.pq-score-child {
+    margin: auto;
+}
+.pq-title {
+    font-size: 16px;
+}
+.pq-chart {
+    margin-top: -50px;
+}

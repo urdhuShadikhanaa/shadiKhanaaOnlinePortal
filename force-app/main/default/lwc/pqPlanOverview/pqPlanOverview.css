@@ -1,0 +1,29 @@
+.overview-container {
+    padding: 4px;
+}
+
+.overview-container .action-icons {
+    visibility: hidden;
+}
+
+.overview-container:hover .action-icons {
+    visibility: visible;
+}
+
+.title-container {
+    border-radius: 4px 4px 0px 0px;
+    min-height: 20px;
+    padding: 8px;
+    font-weight: bold;
+}
+
+.body-container {
+    border-radius: 0px 0px 4px 4px;
+    min-height: 50px;
+    padding: 8px;
+}
+
+.action-icons {
+    padding-left: 2px;
+    padding-right: 2px;
+}

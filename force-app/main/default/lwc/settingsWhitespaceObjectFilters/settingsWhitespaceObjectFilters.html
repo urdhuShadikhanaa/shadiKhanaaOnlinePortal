@@ -1,0 +1,25 @@
+<template>
+    <div class="page-section page-main">
+        <h3 class="slds-section-title_divider slds-text-heading_small slds-p-horizontal_none">{label.title}</h3>
+        <div
+            if:true={errorMessage}
+            class="error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        >
+            {errorMessage}
+        </div>
+        <div class="slds-grid pro-grid slds-var-p-around_medium">
+            <div class="slds-col">
+                <div class="pro-span-content slds-grid_vertical-align-center slds-var-p-vertical_xxx-small">
+                    <lightning-formatted-text value={label.label}></lightning-formatted-text>
+                    <lightning-textarea
+                        if:false={loading}
+                        name="CS Object Filter Input"
+                        value={objectFilterString}
+                        onchange={handleObjectFilterChange}
+                        onblur={handleObjectFilterBlur}
+                    ></lightning-textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

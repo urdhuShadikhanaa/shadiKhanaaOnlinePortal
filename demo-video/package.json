@@ -1,0 +1,17 @@
+{
+  "name": "urdushadikhana-demo-video",
+  "private": true,
+  "description": "Records a narrated demo walkthrough of the Urdu Shadikhana portal",
+  "scripts": {
+    "record": "node record-demo.js",
+    "narrate": "node generate-narration.js",
+    "record:full": "node record-full-demo.js",
+    "merge": "node merge-demo.js",
+    "build:full": "node build-full-demo.js"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0",
+    "msedge-tts": "^2.0.2",
+    "playwright": "^1.51.0"
+  }
+}

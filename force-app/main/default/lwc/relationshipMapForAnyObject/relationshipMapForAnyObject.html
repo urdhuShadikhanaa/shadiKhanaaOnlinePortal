@@ -1,0 +1,27 @@
+<template>
+    <p if:true={errorMessage} class="slds-text-color_error">
+        <lightning-formatted-rich-text value={errorMessage}></lightning-formatted-rich-text>
+    </p>
+    <template if:false={errorMessage}>
+        <template if:false={skipSuggestedContacts}>
+            <template lwc:if={showSuggestedContacts}>
+                <c-pq-suggested-contacts
+                    record-id={mapId}
+                    contact-limit={contactLimit}
+                    setting-type={_settingType}
+                    object-api-name="pqcrush_Relationship_Map_c"
+                ></c-pq-suggested-contacts>
+            </template>
+        </template>
+        <c-relationship-map
+            if:true={mapId}
+            container-record-id={recordId}
+            object-api-name={objectApiName}
+            record-id={mapId}
+            ongrapherror={passthroughEvent}
+            onrequestobjectviewer={passthroughEvent}
+            onpqapplicationevent={passthroughEvent}
+            oncreatenewtask={passthroughEvent}
+        ></c-relationship-map>
+    </template>
+</template>

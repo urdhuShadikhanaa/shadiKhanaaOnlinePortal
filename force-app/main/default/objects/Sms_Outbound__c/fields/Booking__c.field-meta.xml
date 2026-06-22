@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Booking__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Related booking request, when applicable</description>
+    <externalId>false</externalId>
+    <label>Booking</label>
+    <referenceTo>Shadikhana_Booking__c</referenceTo>
+    <relationshipLabel>SMS Outbound</relationshipLabel>
+    <relationshipName>SMS_Outbound</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -1,0 +1,48 @@
+<template>
+
+    <template if:true={showViewer}>
+
+        <template if:true={isDocked}>
+            <div>
+                <!-- Content when docked -->
+                <slot></slot>
+            </div>
+        </template>
+
+        <template if:false={isDocked}>
+            <section
+                role="dialog"
+                tabindex="-1"
+                aria-labelledby="modal-heading-01"
+                aria-modal="true"
+                aria-describedby="modal-content-id-1"
+                class="slds-modal slds-modal_medium slds-fade-in-open"
+                onclick={handleDialogClose}
+            >
+                <div class="pq-omni-view-modal slds-modal__container" onclick={handleDialogClose}>
+                    <div class="pq-omni-view-modal-surround" id="modal-content-id-1">
+
+                        <div class="pq-omni-view-modal-header">
+                            <div></div>
+                            <template if:true={hasHeaderString}>
+                                <div class="pq-omni-view-modal-title">{header}</div>
+                            </template>
+                            <div class="pq-omni-view-modal-header-right">
+                                <lightning-icon class="pq-omni-view-modal-dock" icon-name='utility:dock_panel' onclick={dockViewer} alternative-text='Dock' size='x-small' title='Dock to Side Panel'></lightning-icon>
+                                <lightning-icon class="pq-omni-view-modal-close" icon-name='utility:close' onclick={handleDialogClose} alternative-text='Close' size='x-small' title='Close'></lightning-icon>
+                            </div>
+                        </div>
+
+                        <!-- Content when floating -->
+                        <slot></slot>
+
+                        <slot name="footer" onslotchange={handleSlotFooterChange}></slot>
+
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+    </template>
+</template>

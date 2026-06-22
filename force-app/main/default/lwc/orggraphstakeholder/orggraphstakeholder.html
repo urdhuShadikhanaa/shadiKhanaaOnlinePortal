@@ -1,0 +1,40 @@
+<template>
+    <template if:true={graphData}>
+        <c-pq-matrix-member-modal onsuccess={handleMatrixMemberSuccess}></c-pq-matrix-member-modal>
+
+        <c-relationship-map-controller
+            graph-data={graphData}
+            can-edit-graph={canEditGraph}
+            container-record-id={accountPlanId}
+            record-id={accountPlanId}
+            object-label={objectLabel}
+            chart-settings={chartSettings}
+            rm-org-settings={rmOrgSettings}
+            anchors={anchors}
+            relationship-types={relationshipTypes}
+            rm-or-keystakeholder="keystakeholder"
+            onrequestobjectviewer={handleObjectViewerRequested}
+            ongrapherror={graphError}
+            onaddnodestochart={addKeyStakeholder}
+            onaddparentcontactstochart={handleAddParentContactsToChart}
+            onremovegraphmember={handleDeleteKeyStakeholders}
+            ondeletemapmemberusers={handleDeleteMapMemberUsers}
+            onsettingsclicked={editSettings}
+            onupdategraph={handleUpdateGraph}
+            onperformsearch={handlePerformSearch}
+            onpqapplicationevent={passthroughEvent}
+            oncreatenewplaceholder={handleCreateNewPlaceholder}
+            onsettargetanchor={handleSetTargetAnchor}
+            onsavenodecoordinates={handleSaveAllNodeCoordinates}
+            onupdatenodecoordinates={handleUpdateNodeCoordinates}
+            oncreatenewgroup={handleCreateNewGroup}
+            onaddcontactstogroup={handleAddContactsToGroup}
+            onnewcustomlinks={handleNewCustomLinks}
+            onupdatehierarchylinks={handleUpdateHierarchyLinks}
+            oncreatenewtask={passthroughEvent}
+            onassociatebadge={handleAssociateBadge}
+            onremovebadge={handleRemoveBadge}
+            onremoveleadmembers={handleDeleteKeyStakeholderLeads}
+        ></c-relationship-map-controller>
+    </template>
+</template>

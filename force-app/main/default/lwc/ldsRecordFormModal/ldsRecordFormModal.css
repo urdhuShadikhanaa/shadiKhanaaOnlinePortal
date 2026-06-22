@@ -1,0 +1,14 @@
+.error-box {
+    height: 80px;
+    width: 100%;
+}
+
+.combobox-container {
+    padding-bottom: 200px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    gap: 10px; /* Gap between items */
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Nonveg__c</fullName>
+    <label>Nonveg</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Chicken BIryani</fullName>
+                <default>false</default>
+                <label>Chicken BIryani</label>
+            </value>
+            <value>
+                <fullName>Chicken Dum biryani</fullName>
+                <default>false</default>
+                <label>Chicken Dum biryani</label>
+            </value>
+            <value>
+                <fullName>Hyderabad special biryani</fullName>
+                <default>false</default>
+                <label>Hyderabad special biryani</label>
+            </value>
+            <value>
+                <fullName>Mutton Biryani</fullName>
+                <default>false</default>
+                <label>Mutton Biryani</label>
+            </value>
+            <value>
+                <fullName>Prawns Biryani</fullName>
+                <default>false</default>
+                <label>Prawns Biryani</label>
+            </value>
+            <value>
+                <fullName>Mutton fry</fullName>
+                <default>false</default>
+                <label>Mutton fry</label>
+            </value>
+            <value>
+                <fullName>Mutton Curry</fullName>
+                <default>false</default>
+                <label>Mutton Curry</label>
+            </value>
+            <value>
+                <fullName>Fish fry</fullName>
+                <default>false</default>
+                <label>Fish fry</label>
+            </value>
+            <value>
+                <fullName>Fish curry</fullName>
+                <default>false</default>
+                <label>Fish curry</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

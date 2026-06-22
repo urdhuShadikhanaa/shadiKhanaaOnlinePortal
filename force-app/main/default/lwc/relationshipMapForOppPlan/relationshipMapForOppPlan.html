@@ -1,0 +1,18 @@
+<template>
+    <div
+        if:true={errorMessage}
+        class="slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+    >
+        {errorMessage}
+    </div>
+    <lightning-spinner if:true={isLoading} alternative-text="Loading"></lightning-spinner>
+    <c-relationship-map
+        if:true={mapId}
+        record-id={mapId}
+        container-record-id={recordId}
+        ongrapherror={passthroughEvent}
+        onrequestobjectviewer={passthroughEvent}
+        onpqapplicationevent={passthroughEvent}
+        oncreatenewtask={passthroughEvent}
+    ></c-relationship-map>
+</template>

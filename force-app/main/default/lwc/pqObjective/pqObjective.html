@@ -1,0 +1,162 @@
+<template>
+    <div class="component-container">
+        <div class="slds-hide" data-name="transparent-layer" onclick={transparencylLayerClicked}>
+            <div class="refresh-text-layer">{labels.Click_Anywhere_To_Refresh}</div>
+        </div>
+        <c-pq-card-lwc title={labels.Objectives}>
+            <lightning-spinner if:true={loadingTasks} alternative-text="Loading" size="small"></lightning-spinner>
+            <c-create-task-navigation></c-create-task-navigation>
+            <lightning-button-menu
+                if:false={hideSortButtons}
+                alternative-text="Change Task Sort Order"
+                class="slds-button"
+                slot="actions"
+                label={taskSortFieldButtonLabel}
+                onselect={handleChangeTaskSortField}
+            >
+                <template for:each={taskSortFieldValues} for:item="taskSortFieldValue">
+                    <lightning-menu-item
+                        label={taskSortFieldValue.label}
+                        value={taskSortFieldValue.value}
+                        key={taskSortFieldValue}
+                    ></lightning-menu-item>
+                </template>
+            </lightning-button-menu>
+            <lightning-button-icon
+                if:false={hideSortButtons}
+                class="slds-button"
+                slot="actions"
+                icon-name={sortIconName}
+                variant="border-filled"
+                alternative-text="Sort Order"
+                title="Sort Order"
+                onclick={handleChangeTaskSortDirection}
+            >
+            </lightning-button-icon>
+            <lightning-button
+                if:true={showCreateObjectivesButton}
+                label={labels.New_Objective}
+                class="slds-button"
+                slot="actions"
+                onclick={handleNewObjectiveClick}
+            ></lightning-button>
+            <div class="slds-p-around_none slds-m-top_x-small slds-m-bottom_medium slds-m-horizontal_none">
+                <p if:false={hasObjectives} class="empty-text">{labels.No_Objectives}</p>
+                <template for:each={objectives} for:item="objective">
+                    <div key={objective.objective.Id} class="slds-grid objective-container" style={objective.style}>
+                        <div class="slds-col slds-size_4-of-12 objective-name-col">
+                            <div class="objective-title-container">
+                                <lightning-button-icon
+                                    if:true={objective.deleteable}
+                                    class="icons slds-float_right"
+                                    variant="bare"
+                                    data-id={objective.objective.Id}
+                                    data-name={objective.objective.Name}
+                                    onclick={handleRemoveObjective}
+                                    icon-name="utility:delete"
+                                    alternative-text={labels.Delete}
+                                    title={labels.Delete}
+                                ></lightning-button-icon>
+                                <lightning-button-icon
+                                    if:true={objective.updateable}
+                                    class="icons slds-float_right slds-p-right_xx-small"
+                                    variant="bare"
+                                    data-id={objective.objective.Id}
+                                    data-name={objective.objective.Name}
+                                    onclick={handleObjectiveClicked}
+                                    icon-name="utility:edit"
+                                    alternative-text={labels.Edit}
+                                    title={labels.Edit}
+                                ></lightning-button-icon>
+                                <p class="objective-name-container">
+                                    <span
+                                        class="name-title-objective"
+                                        data-id={objective.objective.Id}
+                                        onclick={handleObjectiveNameClick}
+                                    >
+                                        {objective.objective.Name}
+                                    </span>
+                                    <span if:true={showAccountPlanName} class="account-plan-title">
+                                        &nbsp;{objective.accountPlanName}
+                                    </span>
+                                </p>
+                                <p class="stage-value-objective">{objective.objective.pqcrush__Stage__c}</p>
+                            </div>
+                            <lightning-formatted-rich-text
+                                value={objective.objective.pqcrush__Description__c}
+                            ></lightning-formatted-rich-text>
+                        </div>
+                        <div class="slds-col slds-size_1-of-12 objective-percent-col slds-align_absolute-center">
+                            {objective.completePercentage}
+                        </div>
+                        <div class="slds-col slds-size_7-of-12 objective-task-col">
+                            <template for:each={objective.tasks} for:item="task">
+                                <div key={task.id} class="slds-grid task-container" data-id={task.id}>
+                                    <div class="slds-col slds-size_6-of-12">
+                                        <p class="name-title">{task.subject}</p>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-12">{task.assignedTo}</div>
+                                    <div class="slds-col slds-size_2-of-12">
+                                        <lightning-formatted-date-time
+                                            value={task.dueDate}
+                                        ></lightning-formatted-date-time>
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-12">
+                                        <div class="slds-grid">
+                                            <div class="slds-col">{task.status}</div>
+                                            <div class="slds-col task-icons slds-float_right">
+                                                <lightning-button-icon
+                                                    class="icons"
+                                                    variant="bare"
+                                                    data-id={task.id}
+                                                    onclick={handleTaskClicked}
+                                                    icon-name="utility:edit"
+                                                    alternative-text={labels.Edit}
+                                                    title={labels.Edit}
+                                                ></lightning-button-icon>
+                                                <lightning-button-icon
+                                                    class="icons task-delete-icon"
+                                                    variant="bare"
+                                                    data-task={task.id}
+                                                    data-objective={objective.objective.Id}
+                                                    data-subject={task.subject}
+                                                    onclick={handleRemoveTask}
+                                                    icon-name="utility:delete"
+                                                    alternative-text={labels.Delete}
+                                                    title={labels.Delete}
+                                                ></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                            <div
+                                if:true={showCreateTasksButton}
+                                class="slds-grid slds-grid_align-center slds-p-top_xx-small"
+                            >
+                                <div class="slds-col">
+                                    <lightning-button-icon
+                                        class="add-task-icon"
+                                        variant="border-filled"
+                                        data-id={objective.objective.Id}
+                                        onclick={handleNewTaskClick}
+                                        icon-name="utility:add"
+                                        alternative-text={labels.New_Task}
+                                        title={labels.New_Task}
+                                        disabled={loadingTasks}
+                                    ></lightning-button-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </c-pq-card-lwc>
+        <c-create-record-modal onsuccess={handleObjectCreated}></c-create-record-modal>
+        <c-event-navigation></c-event-navigation>
+        <c-modal-for-confirmation
+            onmainactionclicked={handleDeleteClicked}
+            onalternativeactionclicked={handleAlternativeTaskClicked}
+        ></c-modal-for-confirmation>
+    </div>
+</template>

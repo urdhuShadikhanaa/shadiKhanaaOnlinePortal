@@ -1,0 +1,12 @@
+<template>
+    <div class="slds-text-align_center slds-var-p-around_medium">
+        <img class="pq-image" src={imageUrl} alt="placeholder" />
+        <div class="slds-text-longform">
+            <h3 class="slds-text-heading_large">{title}</h3>
+            <p class="slds-text-body_regular">{body}</p>
+        </div>
+        <template if:true={detail}>
+            <p class="slds-text-body_regular">Details: {detail}</p>
+        </template>
+    </div>
+</template>

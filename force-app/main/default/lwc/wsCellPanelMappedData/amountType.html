@@ -1,0 +1,48 @@
+<template>
+    <div class="field-container slds-p-vertical_medium">
+        <div class="display-element">
+            <c-ws-table-display-field-summary-header
+                display-field={field}
+                can-create-object={canCreate}
+                show-count
+                show-total
+                alternative-text={phrase}
+                onaddnewentry={createRecord}
+                has-multiple-records={hasMultipleRelations}
+                row-options={rowOptions}
+                column-options={columnOptions}
+            ></c-ws-table-display-field-summary-header>
+        </div>
+
+        <template for:each={field.data} for:item="valueObj">
+            <div
+                class="display-subelement"
+                key={valueObj.objectId}
+                data-objectid={valueObj.objectId}
+                data-displayname={valueObj.displayName}
+                onclick={handleEditRecordClick}
+            >
+                <div class="entry-block" title={labels.clickToEdit}>
+                    <div class="amount-type-value-text">
+                        <p class="slds-text-title display-name">{valueObj.displayName}</p>
+                        <p class="slds-text-title display-value">
+                            <c-pq-generic-output-field
+                                display-type={field.type}
+                                field-value={valueObj.value}
+                            ></c-pq-generic-output-field>
+                        </p>
+                    </div>
+                    <div if:true={valueObj.secondaryObjectId} class="amount-type-value-icon">
+                        <lightning-icon
+                            class="slds-icon_container pointer"
+                            icon-name="standard:opportunity"
+                            title={labels.clickToEdit}
+                            data-objectid={valueObj.secondaryObjectId}
+                            onclick={handleEditRecordClick}
+                        ></lightning-icon>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

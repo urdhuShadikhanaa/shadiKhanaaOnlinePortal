@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Admin_Mobile_Number__c</fullName>
+    <description>Admin mobile number(s) for SMS alerts on new booking requests. Use comma-separated values for multiple numbers (e.g. 6364054881, 9849939703). Each number receives a separate SMS.</description>
+    <externalId>false</externalId>
+    <label>Admin Mobile Number</label>
+    <length>40</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

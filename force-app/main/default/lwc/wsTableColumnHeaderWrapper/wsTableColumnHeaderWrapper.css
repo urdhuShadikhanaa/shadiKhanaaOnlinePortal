@@ -1,0 +1,44 @@
+/* ------------------------------------------------ */
+
+:host {
+    display: contents;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ------------------------------------------------ */
+
+table.ws-table {
+    border-spacing: 0px;
+}
+
+table.ws-table th {
+    padding: 5px;
+    border: 0px solid black;
+}
+
+table.ws-table td {
+    padding: 5px;
+    border: 0px solid black;
+}
+
+/* ------------------------------------------------ */
+
+th.ws-col-header-layer {
+    background-color: #fff;
+    position: sticky;
+    position: -webkit-sticky;
+    z-index: 10;
+}
+
+th.ws-col-header-layer.group {
+    top: 0px;
+}
+
+th.ws-col-header-layer.parent {
+    top: 0px;
+}
+
+/* ------------------------------------------------ */

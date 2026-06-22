@@ -1,0 +1,24 @@
+<template>
+    <div
+        if:true={hasChildren}
+        class={currentStyle}
+        data-col-index={colIndex}
+        onclick={handleParentHeaderClick}
+        onmouseover={handleMouseOver}
+        onmouseout={handleMouseOut}
+        title={headerObject.name}
+        style={labelStyle}
+    >
+        {headerObject.name}
+    </div>
+
+    <div
+        if:false={hasChildren}
+        class={currentStyle}
+        data-col-index={colIndex}
+        title={headerObject.name}
+        style={labelStyle}
+    >
+        {headerObject.name}
+    </div>
+</template>

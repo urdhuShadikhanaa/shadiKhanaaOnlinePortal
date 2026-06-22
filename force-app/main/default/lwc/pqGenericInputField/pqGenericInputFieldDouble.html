@@ -1,0 +1,19 @@
+<template>
+    <!-- DOUBLE -->
+    <lightning-input
+        data-id="inputAmountArea"
+        type="number"
+        label={displayName}
+        value={value}
+        formatter="decimal"
+        step=".000001"
+        max="1000000000000"
+        message-when-range-overflow={labels.AmountExceededOneTrillion}
+        onfocus={onAmountFocus}
+        onblur={cleanupAmount}
+        class="slds-truncate slds-p-bottom_xx-small"
+        title={title}
+        onwheel={preventValueChange}
+        onchange={onValueChange}
+    ></lightning-input>
+</template>

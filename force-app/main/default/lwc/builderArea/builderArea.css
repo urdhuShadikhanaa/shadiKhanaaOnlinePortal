@@ -1,0 +1,36 @@
+.preview-container {
+    height: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+.preview-container.column {
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.preview-container.row {
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.preview-container.cell {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.progress-ring-container {
+    position: absolute;
+    top: 10px;
+}
+
+.cell-container {
+    padding: 4px;
+    width: 100%;
+    font-style: italic;
+}
+
+.preview-tile {
+    padding: 10px;
+    border: 1px solid rgb(221, 219, 218);
+    border-radius: 6px;
+}

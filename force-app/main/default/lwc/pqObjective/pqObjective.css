@@ -1,0 +1,150 @@
+.component-container {
+    position: relative;
+}
+
+.objective-box {
+    background-color: gray;
+}
+
+.task-box {
+    background-color: lightgray;
+}
+
+.new-task-box {
+    display: inline-block;
+}
+
+.objective-container {
+    margin: 4px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.objective-name-col {
+    background-color: lightblue;
+    padding: 8px;
+}
+
+.objective-title-container {
+    display: inline;
+}
+
+.icons {
+    visibility: hidden;
+    cursor: pointer;
+}
+
+.objective-title-container:hover .icons {
+    cursor: pointer;
+    visibility: visible;
+}
+
+.objective-name-col:hover {
+    background-color: rgb(196, 224, 235);
+}
+
+.account-plan-title {
+    font-weight: normal;
+    color: #666666;
+}
+
+.objective-name-container {
+    font-weight: 900;
+}
+
+.name-title-objective:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.name-title:hover {
+    text-decoration: underline;
+    color: blue;
+}
+.stage-value-objective {
+    font-weight: 500;
+    color: #676767;
+}
+
+.objective-percent-col {
+    padding: 8px;
+    font-size: 2vw;
+    font-weight: bold;
+}
+
+.task-container:hover {
+    background-color: rgb(233, 233, 233);
+    border-radius: 10px;
+}
+
+.add-task-icon {
+    visibility: hidden;
+}
+
+.objective-task-col {
+    background-color: lightgray;
+    padding: 8px;
+}
+
+.objective-task-col:hover .add-task-icon {
+    visibility: visible;
+}
+
+.task-icons {
+    display: inline;
+}
+
+.task-delete-icon {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.task-container .icons {
+    visibility: hidden;
+}
+
+.task-container:hover .icons {
+    visibility: visible;
+    cursor: pointer;
+}
+
+@keyframes highlight {
+    0% {
+        background: #ffff00;
+    }
+    100% {
+        background: none;
+    }
+}
+
+.highlight {
+    animation: highlight 1s;
+}
+
+.transparent-layer {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(8, 32, 80, 0.85);
+    z-index: 9000;
+    border-radius: 6px;
+    backdrop-filter: blur(3px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.transparent-layer:hover {
+    cursor: pointer;
+}
+
+.refresh-text-layer {
+    font-size: 1.8em;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.empty-text {
+    padding: 10px;
+}

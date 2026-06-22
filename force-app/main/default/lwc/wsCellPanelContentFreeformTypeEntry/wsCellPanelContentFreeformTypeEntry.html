@@ -1,0 +1,30 @@
+<template>
+    <div if:true={amount} class="amount-type-container slds-p-vertical_medium">
+        <div class="display-element">
+            <c-ws-table-display-field-summary-header display-field={amount}></c-ws-table-display-field-summary-header>
+        </div>
+
+        <template if:true={allowEdit}>
+            <template for:each={amount.data} for:item="valueObj">
+                <div class="display-subelement" key={valueObj.displayName}>
+                    <c-ws-cell-panel-content-freeform-input-field
+                        display-field={amount}
+                        value-object={valueObj}
+                        onvaluesaved={handleValueSaved}
+                    ></c-ws-cell-panel-content-freeform-input-field>
+                </div>
+            </template>
+        </template>
+
+        <template if:false={allowEdit}>
+            <template for:each={amount.data} for:item="valueObj">
+                <div class="display-subelement" key={valueObj.displayName}>
+                    <c-pq-generic-output-field
+                        display-type={amount.type}
+                        field-value={valueObj.value}
+                    ></c-pq-generic-output-field>
+                </div>
+            </template>
+        </template>
+    </div>
+</template>

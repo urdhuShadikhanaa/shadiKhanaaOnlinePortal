@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin portal mock</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Segoe UI", Roboto, sans-serif; background: #eef7f1; color: #1f2937; }
+    .layout { display: grid; grid-template-columns: 220px 1fr; min-height: 900px; }
+    .sidebar { background: #0f5132; color: #fff; padding: 20px 12px; }
+    .sidebar h2 { font-size: 13px; opacity: .8; margin: 0 0 12px 12px; letter-spacing: .08em; }
+    .nav-item {
+      display: block; width: 100%; text-align: left; border: none; background: transparent;
+      color: #fff; padding: 10px 12px; border-radius: 8px; margin-bottom: 4px; font-size: 14px;
+    }
+    .nav-item.active, .nav-sub.active { background: rgba(255,255,255,.16); font-weight: 600; }
+    .nav-sub { margin-left: 12px; font-size: 13px; }
+    main { padding: 24px 28px; }
+    .header { background: #fff; border: 1px solid #d8e8de; border-radius: 12px; padding: 16px 20px; margin-bottom: 18px; }
+    .header h1 { margin: 0; color: #0f5132; font-size: 22px; }
+    .header p { margin: 6px 0 0; color: #475467; }
+    .block { background: #fff; border: 1px solid #d8e8de; border-radius: 12px; padding: 18px; margin-bottom: 16px; }
+    .block h3 { margin: 0 0 6px; color: #0f5132; }
+    .block p { margin: 0 0 14px; color: #475467; font-size: 14px; }
+    .admin-card {
+      border: 1px solid #cfe3d6; border-radius: 12px; padding: 16px; margin-top: 12px; background: #fafdfb;
+    }
+    .admin-card.highlighted { border-color: #146c43; box-shadow: 0 0 0 3px rgba(20,108,67,.18); }
+    .badge { display: inline-block; background: #fff3cd; color: #856404; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px 18px; font-size: 14px; }
+    .label { color: #667085; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+    .actions { margin-top: 14px; display: flex; gap: 12px; align-items: end; flex-wrap: wrap; }
+    .field { min-width: 160px; }
+    .field input, .field select {
+      width: 100%; margin-top: 6px; padding: 10px; border: 1px solid #d0d5dd; border-radius: 8px; background: #fff;
+    }
+    .btn { background: #146c43; color: #fff; border: none; border-radius: 8px; padding: 10px 16px; font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { border-bottom: 1px solid #e4e7ec; padding: 10px 8px; text-align: left; }
+    th { color: #475467; font-size: 12px; text-transform: uppercase; }
+    .summary { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 16px; }
+    .summary-card { background: #f3faf6; border: 1px solid #cfe3d6; border-radius: 10px; padding: 12px; }
+    .summary-card strong { display: block; font-size: 22px; color: #0f5132; margin-top: 4px; }
+    .textarea { width: 100%; min-height: 90px; border: 1px solid #d0d5dd; border-radius: 8px; padding: 10px; }
+    .open-select { border: 2px solid #146c43; }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>NAVIGATION</h2>
+      <button class="nav-item">Home</button>
+      <button class="nav-item active">Administration</button>
+      <button class="nav-sub active" id="subnav">Booking Queue</button>
+    </aside>
+    <main id="content"></main>
+  </div>
+  <script>
+    const contact = {
+      name: 'Patan Shabbir Ali Khan',
+      phone: '+91 9966634403',
+      email: 'shabbirali.sfdc@gmail.com',
+      booking: 'SB-0009',
+      date: '20/08/2026'
+    };
+    const screen = new URLSearchParams(location.search).get('screen') || 'queue';
+    const subnav = document.getElementById('subnav');
+    const content = document.getElementById('content');
+
+    const titles = {
+      queue: ['Booking Queue', 'Pending requests are priority 1. Confirmed bookings are priority 2.'],
+      confirm: ['Booking Queue', 'Review pending request and update status to Confirmed.'],
+      deeplink: ['Booking Queue', 'Deep-linked booking highlighted from SMS/email review link.'],
+      reports: ['Booking Report', 'Monthly summary and booking list for administration.'],
+      pricing: ['Pricing', 'Set daily rates and manage custom date pricing.'],
+      branding: ['Site Branding', 'Banner text, gallery images, and venue presentation.'],
+      sms: ['SMS Notifications', 'Admin mobile number and Android gateway routing.'],
+      email: ['Email Notifications', 'Admin and requester email delivery settings.'],
+      login: ['Portal Login Notes', 'Administrator login hints shown on the portal login page.'],
+      data: ['Booking Data', 'Searchable table of all booking records.']
+    };
+    const labels = {
+      queue: 'Booking Queue', confirm: 'Booking Queue', deeplink: 'Booking Queue',
+      reports: 'Booking Report', pricing: 'Pricing', branding: 'Site Branding',
+      sms: 'SMS Notifications', email: 'Email Notifications', login: 'Portal Login Notes', data: 'Booking Data'
+    };
+    subnav.textContent = labels[screen] || 'Booking Queue';
+
+    const [title, desc] = titles[screen] || titles.queue;
+    let body = '';
+
+    if (screen === 'queue' || screen === 'confirm' || screen === 'deeplink') {
+      const highlight = screen === 'deeplink' ? ' highlighted' : '';
+      const selectClass = screen === 'confirm' ? ' open-select' : '';
+      body = `
+        <div class="block">
+          <h3>Pending — Priority 1</h3>
+          <p>Review and confirm these requests first.</p>
+          <article class="admin-card${highlight}">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <strong>${contact.booking} · Birthday Party</strong>
+              <span class="badge">Pending</span>
+            </div>
+            <div class="grid">
+              <div><div class="label">Contact</div>${contact.name}</div>
+              <div><div class="label">Phone</div>${contact.phone}</div>
+              <div><div class="label">Email</div>${contact.email}</div>
+              <div><div class="label">Dates</div>${contact.date}</div>
+              <div><div class="label">Guests</div>100</div>
+              <div><div class="label">Estimated</div>₹8,000</div>
+            </div>
+            <div class="actions">
+              <div class="field"><div class="label">Final Amount (INR)</div><input value="8000" /></div>
+              <div class="field"><div class="label">Status</div>
+                <select class="${selectClass}">
+                  <option>Pending</option>
+                  <option ${screen==='confirm'?'selected':''}>Confirmed</option>
+                  <option>Cancelled</option>
+                </select>
+              </div>
+            </div>
+          </article>
+        </div>`;
+    } else if (screen === 'reports') {
+      body = `
+        <div class="summary">
+          <div class="summary-card"><span class="label">Total</span><strong>9</strong></div>
+          <div class="summary-card"><span class="label">Confirmed</span><strong>5</strong></div>
+          <div class="summary-card"><span class="label">Pending</span><strong>1</strong></div>
+          <div class="summary-card"><span class="label">Cancelled</span><strong>3</strong></div>
+        </div>
+        <div class="block"><h3>July 2026 bookings</h3><table>
+          <thead><tr><th>Ref</th><th>Contact</th><th>Phone</th><th>Date</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>${contact.booking}</td><td>${contact.name}</td><td>${contact.phone}</td><td>${contact.date}</td><td>Pending</td></tr>
+            <tr><td>SB-0007</td><td>${contact.name}</td><td>${contact.phone}</td><td>26/06/2026</td><td>Confirmed</td></tr>
+          </tbody>
+        </table></div>`;
+    } else if (screen === 'pricing') {
+      body = `<div class="block"><h3>Default daily rate</h3><p>Set one standard daily rate for open dates.</p>
+        <div class="field" style="max-width:240px"><div class="label">Rate per day (INR)</div><input value="8000" /></div>
+        <button class="btn" style="margin-top:14px">Save pricing</button></div>`;
+    } else if (screen === 'branding') {
+      body = `<div class="block"><h3>Special offer banner</h3><textarea class="textarea">Prices drop this June! Book Urdu Shadikhana now.</textarea>
+        <button class="btn" style="margin-top:14px">Save branding</button></div>`;
+    } else if (screen === 'sms') {
+      body = `<div class="block"><h3>SMS routing</h3><p>Android gateway polls Sms_Outbound__c and sends from admin phone.</p>
+        <div class="grid"><div><div class="label">Admin mobile</div>+91 9849939703</div>
+        <div><div class="label">Gateway mode</div>Android device</div></div></div>`;
+    } else if (screen === 'email') {
+      body = `<div class="block"><h3>Email notifications</h3>
+        <div class="grid"><div><div class="label">Admin email</div>shabbirali.sfdc@gmail.com</div>
+        <div><div class="label">Requester email</div>Enabled on submit/confirm/cancel</div></div></div>`;
+    } else if (screen === 'login') {
+      body = `<div class="block"><h3>Portal login notes</h3>
+        <textarea class="textarea">Use the administrator username and your Salesforce org password to sign in and open the Administration section.</textarea>
+        <div class="field" style="margin-top:12px"><div class="label">Username hint</div><input value="urdhushadikhanaa.29ee74d264c9@agentforce.com" /></div>
+      </div>`;
+    } else if (screen === 'data') {
+      body = `<div class="block"><h3>All bookings</h3><table>
+        <thead><tr><th>Ref</th><th>Name</th><th>Phone</th><th>Email</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>${contact.booking}</td><td>${contact.name}</td><td>${contact.phone}</td><td>${contact.email}</td><td>Pending</td></tr>
+          <tr><td>SB-0007</td><td>${contact.name}</td><td>${contact.phone}</td><td>${contact.email}</td><td>Confirmed</td></tr>
+        </tbody></table></div>`;
+    }
+
+    content.innerHTML = `<div class="header"><h1>${title}</h1><p>${desc}</p></div>${body}`;
+  </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+.title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.pq-omni-viewer-pageset {
+    display: grid;
+    grid-template-columns: 55px 1fr;
+}
+
+.pq-omni-viewer-tabstrip {
+    grid-column-start: 1;
+    width: 60px;
+}
+
+.pq-omni-viewer-tabset {
+    margin-bottom: 25px;
+}
+
+.pq-omni-viewer-page {
+    grid-column-start: 2;
+    min-height: 200px;
+    padding: 40px;
+    border-radius: 0px 10px 10px 10px;
+    background-color: #fff;
+}
+
+.pq-omni-viewer-tab {
+    width: 65px;
+    height: 50px;
+    border-radius: 10px 0px 0px 10px;
+    padding: 10px;
+    text-align: center;
+    margin: 0px 5px 7px 5px;
+    cursor: pointer;
+}
+
+.pq-omni-viewer-tab.active {
+    background-color: #fff;
+    cursor: default;
+}
+
+.pq-omni-viewer-tab.inactive {
+    background-color: #c0c0c0;
+}
+
+.pq-omni-viewer-icon {
+    margin-left: -12px;
+    margin-top: 4px;
+}
+
+.pq-omni-viewer-icon-active {
+    color: #97d700;
+}
+
+.pq-omni-viewer-icon-inactive {
+    color: white;
+}

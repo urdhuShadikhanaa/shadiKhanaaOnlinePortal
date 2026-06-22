@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Role_Of_The_Employee__c</fullName>
+    <label>Role Of The Employee</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Kitchen Manager</fullName>
+                <default>false</default>
+                <label>Kitchen Manager</label>
+            </value>
+            <value>
+                <fullName>Cook</fullName>
+                <default>false</default>
+                <label>Cook</label>
+            </value>
+            <value>
+                <fullName>Assistant Cook</fullName>
+                <default>false</default>
+                <label>Assistant Cook</label>
+            </value>
+            <value>
+                <fullName>Dish Washer</fullName>
+                <default>false</default>
+                <label>Dish Washer</label>
+            </value>
+            <value>
+                <fullName>Server</fullName>
+                <default>false</default>
+                <label>Server</label>
+            </value>
+            <value>
+                <fullName>Waiter</fullName>
+                <default>false</default>
+                <label>Waiter</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

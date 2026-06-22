@@ -1,0 +1,92 @@
+/* ------------------------------------------------ */
+/* wsTableRowHeader */
+
+div.ws-row-header-rotate {
+    position: absolute;
+    width: 56px;
+    height: calc(100% - 8px);
+}
+
+div.ws-row-header-rotate.child {
+    line-height: 35px;
+    margin-left: -42px;
+    margin-top: -17px;
+}
+
+.ws-row-header {
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: bold;
+    text-align: center;
+    user-select: none;
+    height: 100%;
+    margin: 4px 0px;
+    border-radius: 20px 4px 4px 20px;
+}
+
+.ws-row-header-block {
+    font-size: 0.9em;
+    line-height: 50px;
+    background-color: rgb(220, 220, 220);
+    height: 100%;
+}
+
+.ws-row-header-block-highlight {
+    font-size: 0.9em;
+    line-height: 50px;
+    background-color: rgb(64, 140, 255);
+    color: #fff;
+}
+
+.ws-row-header-block-parent {
+    font-size: 0.9em;
+    line-height: 45px;
+    cursor: pointer;
+    background-color: rgb(220, 220, 220);
+    border-bottom: 4px solid rgb(64, 140, 255);
+}
+
+.ws-row-header-block-parent-highlight {
+    font-size: 0.9em;
+    line-height: 45px;
+    cursor: pointer;
+    border-bottom: 4px solid rgb(255, 210, 9);
+    background-color: rgb(64, 140, 255);
+    color: #fff;
+}
+
+.ws-row-header-block-child {
+    background-color: rgb(220, 220, 220);
+    font-size: 0.8em;
+    line-height: 3.5em;
+    transform: translate(-8px, 6px);
+}
+
+.ws-row-header-block-child-highlight {
+    font-size: 0.8em;
+    line-height: 3.5em;
+    transform: translate(-8px, 6px);
+    background-color: rgb(255, 210, 9);
+    color: #000;
+}
+
+.ws-row-header-label {
+    position: absolute;
+    padding: 0 10px;
+    top: 50%;
+    left: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+    -webkit-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+    -moz-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+    -o-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+    -ms-transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+}
+
+.hidden {
+    display: none;
+}
+
+/* ------------------------------------------------ */

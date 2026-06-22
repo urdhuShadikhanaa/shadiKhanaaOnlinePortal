@@ -1,0 +1,118 @@
+<template>
+    <div>
+        <template if:false={targetObjectOptions.length}>
+            <div class="slds-grid slds-form-element__help slds-m-bottom_small">
+                <lightning-icon
+                    icon-name="utility:warning"
+                    alternative-text={labels.warning}
+                    variant="warning"
+                    size="x-small"
+                    class="slds-m-right_x-small slds-col slds-no-flex"
+                ></lightning-icon>
+                <div class="slds-col slds-align-middle">{labels.cellWarning}</div>
+            </div>
+        </template>
+
+        <c-pq-expandable-section label="Amount Types" body-class="slds-p-around_small">
+            <lightning-button-menu
+                if:false={readOnly}
+                variant="border"
+                alternative-text={labels.addAmountType}
+                onselect={handleAddAmountTypeField}
+                label={labels.addAmountType}
+                disabled={addAmountTypesDisabled}
+            >
+                <template for:each={amountTypes} for:item="amountType">
+                    <lightning-menu-item
+                        label={amountType.Name}
+                        value={amountType.Id}
+                        key={amountType.Id}
+                    ></lightning-menu-item>
+                </template>
+            </lightning-button-menu>
+
+            <template if:true={amountTypeFields.length}>
+                <ol class="slds-list_vertical slds-list_vertical-space slds-m-top_x-small">
+                    <template for:each={amountTypeFields} for:item="config">
+                        <li key={config.displayFieldId} class="slds-item slds-hint-parent">
+                            <lightning-card title={config.name}>
+                                <lightning-button-icon
+                                    if:false={readOnly}
+                                    onclick={handleRemoveAmountTypeField}
+                                    icon-name="utility:delete"
+                                    variant="bare"
+                                    size="medium"
+                                    value={config.displayFieldId}
+                                    slot="actions"
+                                ></lightning-button-icon>
+                                <div class="slds-p-horizontal_medium">
+                                    <c-configuration-form
+                                        data-id={config.displayFieldId}
+                                        read-only={readOnly}
+                                        custom-key={config.displayFieldId}
+                                        has-product-relationship={config.hasProductRelationship}
+                                        target-object={config.mapping.targetObject}
+                                        target-object-options={targetObjectOptions}
+                                        target-label-field={config.mapping.targetLabelField}
+                                        target-value-field={config.mapping.targetValueField}
+                                        condition-operator={config.mapping.conditionOperator}
+                                        message-for-dependency-warning={config.targetObjectWarningMessage}
+                                        include-value-field
+                                        onformchange={handleAmountTypeFieldChange}
+                                        conditions={config.mapping.conditions}
+                                    >
+                                    </c-configuration-form>
+                                </div>
+                            </lightning-card>
+                        </li>
+                    </template>
+                </ol>
+            </template>
+        </c-pq-expandable-section>
+
+        <c-pq-expandable-section label="Other Data" body-class="slds-p-around_small">
+            <lightning-button
+                if:false={readOnly}
+                variant="border"
+                onclick={handleAddBasicField}
+                label="Add Custom Data"
+                disabled={addBasicFieldsDisabled}
+            ></lightning-button>
+
+            <template if:true={basicFields.length}>
+                <ol class="slds-list_vertical slds-list_vertical-space slds-m-top_x-small">
+                    <template for:each={basicFields} for:item="config">
+                        <li key={config.id} class="slds-item slds-hint-parent">
+                            <lightning-card title={config.name}>
+                                <lightning-button-icon
+                                    if:false={readOnly}
+                                    onclick={handleRemoveBasicField}
+                                    icon-name="utility:delete"
+                                    variant="bare"
+                                    size="medium"
+                                    value={config.id}
+                                    slot="actions"
+                                ></lightning-button-icon>
+                                <div class="slds-p-horizontal_medium">
+                                    <c-configuration-form
+                                        data-id={config.id}
+                                        read-only={readOnly}
+                                        custom-key={config.id}
+                                        target-object={config.mapping.targetObject}
+                                        target-object-options={targetObjectOptions}
+                                        target-label-field={config.mapping.targetLabelField}
+                                        condition-operator={config.mapping.conditionOperator}
+                                        message-for-dependency-warning={config.targetObjectWarningMessage}
+                                        conditions={config.mapping.conditions}
+                                        onformchange={handleBasicFieldChange}
+                                    >
+                                    </c-configuration-form>
+                                </div>
+                            </lightning-card>
+                        </li>
+                    </template>
+                </ol>
+            </template>
+        </c-pq-expandable-section>
+    </div>
+</template>

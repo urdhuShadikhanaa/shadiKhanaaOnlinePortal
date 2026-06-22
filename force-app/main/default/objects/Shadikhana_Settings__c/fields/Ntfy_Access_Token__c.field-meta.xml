@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ntfy_Access_Token__c</fullName>
+    <description>Optional ntfy access token for private/protected topics</description>
+    <externalId>false</externalId>
+    <label>ntfy Access Token</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

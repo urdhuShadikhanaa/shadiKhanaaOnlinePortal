@@ -1,0 +1,288 @@
+<template>
+    <div class="page-section page-main">
+        <div class="slds-grid pro-grid slds-var-p-around_medium">
+            <div class="slds-col">
+                <lightning-spinner if:true={loading}></lightning-spinner>
+                <template if:true={loaded}>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text
+                            value={labels.All_Add_Task_From_Objective_Component}
+                        ></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="toggle"
+                            variant="label-hidden"
+                            checked={allowAddTask}
+                            message-toggle-active={labels.Enabled}
+                            message-toggle-inactive={labels.Disabled}
+                            onchange={handleAllowAddTaskToggled}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text
+                            value={labels.Enable_Objective_Stage_Based_On_Tasks}
+                        ></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="toggle"
+                            variant="label-hidden"
+                            checked={allowTasksBasedObjStage}
+                            message-toggle-active={labels.Enabled}
+                            message-toggle-inactive={labels.Disabled}
+                            onchange={handleAllowTasksBasedObjStageToggled}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text
+                            value={labels.Use_System_Modal_Task_From_Objective_Component}
+                        ></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="toggle"
+                            variant="label-hidden"
+                            checked={useSFTaskModal}
+                            message-toggle-active={labels.Enabled}
+                            message-toggle-inactive={labels.Disabled}
+                            onchange={handleUseSFTaskModalToggled}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Use_Default_AP_Scoring}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="toggle"
+                            variant="label-hidden"
+                            checked={useDefaultAPScoring}
+                            message-toggle-active={labels.Enabled}
+                            message-toggle-inactive={labels.Disabled}
+                            onchange={handleDefaultScoringToggled}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Use_Percentage_AP_Scoring}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="toggle"
+                            variant="label-hidden"
+                            checked={usePercentageAPScoring}
+                            message-toggle-active={labels.Enabled}
+                            message-toggle-inactive={labels.Disabled}
+                            onchange={handlePercentageScoringToggled}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text
+                            value={labels.Disable_Objective_Component_Sort_Button}
+                        ></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="toggle"
+                            variant="label-hidden"
+                            checked={disableSortButton}
+                            message-toggle-active={labels.Enabled}
+                            message-toggle-inactive={labels.Disabled}
+                            onchange={handleDisableSortToggled}
+                        ></lightning-input>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div class="slds-grid pro-grid slds-var-p-around_medium objective-container">
+            <div class="slds-col">
+                <lightning-spinner if:true={loading}></lightning-spinner>
+                <template if:true={loaded}>
+                    <div class="slds-text-heading_small slds-p-bottom_small">{labels.Score_Title}</div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Low_Color}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="color"
+                            name="lowColor"
+                            value={scoreSettings.lowColor}
+                            variant="label-hidden"
+                            onchange={handleScoreSettingsChanged}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Mid_Color}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="color"
+                            name="midColor"
+                            value={scoreSettings.midColor}
+                            variant="label-hidden"
+                            onchange={handleScoreSettingsChanged}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.High_Color}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="color"
+                            name="highColor"
+                            value={scoreSettings.highColor}
+                            variant="label-hidden"
+                            onchange={handleScoreSettingsChanged}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Low_Mid_Bound}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="number"
+                            name="lowMidBoundary"
+                            value={scoreSettings.lowMidBoundary}
+                            formatter="percent"
+                            step="0.01"
+                            variant="label-hidden"
+                            onchange={handleScoreSettingsChanged}
+                        >
+                        </lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Mid_High_Bound}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="number"
+                            name="midHighBoundary"
+                            value={scoreSettings.midHighBoundary}
+                            formatter="percent"
+                            step="0.01"
+                            variant="label-hidden"
+                            onchange={handleScoreSettingsChanged}
+                        >
+                        </lightning-input>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div class="slds-grid pro-grid slds-var-p-around_medium objective-container">
+            <div class="slds-col">
+                <lightning-spinner if:true={loading}></lightning-spinner>
+                <template if:true={loaded}>
+                    <div class="slds-text-heading_small slds-p-bottom_small">Objective Settings</div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Low_Color}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="color"
+                            value={objectiveSettings.objective.lowColor}
+                            variant="label-hidden"
+                            onchange={handleObjectiveLowColorChanged}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Mid_Color}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="color"
+                            value={objectiveSettings.objective.midColor}
+                            variant="label-hidden"
+                            onchange={handleObjectiveMiddleColorChanged}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.High_Color}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="color"
+                            value={objectiveSettings.objective.highColor}
+                            variant="label-hidden"
+                            onchange={handleObjectiveHighColorChanged}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Low_Mid_Bound}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="number"
+                            variant="label-hidden"
+                            value={objectiveSettings.objective.lowMidBoundary}
+                            formatter="percent"
+                            step="0.01"
+                            onchange={handleObjectiveLowMiddleBreakChanged}
+                        >
+                        </lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Mid_High_Bound}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="number"
+                            variant="label-hidden"
+                            value={objectiveSettings.objective.midHighBoundary}
+                            formatter="percent"
+                            step="0.01"
+                            onchange={handleObjectiveMiddleHighBreakChanged}
+                        >
+                        </lightning-input>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div class="slds-grid pro-grid slds-var-p-around_medium objective-container">
+            <div class="slds-col">
+                <lightning-spinner if:true={loading}></lightning-spinner>
+                <template if:true={loaded}>
+                    <div class="slds-text-heading_small slds-p-bottom_small">Objective Task Settings</div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Low_Color}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="color"
+                            value={objectiveSettings.task.lowColor}
+                            variant="label-hidden"
+                            onchange={handleTaskLowColorChanged}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Mid_Color}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="color"
+                            value={objectiveSettings.task.midColor}
+                            variant="label-hidden"
+                            onchange={handleTaskMiddleColorChanged}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.High_Color}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="color"
+                            value={objectiveSettings.task.highColor}
+                            variant="label-hidden"
+                            onchange={handleTaskHighColorChanged}
+                        ></lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Low_Mid_Bound}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="number"
+                            variant="label-hidden"
+                            value={objectiveSettings.task.lowMidBoundary}
+                            formatter="percent"
+                            step="0.01"
+                            onchange={handleTaskLowMiddleBreakChanged}
+                        >
+                        </lightning-input>
+                    </div>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text value={labels.Mid_High_Bound}></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="number"
+                            variant="label-hidden"
+                            value={objectiveSettings.task.midHighBoundary}
+                            formatter="percent"
+                            step="0.01"
+                            onchange={handleTaskMiddleHighBreakChanged}
+                        >
+                        </lightning-input>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,41 @@
+.main-container {
+    margin-bottom: 8px;
+}
+
+.hierarchy-container {
+    padding: 8px 12px 8px 12px;
+}
+
+.hierarchy-container.clickable:hover {
+    background-color: rgb(233, 233, 233);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.hierarchy-container .icons {
+    padding-left: 8px;
+    opacity: 35%;
+}
+
+.hierarchy-container:hover .icons {
+    opacity: 100%;
+}
+
+.refresh-layer:hover {
+    cursor: pointer;
+}
+
+.refresh-text-layer {
+    font-size: 1em;
+    color: blue;
+    text-align: center;
+}
+
+.container.highlighted {
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(213 213 213);
+    border-radius: 14px;
+    box-shadow: #a7a7a78a 0 0 6px;
+    padding: 8px 12px 8px 12px;
+}

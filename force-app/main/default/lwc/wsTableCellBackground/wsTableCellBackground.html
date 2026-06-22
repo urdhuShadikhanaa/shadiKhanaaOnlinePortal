@@ -1,0 +1,14 @@
+<template>
+    <lightning-spinner if:true={_showSpinner}></lightning-spinner>
+    <div
+        if:true={tile}
+        class={cellBackingStyle}
+        onmouseover={handleMouseOver}
+        onmouseout={handleMouseOut}
+        onclick={handleCellClick}
+    >
+        <div class={cellHighlightClass} style={backgroundColor}>
+            <slot></slot>
+        </div>
+    </div>
+</template>

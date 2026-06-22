@@ -1,0 +1,35 @@
+/* ------------------------------------------------ */
+
+:host {
+    display: contents;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ------------------------------------------------ */
+
+.ws-cell-container {
+    cursor: pointer;
+    vertical-align: top;
+    padding: 4px;
+}
+
+/* ------------------------------------------------ */
+
+table.ws-table {
+    border-spacing: 0px;
+}
+
+table.ws-table th {
+    padding: 5px;
+    border: 0px solid black;
+}
+
+table.ws-table td {
+    padding: 5px;
+    border: 0px solid black;
+}
+
+/* ------------------------------------------------ */

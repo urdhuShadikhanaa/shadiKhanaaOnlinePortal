@@ -1,0 +1,57 @@
+<template>
+    <c-modal header={label.header} onclosedialog={handleCancel}>
+        <div
+            if:true={isCloning}
+            class="slds-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-theme_shade slds-text-color_default"
+        >
+            {label.cloningMap}
+        </div>
+        <div if:false={isCloning} class="min-height">
+            <lightning-input
+                type="text"
+                label={label.nameFieldTitle}
+                onchange={handleNameChange}
+                placeholder=""
+                value={rmName}
+            ></lightning-input><br />
+            <c-lookup
+                onsearch={handleSearch}
+                onselectionchange={handleOwnerChange}
+                label={label.ownerFieldTitle}
+                placeholder=""
+                selection={defaultOwnerObj}
+                data-object-type="User"
+                data-display-field="Name"
+                data-id="ownerSearch"
+            ></c-lookup><br />
+            <c-lookup
+                onsearch={handleObjectSearch}
+                onselectionchange={handleRelatedChange}
+                label={label.relatedFieldTitle}
+                placeholder=""
+                selection={defaultRelatedSelectionObj}
+                data-id="relatedSearch"
+            ></c-lookup>
+            <span class="slds-form-element__label">{label.relatedFieldNote}</span>
+        </div>
+        <div>
+            <p>{label.asyncWarning}</p>
+        </div>
+        <div slot="footer">
+            <lightning-button
+                variant="neutral"
+                label={label.cancel}
+                class="slds-button"
+                onclick={handleCancel}
+                disabled={isCloning}
+            ></lightning-button>
+            <lightning-button
+                variant="brand"
+                label={label.clone}
+                class="slds-button"
+                onclick={handleClone}
+                disabled={isCloning}
+            ></lightning-button>
+        </div>
+    </c-modal>
+</template>

@@ -1,0 +1,17 @@
+<template>
+    <c-pq-card-lwc title="Trends">
+        <div
+            if:true={loaded}
+            class="container slds-p-around_small slds-grid--vertical-align-center slds-grid--align-center"
+        >
+            <div if:true={showNoData} class="no-data">{labels.noData}<br />{labels.noDataNote}</div>
+            <c-pq-chartjs
+                if:true={showChart}
+                class="trendChart"
+                width="600"
+                height="300"
+                chart-config={trendConfiguration}
+            ></c-pq-chartjs>
+        </div>
+    </c-pq-card-lwc>
+</template>

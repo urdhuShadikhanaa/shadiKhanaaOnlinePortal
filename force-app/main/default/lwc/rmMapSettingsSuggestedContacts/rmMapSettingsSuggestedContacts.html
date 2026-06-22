@@ -1,0 +1,109 @@
+<template>
+    <div class="page-section page-main">
+        <h3 class="slds-section-title_divider slds-text-heading_small slds-p-horizontal_none">Suggested Contacts</h3>
+
+        <div class="slds-grid pro-grid slds-p-around_medium">
+            <div class="slds-col">
+                <lightning-spinner if:true={loading}></lightning-spinner>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-formatted-text
+                        value={labels.Enable_Suggested_Contacts_For_RM}
+                    ></lightning-formatted-text>
+                    <lightning-input
+                        if:false={loading}
+                        type="toggle"
+                        variant="label-hidden"
+                        checked={showSuggestedContacts}
+                        message-toggle-active={labels.Enabled}
+                        message-toggle-inactive={labels.Disabled}
+                        onchange={handleShowSuggestedContactsToggled}
+                    ></lightning-input>
+                </div>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-combobox
+                        data-name="operator"
+                        name="operator"
+                        label={labels.SuggestedContactdropdownLabel}
+                        options={picklistOptions}
+                        value={contactLimit}
+                        onchange={handleSuggestedContactChange}
+                        placeholder="select Suggested Contact Limit"
+                    ></lightning-combobox>
+                </div>
+                <template lwc:if={showSuggestedContacts}>
+                    <lightning-layout-item size="12" class="slds-var-m-bottom_x-small">
+                        <fieldset>
+                            <label class="slds-form-element__label">{labels.conditions}</label>
+                            <ol class="slds-list_vertical slds-list_vertical-space">
+                                <template if:true={conditions.length}>
+                                    <template for:each={conditions} for:item="condition" for:index="index">
+                                        <li key={condition.key} class="slds-item slds-filters__item slds-hint-parent">
+                                            <template if:true={condition.isActive}>
+                                                <div class="is-active slds-p-around_small">
+                                                    <c-condition-form
+                                                        custom-key={index}
+                                                        object-type={targetObject}
+                                                        field={condition.field}
+                                                        operator={condition.operator}
+                                                        value={condition.value}
+                                                        onconditionsubmitted={handleConditionSubmitted}
+                                                        onconditioncanceled={handleEditConditionCanceled}
+                                                        fields={fieldsMap}
+                                                    ></c-condition-form>
+                                                </div>
+                                            </template>
+                                            <template if:false={condition.isActive}>
+                                                <c-condition-tile
+                                                    custom-key={index}
+                                                    read-only={readOnly}
+                                                    field={condition.field}
+                                                    fields={fieldsMap}
+                                                    operator={condition.operator}
+                                                    value={condition.value}
+                                                    onremovecondition={handleRemoveCondition}
+                                                    oneditcondition={handleEditCondition}
+                                                ></c-condition-tile>
+                                            </template>
+                                        </li>
+                                    </template>
+                                </template>
+                                <li if:true={showNewCondition} class="slids-item slds-filters__item">
+                                    <c-condition-form
+                                        object-type={targetObject}
+                                        onconditionsubmitted={handleNewCondition}
+                                        onconditioncanceled={hideNewConditionForm}
+                                        fields={fieldsMap}
+                                    ></c-condition-form>
+                                </li>
+                            </ol>
+                            <template if:true={multipleConditions}>
+                                <!-- WARNING: Do not set the name property on this radio group as the framework expects the name to be unique for each radio group on the page.
+                                There could be multiple instances of this radio group on the page (This component is currently being used inside an iteration in the CellBuilder component).
+                                By not setting the name property in the markup, the framework will dynamically generate a unique name for us.
+                            -->
+                                <lightning-radio-group
+                                    disabled={readOnly}
+                                    label="Include records when:"
+                                    options={conditionOperatorOptions}
+                                    value={conditionOperator}
+                                    onchange={handleConditionOperatorChange}
+                                    type="radio"
+                                ></lightning-radio-group>
+                            </template>
+                            <div class="slds-m-top_small">
+                                <lightning-button
+                                    if:false={readOnly}
+                                    label={labels.addCondition}
+                                    title={labels.addCondition}
+                                    icon-name="utility:add"
+                                    onclick={showNewConditionForm}
+                                    disabled={addConditionDisabled}
+                                ></lightning-button>
+                            </div>
+                        </fieldset>
+                    </lightning-layout-item>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

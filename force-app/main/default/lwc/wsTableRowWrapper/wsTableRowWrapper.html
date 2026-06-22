@@ -1,0 +1,27 @@
+<template>
+    <tr data-row-index={rowIndex} class={elementClassList}>
+        <!-- Header Layer -->
+        <th data-row-index={rowIndex} class="ws-row-header-layer parent">
+            <c-ws-table-row-header
+                header-object={row}
+                row-index={rowIndex}
+                tile-size={tileSize}
+            ></c-ws-table-row-header>
+        </th>
+
+        <!-- Content -->
+        <template for:each={columns} for:item="column" for:index="ci">
+            <c-ws-table-cell-wrapper
+                if:true={column.visible}
+                key={column.id}
+                row={row}
+                column={column}
+                row-index={rowIndex}
+                col-index={ci}
+                visible-amount-types={visibleAmountTypes}
+                permissions={permissions}
+                tile-size={tileSize}
+            ></c-ws-table-cell-wrapper>
+        </template>
+    </tr>
+</template>

@@ -1,0 +1,50 @@
+/* ------------------------------------------------ */
+/* wsTableCellSummaryDisplayField */
+
+.ws-sum {
+    display: block;
+    border-radius: 15px;
+    background-color: rgb(200, 200, 200);
+    padding: 3px 10px 2px 2px;
+    margin: 3px 3px 3px 3px;
+    height: 25px;
+    overflow: hidden;
+    color: #fff;
+    text-align: left;
+}
+
+.ws-sum.note {
+    background-color: transparent;
+    border-color: transparent;
+    background-color: rgb(200, 200, 200);
+    font-weight: normal;
+    font-size: 0.8em;
+}
+
+.ws-sum-count-container {
+    background-color: white;
+    border-radius: 10px;
+    display: inline-block;
+    width: 19px;
+    height: 19px;
+    text-align: center;
+}
+
+.ws-counter {
+    color: black;
+}
+
+.ws-sum-value-container {
+    float: right;
+}
+
+.ws-text-value-container {
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* ------------------------------------------------ */

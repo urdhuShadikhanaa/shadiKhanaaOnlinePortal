@@ -1,0 +1,11 @@
+.component-container {
+    position: relative;
+}
+
+.opp-score {
+    font-size: 2.0em;
+}
+
+.sub-label {
+    font-weight: bold;
+}

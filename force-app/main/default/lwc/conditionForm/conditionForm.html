@@ -1,0 +1,64 @@
+<template>
+    <lightning-layout-item size="12" class="slds-m-bottom_xx-small">
+        <lightning-combobox
+            data-name="field"
+            name="field"
+            label={labels.field}
+            options={fieldOptions}
+            value={field}
+            onchange={handleChange}
+            placeholder={labels.selectAField}
+            required
+        ></lightning-combobox>
+    </lightning-layout-item>
+    <lightning-layout-item size="12" class="slds-m-bottom_xx-small">
+        <lightning-combobox
+            data-name="operator"
+            name="operator"
+            label={labels.operator}
+            options={operators}
+            value={operator}
+            onchange={handleChange}
+            placeholder={labels.selectAnOperator}
+            required
+        ></lightning-combobox>
+    </lightning-layout-item>
+    <lightning-layout-item size="12" class="slds-m-bottom_xx-small">
+        <template if:true={isPicklistInput}>
+            <lightning-combobox
+                data-name="value"
+                name="value"
+                label={labels.value}
+                options={picklistOptions}
+                value={value}
+                onchange={handleChange}
+                required
+            ></lightning-combobox>
+        </template>
+        <template if:false={isPicklistInput}>
+            <lightning-input
+                type={inputType}
+                data-name="value"
+                name="value"
+                label={labels.value}
+                value={value}
+                onchange={handleChange}
+                required
+            ></lightning-input>
+        </template>
+    </lightning-layout-item>
+    <div class="footer">
+        <lightning-button
+            class="slds-m-left_xx-small"
+            label={labels.cancel}
+            title={labels.cancel}
+            onclick={handleCancel}
+        ></lightning-button>
+        <lightning-button
+            class="slds-m-left_xx-small"
+            label={labels.done}
+            title={labels.done}
+            onclick={handleDone}
+        ></lightning-button>
+    </div>
+</template>

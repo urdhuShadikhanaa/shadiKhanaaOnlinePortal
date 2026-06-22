@@ -1,0 +1,43 @@
+<template>
+    <c-pq-card-lwc title={title}>
+        <lightning-button
+            if:true={showCreateOverviewButton}
+            label={labels.New_Plan_Overview}
+            slot="actions"
+            onclick={handleNewOverviewClick}
+        ></lightning-button>
+        <template for:each={planOverviews} for:item="planOverview">
+            <div key={planOverview.id} class="overview-container">
+                <div class="title-container" style={planOverview.titleStyle}>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_11-of-12 slds-col_bump-right">{planOverview.title}</div>
+                        <div class="slds-col slds-size_1-of-12">
+                            <lightning-button-icon
+                                if:true={planOverview.deleteable}
+                                class="action-icons slds-float_right"
+                                data-id={planOverview.id}
+                                data-title={planOverview.title}
+                                icon-name="utility:delete"
+                                variant="bare"
+                                onclick={handleDelete}
+                            ></lightning-button-icon>
+                            <lightning-button-icon
+                                if:true={planOverview.updateable}
+                                class="action-icons slds-float_right"
+                                data-id={planOverview.id}
+                                icon-name="utility:edit"
+                                variant="bare"
+                                onclick={handleEdit}
+                            ></lightning-button-icon>
+                        </div>
+                    </div>
+                </div>
+                <div class="body-container" style={planOverview.overviewStyle}>
+                    <lightning-formatted-rich-text value={planOverview.description}></lightning-formatted-rich-text>
+                </div>
+            </div>
+        </template>
+        <c-pq-plan-overview-edit-modal onsave={handleSave}></c-pq-plan-overview-edit-modal>
+    </c-pq-card-lwc>
+    <c-modal-for-confirmation onmainactionclicked={handleDeleteClicked}></c-modal-for-confirmation>
+</template>

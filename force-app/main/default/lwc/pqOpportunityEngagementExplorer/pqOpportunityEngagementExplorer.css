@@ -1,0 +1,238 @@
+.engagementDiagram {
+    background-color: #ffff;
+}
+
+div.surround {
+    background-color: #ffff;
+    padding: 15px;
+}
+
+.diagramTitle {
+    font-weight: 700;
+    font-size: 1.3em;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.column-contents {
+    border-radius: 10px;
+    background: #f7f7f7;
+    border: 1px solid #d8d8d8;
+}
+
+.column-activities {
+    background: #f7f7f7;
+}
+
+.column-header {
+    position: relative;
+    padding: 9px;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.column-contents {
+    margin: 0px 4px 4px 4px;
+    padding: 6px;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    min-width: 30em;
+    max-width: 60em;
+    background-color: rgb(1 68 134);
+    color: #fff;
+    padding: 6px 6px 6px 6px;
+    border-radius: 10px;
+    top: 25%;
+    left: 20%;
+    z-index: 100;
+}
+
+.tooltip.dev .tooltiptext {
+    visibility: visible;
+}
+
+/* .tooltip .tooltiptext { */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.refresher {
+    margin: 25px 0px 5px 0px;
+    width: 17em;
+}
+
+.hover-detail-row {
+    margin: 1px 0px 1px 0px;
+    width: 400px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.detail-break {
+    display: inline-block;
+}
+
+.detail-nougat {
+    display: flex;
+    flex-direction: row;
+}
+.detail-nougat:before,
+.detail-nougat:after {
+    content: '';
+    flex: 1 1;
+    border-bottom: 1px solid;
+    margin: auto;
+}
+.detail-nougat:before {
+    margin-right: 10px;
+}
+.detail-nougat:after {
+    margin-left: 10px;
+}
+
+.detail-token {
+    display: inline-block;
+    border-radius: 8px;
+    padding: 4px 10px 4px 10px;
+    text-align: center;
+}
+
+.detail-token.token1 {
+    background-color: #002e5c91;
+}
+
+.detail-token.token2 {
+    background-color: #0053a3;
+}
+
+.detail-token.token3 {
+    background-color: #0176d3;
+}
+
+.entry {
+    padding: 9px;
+    margin: 6px auto 6px auto;
+    width: 95%;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.user.b10 {
+    background: rgba(177, 223, 255, 1);
+}
+.user.b9 {
+    background: rgba(177, 223, 255, 0.9);
+}
+.user.b8 {
+    background: rgba(177, 223, 255, 0.8);
+}
+.user.b7 {
+    background: rgba(177, 223, 255, 0.7);
+}
+.user.b6 {
+    background: rgba(177, 223, 255, 0.6);
+}
+.user.b5 {
+    background: rgba(177, 223, 255, 0.5);
+}
+.user.b4 {
+    background: rgba(177, 223, 255, 0.4);
+}
+.user.b3 {
+    background: rgba(177, 223, 255, 0.3);
+}
+.user.b2 {
+    background: rgba(177, 223, 255, 0.2);
+}
+.user.b1 {
+    background: rgba(177, 223, 255, 0.1);
+}
+.user.b0 {
+    background: rgba(177, 223, 255, 0.05);
+}
+
+.activity.b10 {
+    background: rgba(245, 255, 177, 1);
+}
+.activity.b9 {
+    background: rgba(245, 255, 177, 0.9);
+}
+.activity.b8 {
+    background: rgba(245, 255, 177, 0.8);
+}
+.activity.b7 {
+    background: rgba(245, 255, 177, 0.7);
+}
+.activity.b6 {
+    background: rgba(245, 255, 177, 0.6);
+}
+.activity.b5 {
+    background: rgba(245, 255, 177, 0.5);
+}
+.activity.b4 {
+    background: rgba(245, 255, 177, 0.4);
+}
+.activity.b3 {
+    background: rgba(245, 255, 177, 0.3);
+}
+.activity.b2 {
+    background: rgba(245, 255, 177, 0.2);
+}
+.activity.b1 {
+    background: rgba(245, 255, 177, 0.1);
+}
+.activity.b0 {
+    background: rgba(245, 255, 177, 0.05);
+}
+
+.contact.b10 {
+    background: rgba(109, 197, 101, 1);
+}
+.contact.b9 {
+    background: rgba(109, 197, 101, 0.9);
+}
+.contact.b8 {
+    background: rgba(109, 197, 101, 0.8);
+}
+.contact.b7 {
+    background: rgba(109, 197, 101, 0.7);
+}
+.contact.b6 {
+    background: rgba(109, 197, 101, 0.6);
+}
+.contact.b5 {
+    background: rgba(109, 197, 101, 0.5);
+}
+.contact.b4 {
+    background: rgba(109, 197, 101, 0.4);
+}
+.contact.b3 {
+    background: rgba(109, 197, 101, 0.3);
+}
+.contact.b2 {
+    background: rgba(109, 197, 101, 0.2);
+}
+.contact.b1 {
+    background: rgba(109, 197, 101, 0.1);
+}
+.contact.b0 {
+    background: rgba(109, 197, 101, 0.05);
+}
+
+.entry.user {
+    border: 1px solid #a9a9a961;
+}
+
+.entry.activity {
+    border: 1px solid #a9a9a961;
+}
+
+.entry.contact {
+    border: 1px solid #a9a9a961;
+}

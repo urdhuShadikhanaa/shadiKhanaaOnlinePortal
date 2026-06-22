@@ -1,0 +1,6 @@
+<template>
+    <c-ws-summary-area-grid-header header-data={headerData}></c-ws-summary-area-grid-header>
+    <template for:each={summaryData} for:item="rowData">
+        <c-ws-summary-area-grid-row summary-data={rowData} key={rowData.id}></c-ws-summary-area-grid-row>
+    </template>
+</template>

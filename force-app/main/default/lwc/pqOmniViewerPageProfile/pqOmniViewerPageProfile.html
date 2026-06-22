@@ -1,0 +1,67 @@
+<template>
+    <!-- Sub Title Panel -->
+    <c-pq-omni-viewer-widget-header-sub
+        person-map-member-data={personMapMemberData}
+        person-contact-data={personContactData}
+        person-contact-extended-data={personContactExtendedData}
+        profile-image-data={profileImageData}
+        show-edit-contact="true"
+        onrequestobjectviewer={passthroughEvent}
+    ></c-pq-omni-viewer-widget-header-sub>
+
+    <hr class="none" />
+
+    <template if:false={loaded}>
+        <div>{labels.Loading}</div>
+    </template>
+
+    <template if:true={loaded}>
+        <!-- Refresh Banner -->
+        <div
+            if:true={needsRefresh}
+            class="refresh-layer error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+            onclick={refreshClicked}
+        >
+            <div class="refresh-text-layer">{labels.Click_Here_To_Refresh}</div>
+        </div>
+
+        <!-- Address Map Panel -->
+        <template if:true={addressList}>
+            <c-pq-omni-viewer-widget-address-map
+                address-list={addressList}
+            ></c-pq-omni-viewer-widget-address-map>
+            <hr class="one" />
+        </template>
+
+        <!-- Profile Field Layout Sections -->
+        <template for:each={layoutFieldData} for:item="layoutSection">
+            <div key={layoutSection.id} class="section">
+                <div class="section-label">{layoutSection.label}</div>
+                <div class={layoutSection.class}>
+                    <template for:each={layoutSection.fields} for:item="field">
+                        <div class="field-wrapper" key={field.id}>
+                            <div key={uniqueId} class="field-label">{field.label}</div>
+                            <div if:false={field.isAddress} key={uniqueId} title={field.value}>
+
+                                <div if:true={field.isRichText} key={uniqueId} class="field-value" title={field.value}>
+                                    <lightning-formatted-rich-text value={field.value}></lightning-formatted-rich-text> 
+                                </div>
+
+                                <div if:false={field.isRichText} key={uniqueId} class="field-value" title={field.value}>
+                                    {field.value}
+                                </div>
+                                
+                            </div>
+                            <div if:true={field.isAddress} key={uniqueId} class="field-value address">
+                                <span if:true={field.isAddressPopulated}>
+                                    {field.value.street}<br/>
+                                    {field.value.city}&nbsp;{field.value.state}&nbsp;{field.value.postalcode}
+                                </span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+    </template>
+</template>

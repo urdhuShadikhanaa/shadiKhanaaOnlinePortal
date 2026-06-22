@@ -1,0 +1,44 @@
+<template>
+    <div class={highlightClass} if:true={loaded}>
+        <div>{relationshipData.containerName}</div>
+        <div class="slds-p-left_small" if:true={relationshipData.isUsingGlobalRelationship}>
+            {labels.Using_Global_Relationships}
+        </div>
+        <template
+            if:false={relationshipData.isUsingGlobalRelationship}
+            for:each={relationshipData.relationshipLines}
+            for:item="relationshipLine"
+        >
+            <div
+                if:false={areLinksClickable}
+                key={relationshipLine.id}
+                class="slds-grid hierarchy-container"
+            >
+                <div class="slds-col slds-size_12-of-12">
+                    <p>{relationshipLine.lineLabel}&nbsp;<b>{relationshipLine.nodeName}</b></p>
+                </div>
+            </div>
+
+            <div
+                if:true={areLinksClickable}
+                key={relationshipLine.id}
+                class="slds-grid hierarchy-container clickable"
+                title={labels.Open_In_New_Window}
+                onclick={handleNavigateToClicked}
+                data-rmid={relationshipData.relationshipMapId}
+                data-apid={relationshipData.accountPlanId}
+            >
+                <div class="slds-col slds-size_11-of-12">
+                    <p>{relationshipLine.lineLabel}&nbsp;<b>{relationshipLine.nodeName}</b></p>
+                </div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-button-icon
+                        class="icons"
+                        variant="bare"
+                        icon-name="utility:internal_share"
+                    ></lightning-button-icon>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

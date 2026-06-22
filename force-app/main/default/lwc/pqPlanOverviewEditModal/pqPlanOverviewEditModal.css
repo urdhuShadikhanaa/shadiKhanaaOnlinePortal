@@ -1,0 +1,12 @@
+:host {
+    --sds-c-textarea-sizing-min-height: 50vh;
+}
+
+.input-container {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.color-picker {
+    min-height: 300px;
+}

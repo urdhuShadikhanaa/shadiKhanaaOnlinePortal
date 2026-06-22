@@ -1,0 +1,21 @@
+<template>
+    <!-- Influence & Support Panel -->
+    <div class={highlightClass}>
+        <div if:true={hasTitle} class="map-name">
+            {title}&nbsp;<span class="slds-current-color global-indicator"><lightning-icon
+                if:true={isGlobal}
+                icon-name="utility:world"
+                alternative-text="Global"
+                title="Global"
+                size="x-small"
+            ></lightning-icon></span>
+        </div>
+        <div if:true={hasSubTitle} class="map-type">{subTitle}</div>
+        <div class="influence-panel">
+            <div class="label-influence">{influenceLabel}</div>
+            <div class="label-support">{supportLabel}</div>
+            <div class="bulb-left">{influenceOverrideValue}</div>
+            <div class="bulb-right" style={supportColorStyle}>{supportOverrideValue}</div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,34 @@
+<template>
+    <div>
+        <img src={imageData} class="imgpreview" lwc:dom="manual" /><br />
+
+        <div if:true={showImageTools} class="slds-grid slds-grid_align-center">
+            <div class="slds-col slds-var-m-around_small">
+                <lightning-button
+                    class="slds-button slds-button_brand"
+                    label="+"
+                    variant="brand"
+                    onclick={handleImageZoomIn}
+                ></lightning-button>
+            </div>
+            <div class="slds-col slds-var-m-around_small">
+                <lightning-button
+                    class="slds-button slds-button_brand"
+                    label="-"
+                    variant="brand"
+                    onclick={handleImageZoomOut}
+                ></lightning-button>
+            </div>
+            <div class="slds-col slds-var-m-around_small">
+                <lightning-button
+                    class="slds-button slds-button_brand"
+                    label="Reset"
+                    variant="brand"
+                    onclick={handleImageReset}
+                ></lightning-button>
+            </div>
+        </div>
+
+        <span if:true={showImageDetails}>Image File Size: {imageSize} bytes</span>
+    </div>
+</template>

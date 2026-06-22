@@ -1,0 +1,22 @@
+<template>
+    <c-pq-matrix-member-modal onsuccess={handleMatrixMemberSuccess}></c-pq-matrix-member-modal>
+    <c-relationship-influence-chart
+        can-delete={canDeleteStakeholders}
+        can-drag={canDrag}
+        delete-modal-header={label.Delete_Key_Stakeholder}
+        delete-confirmation-message={label.Delete_Key_Stakeholder_Confirmation}
+        is-loading={isLoading}
+        influence={influence}
+        member-label={stakeholderLabel}
+        members={stakeholders}
+        onmemberdropped={handleStakeholderMoved}
+        onmemberremoved={handleStakeholderRemoved}
+        onmemberupdated={handleStakeholderUpdated}
+        onpqapplicationevent={bubbleEvent}
+        onrefreshmembers={handleRefreshMembers}
+        onshowmembermodal={handleEditKeyStakeholderClicked}
+        onshoweditmodal={bubbleEvent}
+        support={support}
+        container-id={accountPlanId}
+    ></c-relationship-influence-chart>
+</template>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>58.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>PROLIFIQ OM Engagement Explorer</masterLabel>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Opportunity</object>
+                <object>PQ_Opportunity_Plan__c</object>
+            </objects>
+            <property name="diagramTitle" label="Title (Optional)" placeholder="Enter an optional title for this diagram" required="false" type="String" />
+            <property name="showTitle" label="Show Title" description="Show or hide the title for this diagram" required="false" default="false" type="Boolean" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

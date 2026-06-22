@@ -1,0 +1,147 @@
+<template>
+    <lightning-spinner if:true={_showSpinner}></lightning-spinner>
+    <div class="display-element">
+        <p>{columnHeaderLabel}</p>
+        <p class="slds-page-header__title">{columnHeaderValue}</p>
+    </div>
+
+    <div class="display-element">
+        <p>{rowHeaderLabel}</p>
+        <p class="slds-page-header__title">{rowHeaderValue}</p>
+    </div>
+
+    <div if:true={isFreeForm} class="display-element">
+        <lightning-combobox
+            name="primary display type"
+            label={labels.displayFieldSelector}
+            value={selectedOption}
+            options={displayFieldOptions}
+            onchange={primaryDisplayFieldChanged}
+            read-only={isReadOnly}
+        ></lightning-combobox>
+    </div>
+
+    <div if:true={hasHighlights} class="display-element highlight-container">
+        <lightning-combobox
+            name="highlight"
+            label={labels.highlight}
+            value={highlightValue}
+            placeholder={labels.selectHighlight}
+            options={highlightOptions}
+            onchange={handleHighlightChange}
+            read-only={isReadOnly}
+        >
+        </lightning-combobox>
+    </div>
+
+    <template if:true={hasDataTypes} for:each={_wsDataTypeOptionsArray} for:item="wsDataOptions">
+        <div key={wsDataOptions.id} class="display-element highlight-container">
+            <lightning-combobox
+                key={wsDataOptions.id}
+                data-id={wsDataOptions.id}
+                data-label={wsDataOptions.label}
+                data-color={wsDataOptions.color}
+                name="Data Types"
+                label={wsDataOptions.label}
+                value={wsDataOptions.value}
+                options={wsDataOptions.options}
+                onchange={handleDataChange}
+                read-only={isReadOnly}
+            >
+            </lightning-combobox>
+        </div>
+    </template>
+
+    <div class="display-element">
+        <div if:true={isReadOnly}>
+            <div class="notes-display" title={labels.notes}>
+                <lightning-formatted-text value={infoObject.value}></lightning-formatted-text>
+            </div>
+        </div>
+        <!-- Div area with current text value, slightly styled, hover highlight, onclick switch to edit mode -->
+        <div if:false={isReadOnly}>
+            <div if:false={infoEditMode}>
+                <div class="notes-display editable" title={labels.clickToEdit} onclick={handleNotesClick}>
+                    <lightning-formatted-text value={infoObject.value}></lightning-formatted-text>
+                </div>
+            </div>
+
+            <!-- textarea loads in with current value, display save/cancel buttons -->
+            <div if:true={infoEditMode}>
+                <lightning-textarea value={infoObject.value} maxlength="255"></lightning-textarea>
+                <lightning-button label={labels.save} variant="brand" onclick={handleSaveNotes}></lightning-button>
+                <lightning-button
+                    label={labels.clear}
+                    class="slds-m-left_xx-small"
+                    onclick={handleClearNotes}
+                ></lightning-button>
+                <lightning-button
+                    label={labels.cancel}
+                    class="slds-m-left_xx-small"
+                    onclick={handleCancelEditNotes}
+                ></lightning-button>
+            </div>
+        </div>
+    </div>
+
+    <template for:each={visibleAmountTypeFields} for:item="field">
+        <div key={field.id}>
+            <c-ws-cell-panel-content-freeform-type-entry
+                if:true={isFreeForm}
+                amount={field}
+                onfreeformsaved={handleUpdateFreeformTile}
+                allow-edit={allowEdit}
+            ></c-ws-cell-panel-content-freeform-type-entry>
+            <c-ws-cell-panel-mapped-data
+                if:false={isFreeForm}
+                field={field}
+                column-object-ids={columnObjectIds}
+                row-object-ids={rowObjectIds}
+                oncreaterecord={handleCreateRecord}
+                oneditrecord={handleEditRecord}
+                allow-edit={allowEdit}
+                column-name={columnHeaderValue}
+                row-name={rowHeaderValue}
+            ></c-ws-cell-panel-mapped-data>
+        </div>
+    </template>
+
+    <template if:false={isFreeForm} for:each={basicFields} for:item="field">
+        <div key={field.id}>
+            <c-ws-cell-panel-mapped-data
+                field={field}
+                column-object-ids={columnObjectIds}
+                row-object-ids={rowObjectIds}
+                oncreaterecord={handleCreateRecord}
+                oneditrecord={handleEditRecord}
+                allow-edit={allowEdit}
+                column-name={columnHeaderValue}
+                row-name={rowHeaderValue}
+            ></c-ws-cell-panel-mapped-data>
+        </div>
+    </template>
+
+    <template for:each={relatedFields} for:item="field">
+        <div key={field.id}>
+            <c-ws-cell-panel-mapped-data
+                field={field}
+                column-object-ids={columnObjectIds}
+                row-object-ids={rowObjectIds}
+                cell-object-id={tileObject.id}
+                oncreaterecord={handleCreateRecord}
+                oneditrecord={handleEditRecord}
+                allow-edit={allowEdit}
+                column-name={columnHeaderValue}
+                row-name={rowHeaderValue}
+            ></c-ws-cell-panel-mapped-data>
+        </div>
+    </template>
+
+    <div if:true={canDeleteTile} class="display-element">
+        <lightning-button
+            label={labels.delete}
+            class="slds-var-m-left_xx-small"
+            onclick={handleDeleteTile}
+        ></lightning-button>
+    </div>
+</template>

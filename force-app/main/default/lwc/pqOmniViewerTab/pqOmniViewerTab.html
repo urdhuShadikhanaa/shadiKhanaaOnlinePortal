@@ -1,0 +1,27 @@
+<template>
+
+    <div
+        key={tabData.id}
+        if:true={tabData.selected}
+        class="pq-omni-viewer-tab active"
+        style={tabStyle}
+    >
+        <div class="slds-current-color pq-omni-viewer-icon pq-omni-viewer-icon-active">
+            <lightning-icon icon-name={iconName} onclick={handleClick} alternative-text={tabName} size='small' title={tabName}></lightning-icon>
+        </div>
+    </div>
+
+    <div
+        key={tabData.id}
+        if:false={tabData.selected}
+        class="pq-omni-viewer-tab inactive"
+        data-tabid={tabData.id}
+        onclick={handleClick}
+        style={tabStyle}
+    >
+        <div class="slds-current-color pq-omni-viewer-icon pq-omni-viewer-icon-inactive">
+            <lightning-icon icon-name={iconName} onclick={handleClick} alternative-text={tabName} size='small' title={tabName}></lightning-icon>
+        </div>
+    </div>
+
+</template>

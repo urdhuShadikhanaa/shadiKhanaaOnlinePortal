@@ -1,0 +1,35 @@
+<template>
+    <div class="outercontainer">
+        <div class="container">
+            <template if:true={loaded}>
+                <div class="cols">
+                    <div style="font-size: x-large; padding-left: 10px">{objectName}</div>
+                </div>
+                <template if:true={isData}>
+                    <div class="cols">
+                        <lightning-datatable
+                            key-field="Id"
+                            data={data}
+                            columns={columns}
+                            sorted-by={sortBy}
+                            sorted-direction={sortDirection}
+                            onsort={doSorting}
+                            hide-checkbox-column
+                        >
+                        </lightning-datatable>
+                    </div>
+                </template>
+            </template>
+            <div class="cols">
+                <template if:false={isData}>
+                    <div style="padding-left: 10px">{No_Data_Available}</div>
+                </template>
+            </div>
+            <template if:false={loaded}>
+                <div class="slds-box slds-theme_shade">
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

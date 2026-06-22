@@ -1,0 +1,113 @@
+.engagementDiagram {
+    background-color: #ffff;
+}
+
+div.surround {
+    background-color: #ffff;
+    padding: 15px;
+}
+
+.diagramTitle {
+    font-weight: 650;
+    font-size: 1.25em;
+    color: black;
+}
+
+.engagementScore {
+    font-size: 5em;
+    font-weight: 400;
+}
+
+.engagementScore.Light {
+    font-weight: 100;
+}
+.engagementScore.Bold {
+    font-weight: 400;
+}
+.engagementScore.X-Bold {
+    font-weight: 700;
+}
+
+.engagementScore.XX-Small {
+    font-size: 1.5em;
+}
+.engagementScore.X-Small {
+    font-size: 2em;
+}
+.engagementScore.Small {
+    font-size: 3em;
+}
+.engagementScore.Medium {
+    font-size: 4em;
+}
+.engagementScore.Large {
+    font-size: 5em;
+}
+.engagementScore.X-Large {
+    font-size: 6em;
+}
+.engagementScore.XX-Large {
+    font-size: 7em;
+}
+.engagementScore.XXX-Large {
+    font-size: 8em;
+}
+.engagementScore.Huge {
+    font-size: 9em;
+}
+
+.engagementScore.Black {
+    color: black;
+}
+.engagementScore.Gray {
+    color: gray;
+}
+.engagementScore.Silver {
+    color: silver;
+}
+.engagementScore.Green {
+    color: green;
+}
+.engagementScore.Lime {
+    color: lime;
+}
+.engagementScore.Red {
+    color: red;
+}
+.engagementScore.Maroon {
+    color: maroon;
+}
+.engagementScore.Orange {
+    color: orange;
+}
+.engagementScore.Yellow {
+    color: yellow;
+}
+.engagementScore.Fuchsia {
+    color: fuchsia;
+}
+.engagementScore.Aqua {
+    color: aqua;
+}
+.engagementScore.Blue {
+    color: blue;
+}
+.engagementScore.Navy {
+    color: navy;
+}
+.engagementScore.Olive {
+    color: olive;
+}
+.engagementScore.Purple {
+    color: purple;
+}
+.engagementScore.Teal {
+    color: teal;
+}
+
+.column-header {
+    position: relative;
+    padding: 9px;
+    font-weight: bold;
+    font-size: 1.1em;
+}

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Starters__c</fullName>
+    <label>Starters</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Finger Chips</fullName>
+                <default>false</default>
+                <label>Finger Chips</label>
+            </value>
+            <value>
+                <fullName>Veg Crispy</fullName>
+                <default>false</default>
+                <label>Veg Crispy</label>
+            </value>
+            <value>
+                <fullName>Gobi Manchirian</fullName>
+                <default>false</default>
+                <label>Gobi Manchirian</label>
+            </value>
+            <value>
+                <fullName>Paneer Chilly</fullName>
+                <default>false</default>
+                <label>Paneer Chilly</label>
+            </value>
+            <value>
+                <fullName>Paneer 65</fullName>
+                <default>false</default>
+                <label>Paneer 65</label>
+            </value>
+            <value>
+                <fullName>Chicken Tandoori</fullName>
+                <default>false</default>
+                <label>Chicken Tandoori</label>
+            </value>
+            <value>
+                <fullName>Chicken Chilly</fullName>
+                <default>false</default>
+                <label>Chicken Chilly</label>
+            </value>
+            <value>
+                <fullName>Chicken 65</fullName>
+                <default>false</default>
+                <label>Chicken 65</label>
+            </value>
+            <value>
+                <fullName>Chicken Lollypop</fullName>
+                <default>false</default>
+                <label>Chicken Lollypop</label>
+            </value>
+            <value>
+                <fullName>Chicken Tikkaa</fullName>
+                <default>false</default>
+                <label>Chicken Tikkaa</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

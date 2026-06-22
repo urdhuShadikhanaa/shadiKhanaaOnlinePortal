@@ -1,0 +1,67 @@
+<template>
+    <template if:true={showTooltip}>
+        <section
+            role="dialog"
+            tabindex="-1"
+            aria-modal="true"
+            aria-labelledby="modal-heading-01"
+            class="slds-modal slds-fade-in-open"
+        >
+            <div class="slds-modal__container">
+                <div class="modalContent">
+                    <div class="modalHeader">
+                        Activities Involving <span class="headerSubject">{subject}</span
+                        ><span class="headerSubjectConnector">{subjectConnector}</span
+                        ><span class="headerSubject">{subject2}</span>
+                    </div>
+                    <template for:each={entry.detailTokens} for:item="token">
+                        <div class="hover-detail-row" key={detail}>
+                            <template if:true={showUsers}>
+                                <div
+                                    class="detail-token token1 left user"
+                                    data-id={token.id1}
+                                    onclick={handleEditClicked}
+                                >
+                                    {token.t1}
+                                </div>
+                                <div class="detail-break">&gt;</div>
+                            </template>
+                            <template if:true={showActivities}>
+                                <div
+                                    class="detail-token token2 left activity"
+                                    data-id={token.id2}
+                                    onclick={handleEditClicked}
+                                >
+                                    {token.t2}
+                                </div>
+                            </template>
+                            <template if:true={showContacts}>
+                                <template if:true={token.id3}>
+                                    <div class="detail-break">&gt;</div>
+                                    <div
+                                        class="detail-token token3 left contact"
+                                        data-id={token.id3}
+                                        onclick={handleEditClicked}
+                                    >
+                                        {token.t3}
+                                    </div>
+                                </template>
+                                <template if:false={token.id3}>
+                                    <!-- Collapse column so others expand-->
+                                    <template if:true={showUsers}></template>
+
+                                    <!-- Blank column but take space -->
+                                    <template if:false={showUsers}>
+                                        <div class="detail-break"></div>
+                                        <div class="detail-token empty"></div>
+                                    </template>
+                                </template>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+</template>

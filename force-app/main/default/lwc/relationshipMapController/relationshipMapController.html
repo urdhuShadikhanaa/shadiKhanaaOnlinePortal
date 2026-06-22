@@ -1,0 +1,189 @@
+<template>
+    <c-profile-image-picker
+        onprofileimagedatachange={handleProfileImageDataChange}
+        rm-org-settings={rmOrgSettings}
+    ></c-profile-image-picker>
+
+    <c-lds-record-form-modal
+        modal-title={modalTitle}
+        mode={mode}
+        record-id={modalRecordId}
+        onsuccess={handleModalSuccess}
+        oncancel={handleModalCancel}
+        temp-node={tempContact}
+    ></c-lds-record-form-modal>
+
+    <div class={fullscreenClass}>
+        <c-pq-card-lwc title={label.Relationship_Map}>
+            <div slot="actions">
+                <div class="slds-grid">
+                    <div class="slds-col">
+                        <div if:true={isSaving} class="label-container slds-p-horizontal_small slds-text-title_bold">
+                            {label.Saving}
+                        </div>
+                    </div>
+                    <div if:true={isGlobalInfluence} class="slds-current-color global-indicator">
+                        <lightning-icon
+                            icon-name="utility:world"
+                            title={label.GlobalInfluence}
+                            size="small"
+                        ></lightning-icon>
+                    </div>
+                    <div if:true={canEditGraph} class="slds-m-left_xx-small slds-col">
+                        <lightning-button-icon
+                            alternative-text={label.Members}
+                            icon-name="utility:people"
+                            onclick={manageMembers}
+                        ></lightning-button-icon>
+                    </div>
+                    <!-- <div class="slds-m-left_xx-small slds-col pq-print-enabled-button">
+                        <lightning-button-icon
+                            alternative-text={label.Undo}
+                            icon-name="utility:undo"
+                            onclick={undoChanges}
+                        ></lightning-button-icon>
+                    </div>  -->
+                    <div if:true={canEditGraph} class="slds-m-left_xx-small slds-col pq-print-enabled-button">
+                        <lightning-button-icon-stateful
+                            alternative-text={label.Read_Only}
+                            icon-name="utility:block_visitor"
+                            selected={readOnly}
+                            onclick={toggleReadOnly}
+                        ></lightning-button-icon-stateful>
+                    </div>
+                    <div class="slds-m-left_xx-small slds-col pq-print-enabled-button">
+                        <lightning-button-icon
+                            alternative-text={label.Zoom_In}
+                            icon-name="utility:zoomin"
+                            onclick={increaseZoom}
+                        ></lightning-button-icon>
+                    </div>
+                    <div class="slds-m-left_xx-small slds-col pq-print-enabled-button">
+                        <lightning-button-icon
+                            alternative-text={label.Zoom_Out}
+                            icon-name="utility:zoomout"
+                            onclick={decreaseZoom}
+                        ></lightning-button-icon>
+                    </div>
+                    <div class="slds-m-left_xx-small slds-col">
+                        <lightning-button-icon
+                            alternative-text={label.Refresh}
+                            icon-name="utility:refresh"
+                            onclick={reloadData}
+                        ></lightning-button-icon>
+                    </div>
+                    <div class="slds-m-left_xx-small slds-col">
+                        <lightning-button-icon
+                            if:true={isExpanded}
+                            alternative-text={label.Exit_Full_Screen}
+                            icon-name="utility:contract_alt"
+                            onclick={fullScreenHandler}
+                        ></lightning-button-icon>
+                        <lightning-button-icon
+                            if:false={isExpanded}
+                            alternative-text={label.Full_Screen}
+                            icon-name="utility:expand_alt"
+                            onclick={fullScreenHandler}
+                        ></lightning-button-icon>
+                    </div>
+                    <div class="slds-m-left_xx-small slds-col">
+                        <lightning-button-menu menu-alignment="auto" onselect={handleMenuSelect}>
+                            <lightning-menu-item
+                                if:true={showAutoManualToggle}
+                                prefix-icon-name="utility:layout"
+                                label={layoutMenuLabel}
+                                value="layout"
+                            >
+                            </lightning-menu-item>
+                            <lightning-menu-item
+                                prefix-icon-name={extendedFieldVisibleIcon}
+                                label={extendedFieldVisibleLabel}
+                                value="extendedfield"
+                            >
+                            </lightning-menu-item>
+                            <lightning-menu-item
+                                prefix-icon-name="utility:identity"
+                                label={cardStyleLabel}
+                                value="carddetail"
+                            >
+                            </lightning-menu-item>
+                            <lightning-menu-item
+                                if:true={showSettingsButton}
+                                prefix-icon-name="utility:settings"
+                                label={label.Settings}
+                                value="settings"
+                            >
+                            </lightning-menu-item>
+                            <lightning-menu-item
+                                if:true={showCopyButton}
+                                prefix-icon-name="utility:copy"
+                                label={label.Clone}
+                                value="clone"
+                            >
+                            </lightning-menu-item>
+                        </lightning-button-menu>
+                    </div>
+                </div>
+            </div>
+            <div class="hierarchy-body slds-box">
+                <template if:false={showGraph}>
+                    <div class="blockout">
+                        <lightning-spinner alternative-text={label.Loading} variant="brand"></lightning-spinner>
+                    </div>
+                </template>
+
+                <c-orggraph
+                    if:true={showGraph}
+                    map-or-plan-id={recordId}
+                    graph-data={graphData}
+                    support-colors={supportColors}
+                    can-edit-graph={canEditGraph}
+                    can-drop={allowDrop}
+                    account-id={accountId}
+                    object-label={objectLabel}
+                    chart-settings={chartSettings}
+                    rm-org-settings={rmOrgSettings}
+                    relationship-types={relationshipTypes}
+                    allow-create-contact={allowCreateContact}
+                    allow-create-group={allowCreateGroup}
+                    anchors={anchors}
+                    auto-layout={autoLayout}
+                    rm-or-keystakeholder={rmOrKeystakeholder}
+                    onrequestobjectviewer={handleObjectViewerRequested}
+                    onclosepanel={handleClosePanel}
+                    onremovenodesfromgroup={handleRemoveNodesFromGroup}
+                    ondeletecustomlinks={handleDeleteCustomLinks}
+                    onnewcustomlinks={passthroughEvent}
+                    onupdatecustomlinks={handleUpdateCustomLinks}
+                    onupdatehierarchylinks={passthroughEvent}
+                    oncreatenewgroup={passthroughEvent}
+                    ongroupnamechanged={handleGroupNameChange}
+                    onaddcontactstogroup={passthroughEvent}
+                    onaddgroupstogroup={handleAddGroupsToGroup}
+                    onaddnodestochart={passthroughEvent}
+                    onremovegraphmember={passthroughEvent}
+                    ondeletemapmemberusers={passthroughEvent}
+                    onperformsearch={passthroughEvent}
+                    ongrapherror={passthroughEvent}
+                    onaddparentcontactstochart={passthroughEvent}
+                    oncreatenewplaceholder={passthroughEvent}
+                    onupdateplaceholderdescription={handleUpdatePlaceholderDescription}
+                    onupdateplaceholderlabel={handleUpdatePlaceholderNameAndLabel}
+                    ondeleteplaceholders={handleDeletePlaceholders}
+                    ondiagraminitialized={passthroughEvent}
+                    oncreatenewcontact={handleCreateNewContact}
+                    oncreatenewtask={handleCreateNewTask}
+                    onsettargetanchor={passthroughEvent}
+                    onsavenodecoordinates={passthroughEvent}
+                    onupdatenodecoordinates={passthroughEvent}
+                    onupdateprofileimage={handleUpdateProfileImage}
+                    onviewuser={handleViewUser}
+                    onremoveleadmembers={passthroughEvent}
+                    onassociatebadge={passthroughEvent}
+                    onremovebadge={passthroughEvent}
+                    ongrouplayoutchange={handleGroupLayoutChange}
+                ></c-orggraph>
+            </div>
+        </c-pq-card-lwc>
+    </div>
+</template>

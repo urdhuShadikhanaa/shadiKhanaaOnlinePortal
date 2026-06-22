@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Desserts__c</fullName>
+    <label>Desserts</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Coffee pudding</fullName>
+                <default>false</default>
+                <label>Coffee pudding</label>
+            </value>
+            <value>
+                <fullName>Red velvet</fullName>
+                <default>false</default>
+                <label>Red velvet</label>
+            </value>
+            <value>
+                <fullName>Brownies</fullName>
+                <default>false</default>
+                <label>Brownies</label>
+            </value>
+            <value>
+                <fullName>Cheese cake</fullName>
+                <default>false</default>
+                <label>Cheese cake</label>
+            </value>
+            <value>
+                <fullName>Swiss roll</fullName>
+                <default>false</default>
+                <label>Swiss roll</label>
+            </value>
+            <value>
+                <fullName>Chocolate mousse</fullName>
+                <default>false</default>
+                <label>Chocolate mousse</label>
+            </value>
+            <value>
+                <fullName>Bread butter pudding</fullName>
+                <default>false</default>
+                <label>Bread butter pudding</label>
+            </value>
+            <value>
+                <fullName>Carrot cake</fullName>
+                <default>false</default>
+                <label>Carrot cake</label>
+            </value>
+            <value>
+                <fullName>Angel cake</fullName>
+                <default>false</default>
+                <label>Angel cake</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

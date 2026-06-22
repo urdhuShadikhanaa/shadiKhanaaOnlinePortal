@@ -1,0 +1,47 @@
+/* ------------------------------------------------ */
+
+.ws-button-circle {
+    display: block;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    float: right;
+    margin-right: 10px;
+    text-align: center;
+    line-height: 27px;
+    background-color: #ccc;
+}
+
+.ws-button-circle:hover {
+    background-color: rgb(156, 156, 156);
+}
+
+.popover {
+    max-width: 250px;
+    margin-left: 50px;
+    text-align: left;
+}
+
+.summary-title {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.summary-value {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.summary-block {
+    border-left: 9px solid #ccc;
+    padding: 10px 0px 10px 10px;
+}
+
+.ws-sum {
+    display: block;
+    overflow: hidden;
+    text-align: left;
+    width: 250px;
+}
+
+/* ------------------------------------------------ */

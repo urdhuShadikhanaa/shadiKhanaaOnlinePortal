@@ -1,0 +1,10 @@
+<template>
+    <div class="pro-card">
+        <lightning-card variant={variant} icon-name={iconName}>
+            <div slot="title" class="slds-p-horizontal_small slds-p-top_small"><slot name="title">{title}</slot></div>
+            <div slot="actions" class="slds-p-horizontal_small slds-p-top_small"><slot name="actions"></slot></div>
+            <slot></slot>
+            <div slot="footer" if:true={footer}><slot name="footer">{footer}</slot></div>
+        </lightning-card>
+    </div>
+</template>

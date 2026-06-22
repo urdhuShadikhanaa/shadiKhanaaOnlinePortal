@@ -1,0 +1,73 @@
+<template>
+    <!-- Sub Title Panel -->
+    <c-pq-omni-viewer-widget-header-sub
+        person-map-member-data={personMapMemberData}
+        person-contact-data={personContactData}
+        person-contact-extended-data={personContactExtendedData}
+        profile-image-data={profileImageData}
+    ></c-pq-omni-viewer-widget-header-sub>
+
+    <hr class="top" />
+
+    <div
+        if:true={needsRefresh}
+        class="refresh-layer error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        data-name="transparent-layer"
+        onclick={refreshClicked}
+    >
+        <div class="refresh-text-layer">{labels.Click_Here_To_Refresh}</div>
+    </div>
+
+    <!-- Task Listings Panel -->
+    <div class="page-title">{labels.PageTitle}</div>
+
+    <template if:false={loaded}>
+        <div>{labels.Loading}</div>
+    </template>
+    <template if:true={loaded}>
+        <template if:false={hasData}>
+            <div>{labels.No_Related_Tasks}</div>
+        </template>
+        <template if:true={hasData}>
+            <lightning-combobox
+                if:true={loaded}
+                name="filter"
+                variant="label-hidden"
+                value={viewType}
+                options={options}
+                class="slds-p-bottom_x-small slds-p-top_x-small"
+                onchange={handleChange}
+            >
+            </lightning-combobox>
+            <template for:each={displayTasks} for:item="task">
+                <div
+                    key={task.id}
+                    class="slds-grid slds-gutters_x-small task-container"
+                    title={labels.Open_In_New_Window}
+                    onclick={handleTaskClicked}
+                    data-id={task.id}
+                >
+                    <div class="slds-col slds-size_6-of-12">
+                        <p class="task-subject">{task.subject}</p>
+                        {task.assignedTo}
+                    </div>
+                    <div class="slds-col slds-size_3-of-12">{task.status}</div>
+                    <div class="slds-col slds-size_2-of-12">
+                        <lightning-formatted-date-time value={task.dueDate}></lightning-formatted-date-time>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12">
+                        <lightning-button-icon
+                            class="icons"
+                            variant="bare"
+                            icon-name="utility:internal_share"
+                            alternative-text={labels.Open_In_New_Window}
+                            title={labels.Open_In_New_Window}
+                        ></lightning-button-icon>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </template>
+
+    <c-event-navigation></c-event-navigation>
+</template>

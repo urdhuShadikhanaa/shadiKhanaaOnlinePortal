@@ -1,0 +1,26 @@
+.address-panel {
+    margin: 10px 0px 10px 0px;
+}
+
+.map-navigation {
+    display: grid;
+    grid-template-columns: 50px 1fr 50px;
+    margin: 0px 0px 5px 2px;
+    justify-items: center;
+    align-items: center;
+}
+
+.map-navigation-title {
+    font-size: 0.9em;
+    color: #000;
+}
+
+.map-navigation-back {
+    line-height: 1.1em;
+    font-size: 0.8em;
+}
+
+.map-navigation-next {
+    line-height: 1.1em;
+    font-size: 0.8em;
+}

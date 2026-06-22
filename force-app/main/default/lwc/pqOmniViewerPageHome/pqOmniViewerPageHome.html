@@ -1,0 +1,38 @@
+<template>
+    <!-- Home Title Panel -->
+    <c-pq-omni-viewer-widget-header-home
+        person-map-member-data={personMapMemberData}
+        person-contact-data={personContactData}
+        person-contact-extended-data={personContactExtendedData}
+        profile-image-data={profileImageData}
+    ></c-pq-omni-viewer-widget-header-home>
+
+    <!-- Last Activity Panel -->
+    <template if:true={hasLastActivity}>
+        <div class="activity-panel">{lastActivity}</div>
+    </template>
+
+    <!-- Phone/Email Panel -->
+    <div class="email-panel">
+        <span class="phone">{phone}</span>
+        <span class="email">{email}</span>
+    </div>
+
+    <hr class="one" />
+
+    <!-- Influence & Support Panel -->
+    <c-pq-omni-viewer-widget-influence-support
+        title={containerName}
+        influence-value={influence}
+        support-value={support}
+        influence-override-value={influenceOverrideValue}
+        support-override-value={supportOverrideValue}
+        support-color={supportColor}
+        influence-label={influenceLabel}
+        support-label={supportLabel}
+        is-global={isGlobal}
+        is-highlighted="false"
+    ></c-pq-omni-viewer-widget-influence-support>
+
+    <hr class="one" />
+</template>

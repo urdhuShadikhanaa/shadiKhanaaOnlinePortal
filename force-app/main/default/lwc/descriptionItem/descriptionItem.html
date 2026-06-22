@@ -1,0 +1,20 @@
+<template>
+    <div class="slds-m-bottom_xxx-small">
+        <div>{label}</div>
+    </div>
+    <div class="slds-media">
+        <div class="slds-media__figure">
+            <lightning-icon icon-name={iconName} size="x-small"></lightning-icon>
+        </div>
+        <div class="slds-media__body">
+            <template if:true={loading}>
+                <c-stencil row-count="1" column-count="1"></c-stencil>
+            </template>
+            <template if:false={loading}>
+                <slot name="pre"></slot>
+                {detail}
+            </template>
+        </div>
+        <div class="slds-media__figure slds-media__figure_reverse"></div>
+    </div>
+</template>

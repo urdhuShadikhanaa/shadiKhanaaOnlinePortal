@@ -1,0 +1,51 @@
+.page-title {
+    text-align: center;
+    font-size: 1.1em;
+    color: #000000;
+    font-weight: bold;
+    margin: 15px 0px 20px 0px;
+}
+
+.pq-omni-viewer-pageset {
+    display: grid;
+    grid-template-columns: 55px 1fr;
+}
+
+.pq-omni-viewer-tabstrip {
+    grid-column-start: 1;
+    width: 60px;
+}
+
+.pq-omni-viewer-tabset {
+    margin-bottom: 25px;
+}
+
+.pq-omni-viewer-page {
+    grid-column-start: 2;
+    min-height: 50em;
+    min-width: 35em;
+    padding: 25px 40px 40px 40px;
+    border-radius: 5px 10px 10px 10px;
+    background-color: #fff;
+}
+
+.pq-omni-viewer-tab {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px 0px 0px 10px;
+    padding: 10px;
+    text-align: center;
+    margin: 0px 5px 7px 5px;
+    cursor: pointer;
+    box-shadow: inset -16px 0px 8px -15px #a5a5a5;
+}
+
+.pq-omni-viewer-tab.active {
+    background-color: #fff;
+    cursor: default;
+    box-shadow: 7px 5px 4px -3px rgb(165 165 165 / 40%)
+}
+
+.pq-omni-viewer-tab.inactive {
+    background-color: #c0c0c0;
+}

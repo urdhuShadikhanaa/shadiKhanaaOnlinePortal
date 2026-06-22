@@ -1,0 +1,180 @@
+<template>
+    <div class="main-container slds-is-absolute slds-size_full">
+        <template if:true={loading}>
+            <lightning-spinner alternative-text={labels.loading} size="medium"></lightning-spinner>
+        </template>
+
+        <template if:true={isEditing}>
+            <div
+                if:true={hasRelatedWhiteSpaces}
+                class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning"
+                role="alert"
+            >
+                <lightning-icon
+                    icon-name="utility:warning"
+                    alternative-text="Warning!"
+                    title="Warning"
+                ></lightning-icon>
+                <h2>{labels.templateWarning}</h2>
+            </div>
+        </template>
+
+        <div class="slds-page-header builder-header">
+            <div class="slds-grid">
+                <div class="slds-col slds-has-flexi-truncate">
+                    <header class="slds-media slds-wrap slds-media_center slds-has-flexi-truncate bundle-heading">
+                        <div class="slds-col slds-size_3-of-12 slds-col_bump-right slds-media__body">
+                            <div if:true={_viewMode}>
+                                <h2 title="input-rich-text" class="slds-card__header-title">
+                                    <span
+                                        class="slds-page-header__title slds-m-right_small slds-align-middle slds-truncate"
+                                        >{templateName}</span
+                                    >
+                                </h2>
+                            </div>
+
+                            <lightning-input
+                                if:false={_viewMode}
+                                readonly={_viewMode}
+                                data-name="templateName"
+                                name="templateName"
+                                label={labels.templateName}
+                                type="string"
+                                value={templateName}
+                                onchange={handleTemplateNameChange}
+                                variant="label-stacked"
+                                class="slds-m-left_small"
+                                max-length="80"
+                                required
+                            ></lightning-input>
+                        </div>
+                        <div class="slds-col slds-no-flex">
+                            <template if:true={_createMode}>
+                                <lightning-button
+                                    label={labels.cancel}
+                                    title={labels.cancel}
+                                    onclick={handlePageCancel}
+                                >
+                                </lightning-button>
+                                <lightning-button
+                                    variant="brand"
+                                    label={labels.save}
+                                    title={labels.save}
+                                    onclick={handlePageSave}
+                                    disabled={isSaveTemplateDisabled}
+                                    class="slds-m-left_xx-small"
+                                ></lightning-button>
+                            </template>
+                            <template if:false={_createMode}>
+                                <lightning-button
+                                    if:true={showEditButton}
+                                    label={labels.edit}
+                                    title={labels.edit}
+                                    icon-name="utility:edit"
+                                    onclick={handleEditClick}
+                                ></lightning-button>
+                                <lightning-button
+                                    if:false={_viewMode}
+                                    label={labels.cancel}
+                                    title={labels.cancel}
+                                    onclick={handleEditCancel}
+                                >
+                                </lightning-button>
+                                <lightning-button
+                                    if:false={_viewMode}
+                                    variant="brand"
+                                    label={labels.save}
+                                    title={labels.save}
+                                    onclick={handlePageSave}
+                                    disabled={isSaveTemplateDisabled}
+                                    class="slds-m-left_xx-small"
+                                ></lightning-button>
+                            </template>
+                        </div>
+                    </header>
+                </div>
+            </div>
+        </div>
+        <div class="content-container">
+            <c-layout-with-side-panel docked>
+                <div slot="content" class="content-container slds-p-around_medium">
+                    <div class="grid-container">
+                        <div class="blank"></div>
+                        <div
+                            class="column template-area hover-border-fade"
+                            data-area-name={templateAreas.column}
+                            onclick={handleAreaClick}
+                        >
+                            <c-builder-area
+                                show-progress={isEditing}
+                                title={labels.columns}
+                                type={templateAreas.column}
+                                is-valid={columnValidity}
+                                configuration={configurations.column}
+                                required
+                            >
+                            </c-builder-area>
+                        </div>
+                        <div
+                            class="row template-area hover-border-fade"
+                            data-area-name={templateAreas.row}
+                            onclick={handleAreaClick}
+                        >
+                            <c-builder-area
+                                show-progress={isEditing}
+                                title={labels.rows}
+                                type={templateAreas.row}
+                                is-valid={rowValidity}
+                                configuration={configurations.row}
+                                required
+                            ></c-builder-area>
+                        </div>
+                        <div
+                            class="cell template-area hover-border-fade"
+                            data-area-name={templateAreas.cell}
+                            onclick={handleAreaClick}
+                        >
+                            <c-builder-area
+                                show-progress={isEditing}
+                                title={labels.cells}
+                                type={templateAreas.cell}
+                                is-valid={cellValidity}
+                                configuration={configurations.cell}
+                                required={isCellDataRequired}
+                            >
+                            </c-builder-area>
+                        </div>
+                    </div>
+                </div>
+                <c-panel slot="panel" panel-header-style="slds-hide">
+                    <div class="slds-p-around_medium">
+                        <template if:true={isHeaderAreaActive}>
+                            <c-header-builder
+                                area={selectedArea}
+                                read-only={_viewMode}
+                                onformchange={handleHeaderFormChange}
+                                builder-state={configurations}
+                            ></c-header-builder>
+                        </template>
+                        <template if:true={isCellAreaActive}>
+                            <div>
+                                <c-cell-builder
+                                    read-only={_viewMode}
+                                    amount-types={amountTypes}
+                                    target-object-options={cellObjectTypeOptions}
+                                    onaddamounttypefield={handleAddAmountTypeField}
+                                    onremoveamounttypefield={handleRemoveAmountTypeField}
+                                    onaddbasicfield={handleAddBasicField}
+                                    onremovebasicfield={handleRemoveBasicField}
+                                    onformchange={handleCellFormChange}
+                                    builder-state={configurations}
+                                >
+                                </c-cell-builder>
+                            </div>
+                        </template>
+                    </div>
+                </c-panel>
+            </c-layout-with-side-panel>
+        </div>
+    </div>
+</template>

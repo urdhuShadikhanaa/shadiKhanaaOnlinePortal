@@ -1,0 +1,29 @@
+/* ------------------------------------------------ */
+
+.display-element {
+    display: block;
+    padding: 10px;
+    text-align: left;
+}
+
+.notes-display {
+    min-height: 100px;
+    border: 1px solid #fff;
+    background-color: rgb(245, 245, 245);
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.notes-display.editable:hover {
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.highlight-container {
+    padding-bottom: 8px;
+}
+
+/* ------------------------------------------------ */

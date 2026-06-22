@@ -1,0 +1,162 @@
+<template>
+    <div class={fullscreenClass}>
+        <c-pq-card-lwc title={label.Influence_Chart}>
+            <div slot="actions">
+                <div class="slds-grid">
+                    <div class="slds-col">
+                        <lightning-button-icon
+                            class="refresh-button"
+                            alternative-text={label.Refresh}
+                            icon-name="utility:refresh"
+                            onclick={reloadData}
+                        ></lightning-button-icon>
+                    </div>
+                    <div class="slds-m-left_xx-small slds-col">
+                        <template if:true={isExpanded}>
+                            <lightning-button-icon
+                                alternative-text={label.Exit_Full_Screen}
+                                icon-name="utility:contract_alt"
+                                onclick={fullScreenHandler}
+                            ></lightning-button-icon>
+                        </template>
+                        <template if:false={isExpanded}>
+                            <lightning-button-icon
+                                alternative-text={label.Full_Screen}
+                                icon-name="utility:expand_alt"
+                                onclick={fullScreenHandler}
+                            ></lightning-button-icon>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text={label.Loading} variant="brand"></lightning-spinner>
+            </template>
+            <div class="pro-scroll-content">
+                <lightning-layout vertical-align="stretch">
+                    <div class={emptyCornerHeaderClasses}></div>
+                    <template iterator:support_item={visibleSupport}>
+                        <div
+                            key={support_item.value.value}
+                            if:false={support_item.last}
+                            class={supportHeaderClasses}
+                            style={support_item.value.style}
+                        >
+                            {support_item.value.value}
+                        </div>
+                        <div
+                            key={support_item.value.value}
+                            if:true={support_item.last}
+                            class={supportHeaderLastClasses}
+                            style={support_item.value.style}
+                        >
+                            {support_item.value.value}
+                        </div>
+                    </template>
+                </lightning-layout>
+                <template for:each={formattedData} for:item="row">
+                    <lightning-layout key={row.name} vertical-align="stretch">
+                        <div class={influenceHeaderClasses}>{row.label}</div>
+                        <template iterator:cell={row.items}>
+                            <div
+                                key={cell.value.name}
+                                if:false={cell.last}
+                                class={cellClasses}
+                                data-influence-name={row.name}
+                                data-support-name={cell.value.name}
+                                ondragleave={handleDragLeave}
+                                ondragover={handleDragOver}
+                                ondrop={handleDrop}
+                            >
+                                <template for:each={cell.value.items} for:item="member">
+                                    <c-relationship-influence-chart-member
+                                        key={member.id}
+                                        data-influence-name={row.name}
+                                        data-support-name={cell.value.name}
+                                        support={cell.value.name}
+                                        influence={row.name}
+                                        member={member}
+                                        menu-items={menuItems}
+                                        can-drag={canDrag}
+                                        border-color={cell.value.color}
+                                        onmemberaction={handleMemberAction}
+                                    ></c-relationship-influence-chart-member>
+                                </template>
+                            </div>
+                            <div
+                                key={cell.value.name}
+                                if:true={cell.last}
+                                class={lastCellClasses}
+                                data-influence-name={row.name}
+                                data-support-name={cell.value.name}
+                                ondragleave={handleDragLeave}
+                                ondragover={handleDragOver}
+                                ondrop={handleDrop}
+                            >
+                                <template for:each={cell.value.items} for:item="member">
+                                    <c-relationship-influence-chart-member
+                                        key={member.id}
+                                        data-influence-name={row.name}
+                                        data-support-name={cell.value.name}
+                                        support={cell.value.name}
+                                        influence={row.name}
+                                        member={member}
+                                        menu-items={menuItems}
+                                        can-drag={canDrag}
+                                        border-color={cell.value.color}
+                                        onmemberaction={handleMemberAction}
+                                    ></c-relationship-influence-chart-member>
+                                </template>
+                            </div>
+                        </template>
+                    </lightning-layout>
+                </template>
+            </div>
+        </c-pq-card-lwc>
+    </div>
+
+    <!-- DELETE MODAL-->
+    <div aria-hidden="true" role="dialog" class={deleteModalClasses}>
+        <div class="slds-modal__container">
+            <div class="slds-modal__header slds-theme_default">
+                <h2 id="header43" class="slds-text-heading_medium">{deleteModalHeader}</h2>
+            </div>
+            <p if:true={deleteErrorText} class="slds-text-color_error">
+                <lightning-formatted-rich-text value={deleteErrorText}></lightning-formatted-rich-text>
+            </p>
+            <div if:true={canDeleteMemberRecord}>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-is-relative">
+                        <template if:true={isSaving}>
+                            <lightning-spinner alternative-text={label.Loading} variant="brand"></lightning-spinner>
+                        </template>
+                        {deleteConfirmationMessage}
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" disabled={isSaving} onclick={handleDeleteCancel}>
+                        {label.Cancel}
+                    </button>
+                    <button class="slds-button slds-button_brand" disabled={isSaving} onclick={handleDeleteConfirm}>
+                        {label.Confirm}
+                    </button>
+                </div>
+            </div>
+            <div if:false={canDeleteMemberRecord}>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-is-relative slds-text-color_error">
+                        {label.error_you_do_not_have_permission_to_perform_this_action}
+                    </div>
+                </div>
+                <div class="slds-modal__footer">
+                    <lightning-button
+                        variant="neutral"
+                        label={label.Cancel}
+                        onclick={handleDeleteCancel}
+                    ></lightning-button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class={backdropClasses}></div>
+</template>

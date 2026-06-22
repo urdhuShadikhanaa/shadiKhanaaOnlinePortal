@@ -1,0 +1,15 @@
+:host {
+    --sds-c-card-color-background: rgb(243, 242, 242);
+    --sds-c-card-body-spacing-block-end: 0;
+}
+
+/* fixes issue with missing borders and padding around card when card is placed inside of another card on the page
+https://salesforce.stackexchange.com/questions/286477/lwc-lightning-card-border-not-shown-with-slds-card-boundary
+*/
+.pq-card-wrapper {
+    display: block;
+}
+
+.pq-no-results-text {
+    margin-top: -20px;
+}

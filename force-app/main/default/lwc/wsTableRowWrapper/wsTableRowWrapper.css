@@ -1,0 +1,60 @@
+/* ------------------------------------------------ */
+
+:host {
+    display: contents;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ------------------------------------------------ */
+
+table.ws-table th {
+    padding: 5px;
+    border: 0px solid black;
+}
+
+table.ws-table td {
+    padding: 5px;
+    border: 0px solid black;
+}
+
+/* ------------------------------------------------ */
+
+th.ws-row-header-layer {
+    background-color: #fff;
+    position: sticky;
+    position: -webkit-sticky;
+    z-index: 5;
+}
+
+th.ws-row-header-layer.group {
+    left: 0px;
+}
+
+th.ws-row-header-layer.parent {
+    left: 0px;
+}
+
+/* -- IE10+ specific styles go here --------------*/
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+    th.ws-row-header-layer {
+        position: relative;
+        transform: translate(-60px, 0px);
+    }
+
+    div.ws-row-header-rotate {
+        top: unset;
+    }
+
+    th.ws-row-header-layer.group {
+        transform: translate(0px, 0px);
+    }
+
+    th.ws-row-header-layer.parent {
+        transform: translate(-60px, 0px);
+    }
+}
+
+/* ------------------------------------------------ */

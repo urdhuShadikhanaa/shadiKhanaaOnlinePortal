@@ -1,0 +1,45 @@
+hr.one {
+    border-top: 1px solid #ccc;
+    margin: 20px 0px 15px 0px;
+}
+
+.activity-panel {
+    font-size: 0.9em;
+    line-height: 1.1em;
+    margin: 10px 0px 10px 0px;
+    font-style: italic;
+    font-weight: 600;
+    color: #7a03ff;
+    text-align: center;
+}
+
+.tag-panel {
+    font-size: 1.2em;
+    line-height: 1.2em;
+    color: #72b3dc;
+}
+
+.tag {
+    font-size: 1.2em;
+    line-height: 1.2em;
+    color: #72b3dc;
+}
+
+.email-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    margin-top: 10px;
+}
+
+.phone {
+    font-size: 1.1em;
+    line-height: 1.2em;
+    color: #000000;
+}
+
+.email {
+    font-size: 1.1em;
+    line-height: 1.2em;
+    color: #000000;
+}

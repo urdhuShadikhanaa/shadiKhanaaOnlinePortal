@@ -1,0 +1,42 @@
+<template>
+    <c-pq-card-lwc title="Objective Summary">
+        <div slot="actions">
+            <div class="slds-grid">
+                <div class="slds-col">
+                    <lightning-button-icon
+                        icon-name={iconName}
+                        slot="actions"
+                        onclick={handleChartChange}
+                    ></lightning-button-icon>
+                </div>
+            </div>
+        </div>
+        <div
+            if:true={loaded}
+            class="chart-container slds-p-around_small slds-grid slds-grid--vertical-align-center slds-grid--align-center"
+        >
+            <c-pq-chartjs
+                if:true={usePieChart}
+                class="objChart"
+                width="200"
+                height="200"
+                chart-config={objectiveConfiguration}
+            ></c-pq-chartjs>
+            <c-pq-chartjs
+                if:true={usePieChart}
+                class="taskChart"
+                width="200"
+                height="200"
+                chart-config={taskConfiguration}
+            ></c-pq-chartjs>
+
+            <c-pq-chartjs
+                if:false={usePieChart}
+                class="barChart"
+                width="400"
+                height="200"
+                chart-config={barConfiguration}
+            ></c-pq-chartjs>
+        </div>
+    </c-pq-card-lwc>
+</template>

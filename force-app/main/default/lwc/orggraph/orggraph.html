@@ -1,0 +1,165 @@
+<template>
+    <c-layout-with-side-panel opened={sidePanelVisible}>
+        <c-panel
+            show-close-button
+            show-undock-option="false"
+            onpanelclose={handlePanelClose}
+            onpanelundock={handlePanelUnDock}
+            panel-style="width:unset;height:100%"
+            slot="panel"
+        >
+            <div class="sidePanel">
+                <c-pq-omni-viewer
+                    ondockomniviewer={dockOmniViewer}
+                    onundockomniviewer={unDockOmniViewer}
+                    onrequestobjectviewer={passthroughEvent}
+                ></c-pq-omni-viewer>
+
+                <div style={contactLookupDisplay}>
+                    <div if:true={contactLookupVisible}>
+                        <c-org-graph-contact-lookup
+                            class="searchContainer"
+                            onsearchresults={handleSearchResults}
+                            onperformsearch={handleSidePanelSearch}
+                            exclude-contact-ids={contactIdsToExclude}
+                            exclude-user-ids={userIdsToExclude}
+                            exclude-lead-ids={leadIdsToExclude}
+                            account-id={accountId}
+                            map-id={mapOrPlanId}
+                        ></c-org-graph-contact-lookup>
+                    </div>
+                    <div class="palette-info" if:true={hasPaletteInfo}><p>{paletteInfoText}</p></div>
+                    <div class={paletteStyle} lwc:dom="manual"></div>
+                </div>
+            </div>
+        </c-panel>
+
+        <div slot="content">
+            <div if:true={showIntroGraphics} class="empty-rm-container">
+                <c-svg-provider width="441.39" height="308.95" svg-name="relationshipMapCloud"></c-svg-provider>
+                <p class="empty-rm-text">{labels.thisRelationshipMapHasNoData}</p>
+            </div>
+            <div class="position-relative">
+                <div if:false={showIntroGraphics} class="search-rm-container">
+                    <div class="search-rm">
+                        <lightning-input
+                            type="text"
+                            label=""
+                            placeholder={labels.search}
+                            onchange={handleSearchChange}
+                        ></lightning-input>
+                    </div>
+                </div>
+                <div class={overviewCSS} lwc:dom="manual"></div>
+                <div class="main" lwc:dom="manual"></div>
+                <ul class="menu action-menu">
+                    <li if:true={canChangeGroupLayout} class="menu-item">
+                        <c-svg-provider width="24" height="24" svg-name="group"></c-svg-provider>
+                        <span class="slds-p-left_x-small">{labels.layout}</span>
+                        <ul class="menu">
+                            <template for:each={groupLayouts} for:item="layout">
+                                <li
+                                    key={layout.id}
+                                    data-group={layout.groupId}
+                                    data-type={layout.type}
+                                    class="menu-item"
+                                    onclick={groupLayoutClicked}
+                                >
+                                    <span class="slds-p-left_x-small">{layout.type}</span>
+                                </li>
+                            </template>
+                        </ul>
+                    </li>
+                    <li if:true={canMarkNodes} class="menu-item">
+                        <c-svg-provider
+                            width="24"
+                            height="24"
+                            svg-name="generic"
+                            svg-data={defaultSvgData}
+                        ></c-svg-provider>
+                        <span class="slds-p-left_x-small">{labels.markCard}</span>
+                        <ul class="menu">
+                            <template for:each={_badgeOptions} for:item="badge">
+                                <li key={badge.id} data-id={badge.id} class="menu-item" onclick={badgeOptionClicked}>
+                                    <c-svg-provider
+                                        width="24"
+                                        height="24"
+                                        svg-name="generic"
+                                        svg-data={badge.data}
+                                    ></c-svg-provider
+                                    ><span class="slds-p-left_x-small">{badge.label}</span>
+                                </li>
+                            </template>
+                            <li class="menu-item" onclick={badgeClearClicked}>
+                                <span class="slds-p-left_x-small">{labels.clear}</span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li if:true={canDrawRel} class="menu-item">
+                        <c-svg-provider
+                            width="24"
+                            height="24"
+                            svg-name="draw"
+                            styles={defaultDrawRelStyle}
+                        ></c-svg-provider>
+                        <span class="slds-p-left_x-small">{labels.draw}</span>
+                        <ul class="menu">
+                            <template for:each={relationshipTypes} for:item="relType">
+                                <li
+                                    key={relType.id}
+                                    data-id={drawRelObjectId}
+                                    data-type={relType.type}
+                                    data-color={relType.color}
+                                    data-action="draw"
+                                    class="menu-item"
+                                    onclick={relTypeClicked}
+                                >
+                                    <c-svg-provider
+                                        width="24"
+                                        height="24"
+                                        svg-name="draw"
+                                        styles={relType.styles}
+                                    ></c-svg-provider
+                                    ><span class="slds-p-left_x-small">{relType.label}</span>
+                                </li>
+                            </template>
+                        </ul>
+                    </li>
+                    <template for:each={menuActions} for:item="action">
+                        <li
+                            key={action.name}
+                            data-id={action.objectId}
+                            data-type={action.type}
+                            data-color={action.color}
+                            data-action={action.name}
+                            data-category={action.category}
+                            data-contact={action.contactId}
+                            class="menu-item"
+                            onclick={menuClicked}
+                        >
+                            <c-svg-provider
+                                width="24"
+                                height="24"
+                                svg-name={action.name}
+                                styles={action.styles}
+                                svg-data={action.data}
+                            >
+                            </c-svg-provider
+                            ><span class="slds-p-left_x-small">{action.label}</span>
+                        </li>
+                    </template>
+                </ul>
+                <ul class="menu placeholder-menu">
+                    <li data-action="replace" class="replace menu-item" onclick={dropMenuClicked}>
+                        <c-svg-provider width="24" height="24" svg-name="replace"></c-svg-provider
+                        ><span class="slds-p-left_x-small">{labels.replacePlaceholder}</span>
+                    </li>
+                    <li data-action="reportsto" class="reportsto menu-item" onclick={dropMenuClicked}>
+                        <c-svg-provider width="24" height="24" svg-name="reportsto"></c-svg-provider
+                        ><span class="slds-p-left_x-small">{labels.reportsTo}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </c-layout-with-side-panel>
+</template>

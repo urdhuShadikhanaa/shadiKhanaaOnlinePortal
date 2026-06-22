@@ -1,0 +1,38 @@
+<template>
+    <c-modal header={modalTitle} onclosedialog={handleCancel}>
+        <div class="message-container">{message}</div>
+        <div class="message-options">
+            <lightning-checkbox-group
+                label=""
+                options={messageOptions}
+                value={messageOptionsValue}
+                onchange={handleOptionChange}
+            >
+            </lightning-checkbox-group>
+        </div>
+        <div slot="footer">
+            <lightning-button
+                variant="neutral"
+                label={labels.cancel_label}
+                title={labels.cancel_label}
+                onclick={handleCancelClick}
+                class="slds-m-left_x-small"
+            ></lightning-button>
+            <lightning-button
+                variant="destructive"
+                label={mainActionLabel}
+                title={mainActionLabel}
+                onclick={handleMainActionClick}
+                class="slds-m-left_x-small"
+            ></lightning-button>
+            <lightning-button
+                if:true={alternativeActionLabel}
+                variant="destructive"
+                label={alternativeActionLabel}
+                title={alternativeActionLabel}
+                onclick={handleAlternativeActionClick}
+                class="slds-m-left_x-small"
+            ></lightning-button>
+        </div>
+    </c-modal>
+</template>

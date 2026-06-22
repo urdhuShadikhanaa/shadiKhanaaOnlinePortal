@@ -1,0 +1,42 @@
+<template>
+    <div class="main-container" if:true={loaded}>
+        <div key={hierarchyData.id}>{hierarchyData.containerName}</div>
+        <template for:each={hierarchyData.entries} for:item="displayItem">
+
+            <div
+                if:true={hierarchyData.isGlobal}
+                key={displayItem.id}
+                class="slds-grid hierarchy-container"
+                data-rmid={displayItem.rmId}
+                data-apid={displayItem.apId}
+            >
+                <div class="slds-col slds-size_12-of-12">
+                    <p>{displayItem.verb}&nbsp;<b>{displayItem.person}</b></p>
+                </div>
+            </div>
+
+            <div
+                if:false={hierarchyData.isGlobal}
+                key={displayItem.id}
+                class="slds-grid hierarchy-container clickable"
+                data-id={displayItem.id}
+                data-rmid={displayItem.rmId}
+                data-apid={displayItem.apId}
+                onclick={handleNavigateToClicked}
+                title={labels.Open_In_New_Window}
+            >
+                <div class="slds-col slds-size_11-of-12">
+                    <p>{displayItem.verb}&nbsp;<b>{displayItem.person}</b></p>
+                </div>
+                <div class="slds-col slds-size_1-of-12">
+                    <lightning-button-icon
+                        class="icons"
+                        variant="bare"
+                        icon-name="utility:internal_share"
+                    ></lightning-button-icon>
+                </div>
+            </div>
+
+        </template>
+    </div>
+</template>

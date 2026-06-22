@@ -1,0 +1,14 @@
+.container {
+    border-bottom: 1px solid #bfbfbf;
+    margin-bottom: 12px;
+}
+
+.main {
+    width: 100%;
+    flex-grow: 1;
+}
+
+.input {
+    width: 100%;
+    text-align: left;
+}

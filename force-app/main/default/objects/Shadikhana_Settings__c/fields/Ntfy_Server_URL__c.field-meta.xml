@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ntfy_Server_URL__c</fullName>
+    <defaultValue>&quot;https://ntfy.sh&quot;</defaultValue>
+    <description>Open source ntfy server URL. Use https://ntfy.sh or your self-hosted ntfy instance.</description>
+    <externalId>false</externalId>
+    <label>ntfy Server URL</label>
+    <length>255</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

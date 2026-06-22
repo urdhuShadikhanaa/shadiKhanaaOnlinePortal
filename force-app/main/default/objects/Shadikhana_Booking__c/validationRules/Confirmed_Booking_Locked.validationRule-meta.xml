@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Confirmed_Booking_Locked</fullName>
+    <active>true</active>
+    <description>Once a booking is confirmed, the record cannot be changed or cancelled.</description>
+    <errorConditionFormula>AND(
+NOT(ISNEW()),
+ISPICKVAL(PRIORVALUE(Status__c), &quot;Confirmed&quot;)
+)</errorConditionFormula>
+    <errorDisplayField>Status__c</errorDisplayField>
+    <errorMessage>Confirmed bookings cannot be changed or cancelled.</errorMessage>
+</ValidationRule>

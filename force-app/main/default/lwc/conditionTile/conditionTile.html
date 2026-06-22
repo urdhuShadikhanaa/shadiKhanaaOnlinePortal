@@ -1,0 +1,18 @@
+<template>
+    <div class="slds-grid slds-grid_vertical-align-center" onclick={handleEdit}>
+        <button class="slds-button_reset slds-grow slds-has-blur-focus">
+            <span class="slds-assistive-text">{labels.editCondition}</span>
+            <span class="slds-show slds-text-body_small">{fieldLabel}</span>
+            <span class="slds-show">{operatorLabel} {value}</span>
+        </button>
+        <lightning-button-icon
+            if:false={readOnly}
+            title={labels.remove}
+            class="slds-button__icon_hint"
+            icon-name="utility:delete"
+            variant="bare"
+            size="small"
+            onclick={handleRemove}
+        ></lightning-button-icon>
+    </div>
+</template>

@@ -1,0 +1,14 @@
+<template>
+    <!-- TEXT AREA / TEXT -->
+    <div class="slds-form-element">
+        <lightning-textarea
+            data-id="inputTextArea"
+            label={displayName}
+            value={value}
+            maxlength="255"
+            oninput={onTextInput}
+            class="slds-textarea ws-textarea slds-p-bottom_xx-small"
+            onchange={onValueChange}
+        ></lightning-textarea>
+    </div>
+</template>

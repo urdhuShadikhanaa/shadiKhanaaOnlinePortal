@@ -1,0 +1,17 @@
+<template>
+    <c-modal-with-record-type-selection modal-title={title} onrecordtypeselected={handleRecordTypeSelected}>
+        <c-pq-dynamic-record-form
+            object-api-name={objectApiName}
+            field-values={fieldValues}
+            onsuccess={handleSuccess}
+            onload={handleLoad}
+            columns="2"
+            record-type-id={recordTypeId}
+        >
+        </c-pq-dynamic-record-form>
+        <div slot="footer">
+            <lightning-button variant="neutral" label="Cancel" class="slds-button" onclick={hide}></lightning-button>
+            <lightning-button variant="brand" label="Save" class="slds-button" onclick={handleSave}></lightning-button>
+        </div>
+    </c-modal-with-record-type-selection>
+</template>

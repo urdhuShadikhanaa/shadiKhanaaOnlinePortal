@@ -1,0 +1,32 @@
+<template>
+    <div class="page-section page-main">
+        <!-- General -->
+        <h3 class="slds-section-title_divider slds-text-heading_small slds-p-horizontal_none">{labels.title}</h3>
+        <div class="slds-grid pro-grid slds-var-p-around_medium">
+            <div class="slds-col">
+                <lightning-spinner if:true={loading}></lightning-spinner>
+                <template if:true={loaded}>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-var-p-vertical_xxx-small">
+                        <lightning-formatted-text
+                            value={labels.Ability_To_Create_New_Records}
+                        ></lightning-formatted-text>
+                        <lightning-input
+                            if:false={loading}
+                            type="toggle"
+                            variant="label-hidden"
+                            checked={canCreateObjectsInCrossSell}
+                            message-toggle-active={labels.Enabled}
+                            message-toggle-inactive={labels.Disabled}
+                            onchange={handleOnNewObjectCreation}
+                        ></lightning-input>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+    <!-- Template Object Filter -->
+    <c-settings-whitespace-object-filters
+        if:true={loaded}
+        object-filter-string={crossSellObjectFilterString}
+    ></c-settings-whitespace-object-filters>
+</template>

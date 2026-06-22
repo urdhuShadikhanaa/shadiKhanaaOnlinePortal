@@ -1,0 +1,54 @@
+<template>
+    <lightning-card icon-name={iconName} class="slds-card_boundary pq-card-wrapper">
+        <div slot="title">
+            <slot name="title">
+                <template if:true={showRecordCount}> {title} {recordCountDisplay} </template>
+                <template if:false={showRecordCount}> {title} </template>
+            </slot>
+        </div>
+
+        <div class="slds-border_top slds-is-relative" style={customHeightStyle}>
+            <template if:true={showSpinner}>
+                <lightning-spinner alternative-text={labels.loading}></lightning-spinner>
+            </template>
+            <c-datatable-extension
+                key-field={keyField}
+                hide-checkbox-column={isHideCheckbox}
+                data={displayedTableData}
+                columns={tableColumns}
+                column-widths-mode={columnWidthsMode}
+                show-row-number-column={showRowNumberColumn}
+                sorted-by={sortedBy}
+                sorted-direction={sortedDirection}
+                onsort={handleColumnSorting}
+                onrowaction={handleRowAction}
+            ></c-datatable-extension>
+            <c-pq-illustration-lwc if:true={showEmptyGraphics} image-url={emptyDataUrl}></c-pq-illustration-lwc>
+            <div
+                class="pq-no-results-text slds-text-color_weak slds-text-heading_small slds-text-align_center slds-p-bottom_medium"
+            >
+                {labels.noResultsFound}
+            </div>
+        </div>
+
+        <div slot="actions">
+            <lightning-layout horizontal-align="end" vertical-align="end" pull-to-boundary="small">
+                <template if:true={showComposedActions}>
+                    <lightning-layout-item class="slds-var-p-right_xx-small">
+                        <slot name="composedActions" onslotchange={handleComposedActionSlotChange}></slot>
+                    </lightning-layout-item>
+                </template>
+                <template if:true={showRefreshButton}>
+                    <lightning-layout-item class="slds-var-p-left_xx-small slds-var-p-right_small">
+                        <lightning-button-icon
+                            alternative-text={labels.refreshData}
+                            icon-name="utility:refresh"
+                            onclick={handleRefresh}
+                            variant="border-filled"
+                        ></lightning-button-icon>
+                    </lightning-layout-item>
+                </template>
+            </lightning-layout>
+        </div>
+    </lightning-card>
+</template>

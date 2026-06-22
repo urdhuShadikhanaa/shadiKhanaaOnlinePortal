@@ -1,0 +1,13 @@
+<template>
+    <template for:each={displayField.data} for:item="dataItem">
+        <div if:true={shouldRender} class="ws-sum" style={style} key={dataItem.objectId}>
+            <div class={valueContainerClass}>
+                <c-pq-generic-output-field
+                    display-type={type}
+                    field-value={dataItem.value}
+                    display-style={displayStyle}
+                ></c-pq-generic-output-field>
+            </div>
+        </div>
+    </template>
+</template>

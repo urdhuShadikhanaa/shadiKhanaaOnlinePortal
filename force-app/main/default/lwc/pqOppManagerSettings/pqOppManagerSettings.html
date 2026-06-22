@@ -1,0 +1,97 @@
+<template>
+    <div class="page-section page-main">
+        <div class="slds-grid pro-grid slds-var-p-around_medium">
+            <div class="slds-col">
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text
+                            value={labels.daysOfDataDescription}
+                        ></lightning-formatted-text>
+                        <lightning-combobox
+                            name="daysofdata"
+                            label={labels.daysOfData}
+                            value={days}
+                            placeholder="Select Option"
+                            options={options}
+                            onchange={handleChange} >
+                        </lightning-combobox>
+                    </div>
+            </div>
+        </div>
+        <div class="slds-grid pro-grid slds-var-p-around_medium">
+            <div class="slds-col">
+                <lightning-spinner if:false={loaded}></lightning-spinner>
+                <template if:true={loaded}>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text
+                            value={labels.Toggle_Schedule_Tasks_Opportunity}
+                        ></lightning-formatted-text>
+                        <lightning-input
+                            type="toggle"
+                            variant="label-hidden"
+                            checked={scheduledTaskOn}
+                            disabled={scheduledTaskOn}
+                            message-toggle-active={labels.On}
+                            message-toggle-inactive={labels.Off}
+                            onchange={handleScheduleToggled}
+                        ></lightning-input>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div class="slds-grid pro-grid slds-var-p-around_medium">
+            <div class="slds-col">
+                <lightning-spinner if:false={loaded}></lightning-spinner>
+                <template if:true={loaded}>
+                    <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                        <lightning-formatted-text
+                            value="Run Test For Date"
+                        ></lightning-formatted-text>
+                        <lightning-input
+                            type="date"
+                            variant="label-hidden"
+                            date-style="short"
+                            value={today}
+                            onchange={handleDateChanged}
+                        ></lightning-input>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+    <p if:true={errorMessage} class="slds-text-color_error">
+        <lightning-formatted-rich-text value={errorMessage}></lightning-formatted-rich-text>
+    </p>
+            <lightning-layout>
+                <lightning-layout-item size="7">
+                    <div class="slds-m-top_medium">
+                        <c-map-settings-display-fields
+                            member-fields={orgChartFields}
+                            loading={orgChartFieldsLoading}
+                            ondisplayfieldchange={handleVisibilityChange}
+                        ></c-map-settings-display-fields>
+                    </div>
+                    <div class="slds-m-top_medium">
+                        <c-map-settings-feature-flags
+                            setting-type="om"
+                            auto-generate={autoGenerateMapFlag}
+                            onautogeneratemapchange={handleAutoGenerateMapChange}
+                            loading={featureFlagsLoading}
+                        ></c-map-settings-feature-flags>
+                    </div>
+                    <div class="slds-m-top_medium">
+                        <c-map-settings-default-values
+                            type="om"
+                            onsettingschange={passthroughEvent}
+                        ></c-map-settings-default-values>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="5">
+                    <c-map-settings-field-selection
+                        if:false={objectsLoading}
+                        fields={objects}
+                        loading={objectsLoading}
+                        onfieldtoggled={handleFieldToggled}
+                    ></c-map-settings-field-selection>
+                </lightning-layout-item>
+            </lightning-layout>
+</template>

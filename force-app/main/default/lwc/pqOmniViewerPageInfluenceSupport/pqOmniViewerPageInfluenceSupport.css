@@ -1,0 +1,31 @@
+hr.top {
+    border-top: 1px solid #ccc;
+    margin: 25px 0px 10px 0px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 1.1em;
+    color: #000000;
+    font-weight: bold;
+    margin: 15px 0px 20px 0px;
+}
+
+.title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.sub-title {
+    font-size: 1.0em;
+    color: #000000;
+    margin: 15px 0px 10px 0px;
+}
+
+.pq-omni-viewer-page {
+    grid-column-start: 2;
+    min-height: 200px;
+    padding: 40px;
+    border-radius: 0px 10px 10px 10px;
+    background-color: #fff;
+}

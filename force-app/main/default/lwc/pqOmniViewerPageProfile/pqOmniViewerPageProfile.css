@@ -1,0 +1,79 @@
+hr.top {
+    border-top: 1px solid #ccc;
+    margin: 25px 0px 10px 0px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 1.1em;
+    color: #000000;
+    font-weight: bold;
+    margin: 15px 0px 20px 0px;
+}
+
+.one-column-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.two-column-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.section {
+    margin-bottom: 20px;
+    border-bottom: 0px solid #ccc;
+}
+
+.section-label {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.field-wrapper {
+    width: 15em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.field-label {
+    font-size: 0.7em;
+    line-height: 1em;
+    margin-top: 5px;
+    color: #bebebe;
+    min-height: 1em;
+}
+
+.field-value {
+    font-size: 1em;
+    line-height: 1.3em;
+    padding: 1px 2px 7px 0px;
+    min-height: 1.3em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.field-value.phone {
+    font-size: 1em;
+}
+
+.field-value.email {
+    font-size: 1em;
+}
+
+.field-value.address {
+    font-size: 1em;
+}
+
+.refresh-layer:hover {
+    cursor: pointer;
+}
+
+.refresh-text-layer {
+    font-size: 1em;
+    color: blue;
+    text-align: center;
+}

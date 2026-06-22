@@ -1,0 +1,32 @@
+:host {
+    --slds-c-textarea-sizing-min-height: 100px;
+}
+
+.page-section {
+    border: solid 1px #ccc;
+    padding: 1rem;
+}
+
+.page-main {
+    background: #f0efef;
+    position: relative;
+}
+
+.error-box {
+    height: 40px;
+    width: 100%;
+}
+
+.slds-section-title_divider {
+    background: none;
+}
+
+.pro-grid {
+    background: white;
+    border: 1px solid rgb(217, 219, 221);
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.pro-span-content {
+    display: inline-block;
+}

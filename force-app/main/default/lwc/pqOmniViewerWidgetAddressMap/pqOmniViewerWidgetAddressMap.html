@@ -1,0 +1,28 @@
+<template>
+
+    <template if:true={addressList}>
+        <div class="address-panel">
+
+            <!-- Map List Navigation -->
+            <div class="map-navigation">
+                <div>
+                    <div if:true={hasMultipleAddresses} class="map-navigation-back"><a onclick={addressBack}>&lt; Back</a></div>
+                </div>
+                <div class="map-navigation-title">{currentAddressLabel}</div>
+                <div>
+                    <div if:true={hasMultipleAddresses} class="map-navigation-next"><a onclick={addressNext}>Next &gt;</a></div>
+                </div>
+            </div>
+
+            <!-- Map Panel -->
+            <div class="map">
+                <lightning-map
+                    map-markers={mapMarkers}
+                    zoom-level=11
+                ></lightning-map>
+            </div>
+
+        </div>
+    </template>
+
+</template>

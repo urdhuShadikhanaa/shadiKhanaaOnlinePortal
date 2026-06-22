@@ -1,0 +1,50 @@
+.title-panel {
+    text-align: center;
+}
+
+.profile-image {
+    border-radius: 50%;
+    max-width: 140px;
+    min-width: 140px;
+    min-height: 140px;
+}
+
+.fullname {
+    font-size: 1.9em;
+    line-height: 1.4em;
+    font-weight: 900;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.title {
+    font-size: 1.1em;
+    line-height: 1.2em;
+    color: #3f3f3f;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.company {
+    font-size: 1.1em;
+    line-height: 1.2em;
+    color: #3f3f3f;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.pq-omni-viewer-pageset {
+    display: grid;
+    grid-template-columns: 55px 1fr;
+}
+
+.pq-omni-viewer-page {
+    grid-column-start: 2;
+    min-height: 200px;
+    padding: 40px;
+    border-radius: 0px 10px 10px 10px;
+    background-color: #fff;
+}

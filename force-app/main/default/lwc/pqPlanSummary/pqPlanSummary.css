@@ -1,0 +1,21 @@
+.account-plan-score {
+    margin: auto;
+}
+
+.object-score {
+    margin: auto;
+    width: 60%;
+    padding-left: 20px;
+}
+
+.card {
+    display: block;
+}
+
+.summary-container {
+    max-height: 300px;
+}
+
+.align-center {
+    text-align: center;
+}

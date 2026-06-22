@@ -1,0 +1,81 @@
+.slds-text-heading_small {
+    color: purple;
+    font-size: 1.3em;
+}
+
+.tile-content {
+    text-align: unset;
+}
+
+.template-title {
+    color: black;
+}
+
+.template-description {
+    margin: 5px 0 10px 0;
+}
+
+.grid-wrapper {
+    display: grid;
+    padding-bottom: 10px;
+}
+
+.grid-filters {
+    margin-top: 10px;
+}
+
+.grid-cell {
+    display: grid;
+    padding: 0;
+    align-content: center;
+}
+
+.a {
+    grid-row: 1;
+    justify-content: end;
+}
+
+.b {
+    grid-row: 1;
+    justify-content: left;
+    text-align-last: left;
+    margin-left: 10px;
+}
+
+.c {
+    grid-row: 2;
+    margin-left: 25px;
+    margin-top: 5px;
+}
+
+.dimension-title {
+    font-weight: bold;
+    text-align: center;
+}
+
+.dimension-detail {
+    text-align: center;
+    align-items: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: black;
+    line-height: 1em;
+}
+
+.dimension-detail img {
+    margin: 5px;
+}
+
+.dimension-count {
+    display: inline-block;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
+.warning {
+    margin: 5px;
+    display: initial;
+}

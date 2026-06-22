@@ -1,0 +1,152 @@
+<template>
+    <div class="page-section page-main">
+        <div
+            if:true={errorMessage}
+            class="error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        >
+            {errorMessage}
+        </div>
+        <h3 class="slds-section-title_divider slds-text-heading_small slds-p-horizontal_none">
+            {label.Relationship_Map_Features}
+        </h3>
+        <div class="slds-grid pro-grid slds-p-around_medium">
+            <div class="slds-col">
+                <lightning-spinner if:true={loading}></lightning-spinner>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-formatted-text value={label.Auto_Generate_Maps}></lightning-formatted-text>
+                    <lightning-input
+                        if:false={loading}
+                        type="toggle"
+                        variant="label-hidden"
+                        checked={autoGenerateMapFlag}
+                        message-toggle-active={label.Enabled}
+                        message-toggle-inactive={label.Disabled}
+                        onchange={handleChange}
+                    ></lightning-input>
+                </div>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-formatted-text value={label.LeadTab}></lightning-formatted-text>
+                    <lightning-input
+                        if:false={loading}
+                        type="toggle"
+                        variant="label-hidden"
+                        checked={showLeadsTab}
+                        message-toggle-active={label.Enabled}
+                        message-toggle-inactive={label.Disabled}
+                        onchange={handleLeadsChange}
+                    ></lightning-input>
+                </div>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-formatted-text value={label.UserTab}></lightning-formatted-text>
+                    <lightning-input
+                        if:false={loading}
+                        type="toggle"
+                        variant="label-hidden"
+                        checked={showUsersTab}
+                        message-toggle-active={label.Enabled}
+                        message-toggle-inactive={label.Disabled}
+                        onchange={handleUsersChange}
+                    ></lightning-input>
+                </div>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-formatted-text value={label.CreateNewContact}></lightning-formatted-text>
+                    <lightning-input
+                        if:false={loading}
+                        type="toggle"
+                        variant="label-hidden"
+                        checked={createNewContact}
+                        message-toggle-active={label.Enabled}
+                        message-toggle-inactive={label.Disabled}
+                        onchange={handleNewContactChange}
+                    ></lightning-input>
+                </div>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-formatted-text value={label.Show_Auto_Manual_Layout_Toggle}></lightning-formatted-text>
+                    <lightning-input
+                        if:false={loading}
+                        type="toggle"
+                        variant="label-hidden"
+                        checked={showAutoManualToggle}
+                        message-toggle-active={label.Show}
+                        message-toggle-inactive={label.Hide}
+                        onchange={handleShowAutoManualToggleChange}
+                    ></lightning-input>
+                </div>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-formatted-text value={label.Enable_Contact_Context_Menu}></lightning-formatted-text>
+                    <lightning-input
+                        if:false={loading}
+                        type="toggle"
+                        variant="label-hidden"
+                        checked={enableContactMenu}
+                        message-toggle-active={label.Enabled}
+                        message-toggle-inactive={label.Disabled}
+                        onchange={handleEnableContactMenuToggle}
+                    ></lightning-input>
+                </div>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-formatted-text value={label.Enable_Map_Member_Context_Menu}></lightning-formatted-text>
+                    <lightning-input
+                        if:false={loading}
+                        type="toggle"
+                        variant="label-hidden"
+                        checked={enableMapMemberMenu}
+                        message-toggle-active={label.Enabled}
+                        message-toggle-inactive={label.Disabled}
+                        onchange={handleEnableMapMemberMenuToggle}
+                    ></lightning-input>
+                </div>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-formatted-text value={label.Enable_Omni_Viewer_Context_Menu}></lightning-formatted-text>
+                    <lightning-input
+                        if:false={loading}
+                        type="toggle"
+                        variant="label-hidden"
+                        checked={enableOmniViewerMenu}
+                        message-toggle-active={label.Enabled}
+                        message-toggle-inactive={label.Disabled}
+                        onchange={handleEnableOmniViewerMenuToggle}
+                    ></lightning-input>
+                </div>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-formatted-text
+                        value={label.Enable_Group_Selection_Context_Menu}
+                    ></lightning-formatted-text>
+                    <lightning-input
+                        if:false={loading}
+                        type="toggle"
+                        variant="label-hidden"
+                        checked={enableGroupSelectionMenu}
+                        message-toggle-active={label.Enabled}
+                        message-toggle-inactive={label.Disabled}
+                        onchange={handleEnableGroupSelectionMenuToggle}
+                    ></lightning-input>
+                </div>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-formatted-text value={label.Show_Clone_Map_Button}></lightning-formatted-text>
+                    <lightning-input
+                        if:false={loading}
+                        type="toggle"
+                        variant="label-hidden"
+                        checked={showCloneButton}
+                        message-toggle-active={label.Enabled}
+                        message-toggle-inactive={label.Disabled}
+                        onchange={handleShowCloneButtonToggle}
+                    ></lightning-input>
+                </div>
+                <div class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small">
+                    <lightning-formatted-text value={label.Show_Settings_Button}></lightning-formatted-text>
+                    <lightning-input
+                        if:false={loading}
+                        type="toggle"
+                        variant="label-hidden"
+                        checked={showSettingsButton}
+                        message-toggle-active={label.Enabled}
+                        message-toggle-inactive={label.Disabled}
+                        onchange={handleShowSettingsButtonToggle}
+                    ></lightning-input>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

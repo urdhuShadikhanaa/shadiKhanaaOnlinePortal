@@ -1,0 +1,132 @@
+<template>
+    <!-- modal start -->
+    <lightning-spinner
+        alternative-text="Loading"
+        variant="brand"
+        size="medium"
+        class="spinner-preview"
+        if:true={isOuterSpinner}
+    ></lightning-spinner>
+    <template if:true={isShowModal}>
+        <section
+            role="dialog"
+            tabindex="-1"
+            aria-labelledby="modal-heading-01"
+            aria-modal="true"
+            aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open"
+        >
+            <div class="slds-modal__container">
+                <!-- modal header start -->
+                <header class="slds-modal__header">
+                    <button
+                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close"
+                        onclick={hideModalBox}
+                    >
+                        <lightning-icon
+                            icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small"
+                        ></lightning-icon>
+                        <span class="slds-assistive-text">{Close}</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{preview_button}</h2>
+                </header>
+
+                <!-- modal body start -->
+                <div class="slds-modal__content slds-p-around_xx-large" id="modal-content-id-1">
+                    <!-- Serchable Dropdown Input Field -->
+                    <div class="outerBorder">
+                        <div class="ChangeTemplateContainer">
+                            <div class="slds-form-element container">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-combobox_container">
+                                        <div
+                                            class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
+                                        >
+                                            <div
+                                                class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                                                role="none"
+                                            >
+                                                <label class="changeTemplateinputLabel"
+                                                    >{SelectAccountPlanRecord}</label
+                                                >
+                                                <div class="inputIcon">
+                                                    <lightning-icon
+                                                        if:true={iconUp}
+                                                        class="searchIcon"
+                                                        icon-name="utility:search"
+                                                        size="x-small"
+                                                        title="search"
+                                                    ></lightning-icon>
+                                                    <input
+                                                        type="text"
+                                                        onkeyup={handleChange}
+                                                        value=""
+                                                        placeholder={Search_Available_Templates}
+                                                        class="changeTemplateinputField"
+                                                        onclick={inputFocus}
+                                                    />
+                                                    <lightning-icon
+                                                        if:true={iconUp}
+                                                        class="changeTemplatedropDownIcon"
+                                                        onclick={handleUp}
+                                                        icon-name="utility:chevronup"
+                                                        size="x-small"
+                                                        title="up"
+                                                    ></lightning-icon>
+                                                    <lightning-icon
+                                                        if:true={iconDown}
+                                                        class="changeTemplatedropDownIcon"
+                                                        onclick={handleDown}
+                                                        icon-name="utility:chevrondown"
+                                                        size="x-small"
+                                                        title="down"
+                                                    ></lightning-icon>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <template if:true={isrecordsList}>
+                                        <div class="changeTemplatesearchSuggestion">
+                                            <template
+                                                for:each={accountPlanData}
+                                                for:item="currentItem"
+                                                for:index="index"
+                                            >
+                                                <div key={currentItem}>
+                                                    <div class="itemContainer">
+                                                        <lightning-formatted-rich-text
+                                                            value={currentItem.Name}
+                                                            class="items"
+                                                            data-id={index}
+                                                            onclick={handleSelect}
+                                                        >
+                                                        </lightning-formatted-rich-text>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+                                    <span class="messageDiv" if:true={isShowMessage}>{NoAccountPlanData}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- modal footer start-->
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_destructive" onclick={hideModalBox}>{Cancel}</button>
+                    <button class="slds-button slds-button_brand" lwc:ref="submitBtn" onclick={handleSubmit} disabled>
+                        {Submit}
+                    </button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!-- modal end -->
+</template>

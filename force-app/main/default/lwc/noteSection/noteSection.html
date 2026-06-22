@@ -1,0 +1,60 @@
+<template>
+    <template if:true={showSpinner}>
+        <div class="spinnerContainer">
+            <lightning-spinner alternative-text="Loading" size="x-small"></lightning-spinner>
+        </div>
+    </template>
+
+    <div class="Container">
+        <div class="notes">
+            <template if:true={EmptyNotes}>
+                <p>{labels.No_Data_Available}</p>
+            </template>
+            <template for:each={ShowNotesArray} for:item="arr">
+                <div
+                    key={arr.Id}
+                    class={arr.classValue}
+                    data-id={arr.notesId}
+                    onmouseover={arr.over}
+                    onmouseout={arr.out}
+                >
+                    <lightning-icon
+                        icon-name="utility:edit"
+                        data-ids={arr.notesId}
+                        onclick={showDataRichText}
+                        class="editButton"
+                        alternative-text="edit"
+                        size="x-small"
+                        title="edit"
+                    ></lightning-icon>
+                    <lightning-formatted-rich-text value={arr.message}></lightning-formatted-rich-text>
+                    <div class="userDate">
+                        <p>{arr.username}</p>
+                        <p>{arr.dateValue}</p>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <div class="richText">
+            <lightning-input-rich-text
+                value={fieldValue}
+                label={fieldLabel}
+                placeholder="Enter Notes..."
+                required={required}
+                formats={allowedFormats}
+                valid={validity}
+                class="visibleLines"
+                onchange={handleChange}
+                share-with-entity-id={recordId}
+                message-when-bad-input={errorMessage}
+            >
+            </lightning-input-rich-text>
+            <div class="mtbtnDiv">
+                <button class="mybtn" data-id="saveBtn" disabled={disbaleBtn} onclick={SaveNotes} type="button">
+                    {labels.Save}
+                </button>
+                <button class="mybtncancel" onclick={cancelNotes} type="button">{labels.Cancel}</button>
+            </div>
+        </div>
+    </div>
+</template>

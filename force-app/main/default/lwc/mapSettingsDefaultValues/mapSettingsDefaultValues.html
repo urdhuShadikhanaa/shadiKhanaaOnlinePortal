@@ -1,0 +1,218 @@
+<template>
+    <div class="page-section page-main">
+        <h3 class="slds-section-title_divider slds-text-heading_small slds-p-horizontal_none">
+            {labels.Default_Settings}
+        </h3>
+        <div class="slds-grid pro-grid slds-p-around_medium">
+            <div class="slds-col">
+                <lightning-spinner if:true={loading}></lightning-spinner>
+                <template if:true={orgSettings}>
+                    <table>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text value={labels.Auto_Layout}></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    type="checkbox"
+                                    checked={orgSettings.pqcrush__Auto_Layout__c}
+                                    onchange={onAutoLayoutChange}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text value={labels.Enable_Drag_Select}></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    type="checkbox"
+                                    checked={orgSettings.pqcrush__Enable_Drag_Select__c}
+                                    onchange={onEnableDragSelect}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text value={labels.Group_Global_Scope}></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    type="checkbox"
+                                    checked={orgSettings.pqcrush__Is_Group_Global_Scope__c}
+                                    onchange={onIsGroupGlobalScope}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text
+                                    value={labels.Relationship_Line_Global_Scope}
+                                ></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    type="checkbox"
+                                    checked={orgSettings.pqcrush__Is_Relationship_Line_Global_Scope__c}
+                                    onchange={onIsRelationshipLineGlobalScope}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text value={labels.Badge_Global_Scope}></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    type="checkbox"
+                                    checked={orgSettings.pqcrush__Is_Badge_Global_Scope__c}
+                                    onchange={onIsBadgeGlobalScope}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text
+                                    value={labels.Influence_Support_Global_Scope}
+                                ></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    type="checkbox"
+                                    checked={orgSettings.pqcrush__Is_Influence_Support_Global_Scope__c}
+                                    onchange={onIsInfluenceSupportGlobalScope}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text
+                                    value={labels.Reports_To_Global_Scope}
+                                ></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    type="checkbox"
+                                    checked={orgSettings.pqcrush__Is_Reports_To_Global_Scope__c}
+                                    onchange={onIsReportsToGlobalScope}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text value={labels.Show_Empty_Fields}></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    type="checkbox"
+                                    checked={orgSettings.pqcrush__Show_Empty_Fields__c}
+                                    onchange={onShowEmptyFields}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text value={labels.Show_Overview}></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    type="checkbox"
+                                    checked={orgSettings.pqcrush__Show_Overview__c}
+                                    onchange={onShowOverview}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text value={labels.Show_Parents}></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    type="checkbox"
+                                    checked={orgSettings.pqcrush__Show_Parents__c}
+                                    onchange={onShowParents}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text
+                                    value={labels.Relationship_Line_Opacity}
+                                ></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    data-id="relLineOpacity"
+                                    type="number"
+                                    label=""
+                                    value={relationshipLineOpacity}
+                                    formatter="percent-fixed"
+                                    step="1"
+                                    min="0"
+                                    max="100"
+                                    message-when-range-overflow={labels.Opacity_Range_Error_Message}
+                                    message-when-range-underflow={labels.Opacity_Range_Error_Message}
+                                    onblur={onRelationshipLineOpacity}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text
+                                    value={labels.Reports_To_Line_Opacity}
+                                ></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-input
+                                    data-id="repToOpacity"
+                                    type="number"
+                                    label=""
+                                    value={reportsToLineOpacity}
+                                    formatter="percent-fixed"
+                                    step="1"
+                                    min="0"
+                                    max="100"
+                                    message-when-range-overflow={labels.Opacity_Range_Error_Message}
+                                    message-when-range-underflow={labels.Opacity_Range_Error_Message}
+                                    onblur={onReportsToLineOpacity}
+                                ></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text value={labels.Card_Style}></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-combobox
+                                    name="cardStyle"
+                                    label=""
+                                    value={cardStyle}
+                                    placeholder="Select Card Detail"
+                                    options={cardStyleOptions}
+                                    onchange={onCardStyle}
+                                >
+                                </lightning-combobox>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lightning-formatted-text value={labels.Display_Style}></lightning-formatted-text>
+                            </td>
+                            <td class="pro-text-align-right">
+                                <lightning-combobox
+                                    name="displayStyle"
+                                    label=""
+                                    value={displayStyle}
+                                    placeholder="Select Card Detail"
+                                    options={displayStyleOptions}
+                                    onchange={onDisplayStyle}
+                                >
+                                </lightning-combobox>
+                            </td>
+                        </tr>
+                    </table>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

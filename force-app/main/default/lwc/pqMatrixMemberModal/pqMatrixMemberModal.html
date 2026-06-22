@@ -1,0 +1,41 @@
+<template>
+    <c-modal-with-record-type-selection modal-title={title} onrecordtypeselected={handleRecordTypeSelected}>
+        <c-pq-dynamic-matrix-member-form
+            object-api-name={objectApiName}
+            object-id={objectId}
+            field-values={fieldValues}
+            onsuccess={handleSuccess}
+            onload={handleLoad}
+            columns="1"
+            record-type-id={recordTypeId}
+            influence-data={influenceData}
+            support-data={supportData}
+            container-id={containerId}
+            can-edit={canEdit}
+        >
+        </c-pq-dynamic-matrix-member-form>
+        <div slot="footer">
+            <lightning-button
+                if:true={canEdit}
+                variant="neutral"
+                label={labels.Cancel}
+                class="slds-button"
+                onclick={hide}
+            ></lightning-button>
+            <lightning-button
+                if:true={canEdit}
+                variant="brand"
+                label={labels.Save}
+                class="slds-button"
+                onclick={handleSave}
+            ></lightning-button>
+            <lightning-button
+                if:false={canEdit}
+                variant="brand"
+                label={labels.Close}
+                class="slds-button"
+                onclick={hide}
+            ></lightning-button>
+        </div>
+    </c-modal-with-record-type-selection>
+</template>

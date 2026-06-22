@@ -1,0 +1,38 @@
+<template>
+    <div class="page-section page-main">
+        <h3 class="slds-section-title_divider slds-text-heading_small slds-p-horizontal_none">
+            {label.Field_Selection}
+        </h3>
+        <lightning-tabset variant="scoped" class="pro-tabset">
+            <template for:each={fields} for:item="object">
+                <lightning-tab label={object.objectLabel} key={object.name}>
+                    <div class="">
+                        <lightning-spinner if:true={loading}></lightning-spinner>
+                        <template if:false={loading} for:each={object.fields} for:item="field">
+                            <div
+                                class="slds-grid slds-grid_vertical-align-center slds-p-vertical_xxx-small"
+                                key={field.id}
+                            >
+                                <lightning-input
+                                    type="checkbox-button"
+                                    label={field.label}
+                                    data-object-name={object.objectName}
+                                    data-field-name={field.name}
+                                    data-related-name={field.relatedFieldName}
+                                    checked={field.isOrgChartField}
+                                    disabled={field.isRequired}
+                                    message-toggle-active={label.Add}
+                                    message-toggle-inactive={label.Remove}
+                                    onchange={onFieldToggled}
+                                ></lightning-input>
+                                <span class="slds-form-element__label pro-label-margin-left slds-truncate">
+                                    {field.label}
+                                </span>
+                            </div>
+                        </template>
+                    </div>
+                </lightning-tab>
+            </template>
+        </lightning-tabset>
+    </div>
+</template>

@@ -1,0 +1,26 @@
+<template>
+    <div
+        data-member-id={member.id}
+        class={cellClasses}
+        style={borderStyle}
+        draggable={canDrag}
+        ondragstart={handleDragStart}
+    >
+        <div class="stakeholder-matrix-item-label">
+            <span>{member.name}</span
+            ><span if:true={member.title} class="stakeholder-matrix-item-title">&nbsp;{member.title}</span>
+        </div>
+        <lightning-button-menu
+            if:true={displayMenuButton}
+            alternative-text={label.Actions}
+            icon-size="small"
+            menu-alignment="right"
+            onselect={handleMenuSelect}
+            variant="container"
+        >
+            <template for:each={menuItems} for:item="item">
+                <lightning-menu-item key={item.value} label={item.label} value={item.value}></lightning-menu-item>
+            </template>
+        </lightning-button-menu>
+    </div>
+</template>

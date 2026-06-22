@@ -1,0 +1,47 @@
+<template>
+    <lightning-quick-action-panel header="Upload Logo">
+        <div class="main-container" ondrop={handleDragDropImage} ondragover={handleDragOver}>
+            <template if:true={showSpinner}>
+                <lightning-spinner class="spins" variant="brand" size="large"></lightning-spinner>
+            </template>
+            <div class="border">
+                <div class="logo">
+                    <div class="uploadBtn">
+                        <lightning-button icon-name="utility:upload" label="Upload Logo" onclick={handleFileUpload}>
+                        </lightning-button>
+                        <input
+                            type="file"
+                            accept=".png, .svg"
+                            onchange={openfileUpload}
+                            class="slds-hide"
+                            id="fileInput"
+                            value=""
+                        />
+                        <label class="uploadLabel">{Drop_Files}</label>
+                    </div>
+
+                    <!-- Upload File -->
+                    <div class="imageContainer">
+                        <lightning-icon
+                            icon-name="utility:close"
+                            alternative-text=""
+                            size="xx-small"
+                            title="large size"
+                            class="editIcon"
+                            onclick={handleEditIcon}
+                        ></lightning-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div slot="footer">
+            <lightning-button
+                variant="neutral"
+                label="Cancel"
+                class="slds-m-right_x-small"
+                onclick={closeModal}
+            ></lightning-button>
+            <button class="slds-button slds-button_brand" lwc:ref="saveBtn" onclick={saveLogo}>{Save}</button>
+        </div>
+    </lightning-quick-action-panel>
+</template>

@@ -1,0 +1,51 @@
+<template>
+    <p if:true={errorMessage} class="slds-text-color_error">
+        <lightning-formatted-rich-text value={errorMessage}></lightning-formatted-rich-text>
+    </p>
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item padding="around-small" size="12">
+            <lightning-layout>
+                <lightning-layout-item padding="around-small" size="8">
+                    <div>
+                        <c-map-settings-display-fields
+                            member-fields={orgChartFields}
+                            loading={orgChartFieldsLoading}
+                            ondisplayfieldchange={handleVisibilityChange}
+                        ></c-map-settings-display-fields>
+                    </div>
+                    <div class="slds-m-top_medium">
+                        <c-map-settings-feature-flags
+                            setting-type="rm"
+                            auto-generate={autoGenerateMapFlag}
+                            onautogeneratemapchange={handleAutoGenerateMapChange}
+                            loading={featureFlagsLoading}
+                        ></c-map-settings-feature-flags>
+                    </div>
+                    <div class="slds-m-top_medium">
+                        <c-map-settings-default-values
+                            type="rm"
+                            onsettingschange={passthroughEvent}
+                        ></c-map-settings-default-values>
+                    </div>
+                    <div class="slds-m-top_medium">
+                        <c-rm-Map-Settings-Suggested-Contacts></c-rm-Map-Settings-Suggested-Contacts>
+                    </div>
+                    <div class="slds-m-top_medium">
+                        <c-map-settings-advanced
+                            setting-type="rm"
+                            onsettingschange={passthroughEvent}
+                        ></c-map-settings-advanced>
+                    </div>
+                </lightning-layout-item>
+                <lightning-layout-item padding="around-small" size="5">
+                    <c-map-settings-field-selection
+                        if:false={objectsLoading}
+                        fields={objects}
+                        loading={objectsLoading}
+                        onfieldtoggled={handleFieldToggled}
+                    ></c-map-settings-field-selection>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

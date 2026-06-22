@@ -1,0 +1,15 @@
+<template>
+    <div if:true={shouldRender} class="ws-sum" style={style}>
+        <div class="ws-sum-count-container" if:true={shouldRenderCount}>
+            <span class="ws-counter">{countValue}</span>
+        </div>
+
+        <div class={valueContainerClass}>
+            <c-pq-generic-output-field
+                display-type={type}
+                field-value={displayValue}
+                display-style={displayStyle}
+            ></c-pq-generic-output-field>
+        </div>
+    </div>
+</template>

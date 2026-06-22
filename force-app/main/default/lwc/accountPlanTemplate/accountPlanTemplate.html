@@ -1,0 +1,83 @@
+<template>
+    <div class="container">
+        <div class="component-container">
+            <p class="componentLabel"><span>{Components}</span></p>
+            <div
+                class="flex-container"
+                ondragover={allowDropLeft}
+                ondrop={dropLeft}
+                ontouchmove={touchMoveContainerLeft}
+                ontouchend={touchEndContainerLeft}
+            >
+                <template
+                    if:true={showSelectedComponent}
+                    for:each={componentListLeft}
+                    for:item="currentItem"
+                    for:index="index"
+                >
+                    <div
+                        key={currentItem}
+                        class="box completed rightcls"
+                        data-id={currentItem.id}
+                        data-apiname={currentItem.value}
+                        data-name={currentItem.label}
+                        data-relatedobjectlist={currentItem.relatedObject}
+                        draggable="true"
+                        ondragstart={dragLeft}
+                        ontouchstart={touchStartLeft}
+                    >
+                        <div if:true={currentItem.relatedObject} class="relatedDataDiv">
+                            <span if:false={isSelectRelatedData} class="relatedDataSelected"
+                                >{NotSelectedRelatedData}</span
+                            >
+                            <div class="relatedDataImage">
+                                <img src={account_template_component_available_logo} alt="" class="componentLogo" />
+                                <span>{currentItem.label}</span>
+                            </div>
+                        </div>
+                        <div if:false={currentItem.relatedObject}>
+                            <img src={account_template_component_available_logo} alt="" class="componentLogo" />
+                            <span>{currentItem.label}</span>
+                            <p if:false={currentItem.relatedObject}>{AccountPlanTemplateMSG}</p>
+                        </div>
+                        <c-generic-data-table-comp
+                            if:true={currentItem.relatedObject}
+                            defaultvalues={defaultValuesOfRelatedList}
+                            onsendgenereicdata={getGenericData}
+                        ></c-generic-data-table-comp>
+                    </div>
+                </template>
+                <div class="boxEmpty" if:false={showSelectedComponent} draggable="true">
+                    <span>{drag_drop_here}</span>
+                </div>
+            </div>
+        </div>
+        <div class="component-dropdown">
+            <p class="componentLabel"><span>{AvailableComponents}</span></p>
+            <div
+                class="flex-div"
+                ondragover={allowDropRight}
+                ondrop={dropRight}
+                ontouchmove={touchMoveContainerRight}
+                ontouchend={touchEndContainerRight}
+            >
+                <template for:each={componentListRight} for:item="currentItem" for:index="index">
+                    <div
+                        key={currentItem}
+                        class="box"
+                        data-id={currentItem.id}
+                        data-apiname={currentItem.value}
+                        data-name={currentItem.label}
+                        data-relatedobjectlist={currentItem.relatedObject}
+                        draggable="true"
+                        ondragstart={dragRight}
+                        ontouchstart={touchStartRight}
+                    >
+                        <img src={account_template_component_available_logo} alt="" class="componentLogo" />
+                        <span>{currentItem.label}</span>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,200 @@
+<template>
+    <div>
+        <lightning-layout multiple-rows="true">
+            <template if:true={targetObjectOptions}>
+                <lightning-layout-item size="12">
+                    <div if:true={readOnly} class="slds-var-m-bottom_x-small">
+                        <span class="slds-form-element__label">{labels.targetObjectType}</span>
+                        <div class="slds-form-element__control">{targetObjectTypeLabel}</div>
+                    </div>
+
+                    <lightning-combobox
+                        if:false={readOnly}
+                        data-name="targetObject"
+                        name="targetObject"
+                        label={labels.targetObjectType}
+                        value={targetObject}
+                        placeholder={labels.selectAnObject}
+                        options={_targetObjectOptions}
+                        onchange={handleTargetObjectChange}
+                        disabled={isTargetObjectOptionsEmpty}
+                        variant="label-stacked"
+                        required
+                    ></lightning-combobox>
+                    <template if:true={messageForDependencyWarning}>
+                        <div class="slds-grid slds-form-element__help">
+                            <lightning-icon
+                                icon-name="utility:warning"
+                                alternative-text={labels.warning}
+                                variant="warning"
+                                size="x-small"
+                                class="slds-m-right_x-small slds-col slds-no-flex"
+                            ></lightning-icon>
+                            <div class="slds-col slds-align-middle">{messageForDependencyWarning}</div>
+                        </div>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="12">
+                    <div if:true={readOnly} class="slds-var-m-bottom_x-small">
+                        <span class="slds-form-element__label">{labels.targetLabelField}</span>
+                        <div class="slds-form-element__control">{targetLabelFieldLabel}</div>
+                    </div>
+
+                    <lightning-combobox
+                        if:false={readOnly}
+                        data-name="targetLabelField"
+                        name="targetLabelField"
+                        label={labels.targetLabelField}
+                        value={targetLabelField}
+                        placeholder={labels.selectALabelField}
+                        options={targetLabelFieldOptions}
+                        onchange={handleTargetLabelFieldChange}
+                        disabled={targetLabelFieldDisabled}
+                        variant="label-stacked"
+                        required
+                    ></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item if:true={canGroup} size="12">
+                    <div if:true={readOnly} class="slds-var-m-bottom_x-small">
+                        <span if:true={recordsAreGrouped} class="slds-form-element__control"
+                            >{labels.groupRecordsTogether}</span
+                        >
+                    </div>
+                    <lightning-input
+                        if:false={readOnly}
+                        type="checkbox"
+                        data-name="recordsAreGrouped"
+                        name="recordsAreGrouped"
+                        label={labels.groupRecordsTogether}
+                        checked={recordsAreGrouped}
+                        onchange={handleGroupRecordsChanged}
+                        variant="label-stacked"
+                    ></lightning-input>
+                </lightning-layout-item>
+                <lightning-layout-item if:true={includeValueField} size="12">
+                    <div if:true={readOnly} class="slds-var-m-bottom_x-small">
+                        <span class="slds-form-element__label">{labels.targetValueField}</span>
+                        <div class="slds-form-element__control">{targetValueFieldLabel}</div>
+                    </div>
+
+                    <lightning-combobox
+                        if:false={readOnly}
+                        data-name="targetValueField"
+                        name="targetValueField"
+                        label={labels.targetValueField}
+                        value={targetValueField}
+                        placeholder={labels.selectAValueField}
+                        options={targetValueFieldOptions}
+                        onchange={handleTargetValueFieldChange}
+                        disabled={targetValueFieldDisabled}
+                        variant="label-stacked"
+                        required
+                    ></lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item if:true={canShowParentSelection} size="12">
+                    <div if:true={readOnly} class="slds-var-m-bottom_x-small">
+                        <span class="slds-form-element__label">{labels.parentRelationshipField}</span>
+                        <div class="slds-form-element__control">{targetParentFieldLabel}</div>
+                    </div>
+
+                    <lightning-combobox
+                        if:false={readOnly}
+                        data-name="targetParentField"
+                        name="targetParentField"
+                        label={labels.parentRelationshipField}
+                        value={targetParentField}
+                        placeholder={labels.selectAParentField}
+                        options={targetParentFieldOptions}
+                        onchange={handleTargetParentFieldChange}
+                        disabled={targetParentFieldDisabled}
+                        variant="label-stacked"
+                    ></lightning-combobox>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12" class="slds-var-m-bottom_x-small">
+                    <fieldset>
+                        <label class="slds-form-element__label">{labels.conditions}</label>
+                        <ol class="slds-list_vertical slds-list_vertical-space slds-list_ordered">
+                            <template if:true={conditions.length}>
+                                <template for:each={conditions} for:item="condition" for:index="index">
+                                    <li key={condition.key} class="slds-item slds-filters__item slds-hint-parent">
+                                        <template if:true={condition.isActive}>
+                                            <div class="is-active slds-p-around_small">
+                                                <c-condition-form
+                                                    custom-key={index}
+                                                    object-type={targetObject}
+                                                    field={condition.field}
+                                                    operator={condition.operator}
+                                                    value={condition.value}
+                                                    onconditionsubmitted={handleConditionSubmitted}
+                                                    onconditioncanceled={handleEditConditionCanceled}
+                                                    fields={fieldsMap}
+                                                ></c-condition-form>
+                                            </div>
+                                        </template>
+                                        <template if:false={condition.isActive}>
+                                            <c-condition-tile
+                                                custom-key={index}
+                                                read-only={readOnly}
+                                                field={condition.field}
+                                                fields={fieldsMap}
+                                                operator={condition.operator}
+                                                value={condition.value}
+                                                onremovecondition={handleRemoveCondition}
+                                                oneditcondition={handleEditCondition}
+                                            ></c-condition-tile>
+                                        </template>
+                                    </li>
+                                </template>
+                            </template>
+                            <li if:true={showNewCondition} class="slids-item slds-filters__item">
+                                <c-condition-form
+                                    object-type={targetObject}
+                                    onconditionsubmitted={handleNewCondition}
+                                    onconditioncanceled={hideNewConditionForm}
+                                    fields={fieldsMap}
+                                ></c-condition-form>
+                            </li>
+                        </ol>
+                        <template if:true={multipleConditions}>
+                            <!-- WARNING: Do not set the name property on this radio group as the framework expects the name to be unique for each radio group on the page.
+                                There could be multiple instances of this radio group on the page (This component is currently being used inside an iteration in the CellBuilder component).
+                                By not setting the name property in the markup, the framework will dynamically generate a unique name for us.
+                            -->
+                            <lightning-radio-group
+                                disabled={readOnly}
+                                label="Include records when:"
+                                options={conditionOperatorOptions}
+                                value={conditionOperatorRadioValue}
+                                onchange={handleConditionOperatorChange}
+                                type="radio"
+                            ></lightning-radio-group>
+                            <template if:true={showCustomLogicInput}>
+                                <lightning-input
+                                    disabled={readOnly}
+                                    type="text"
+                                    label={labels.conditionLogic}
+                                    value={customLogicText}
+                                    class="customLogicInput"
+                                    field-level-help={labels.conditionLogicHelp}
+                                    onchange={handleCustomConditionChange}
+                                >
+                                </lightning-input>
+                            </template>
+                        </template>
+                        <div class="slds-m-top_small">
+                            <lightning-button
+                                if:false={readOnly}
+                                label={labels.addCondition}
+                                title={labels.addCondition}
+                                icon-name="utility:add"
+                                onclick={showNewConditionForm}
+                                disabled={addConditionDisabled}
+                            ></lightning-button>
+                        </div>
+                    </fieldset>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+    </div>
+</template>

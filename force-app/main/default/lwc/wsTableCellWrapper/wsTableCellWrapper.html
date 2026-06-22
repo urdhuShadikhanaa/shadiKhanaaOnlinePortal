@@ -1,0 +1,19 @@
+<template>
+    <td
+        class={elementClassList}
+        data-row={row.id}
+        data-column={column.id}
+        data-row-index={rowIndex}
+        data-col-index={colIndex}
+    >
+        <c-ws-table-cell
+            row={row}
+            column={column}
+            row-index={rowIndex}
+            col-index={colIndex}
+            visible-amount-types={visibleAmountTypes}
+            permissions={permissions}
+            tile-size={tileSize}
+        ></c-ws-table-cell>
+    </td>
+</template>

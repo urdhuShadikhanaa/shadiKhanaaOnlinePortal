@@ -1,0 +1,15 @@
+<template>
+    <div class="slds-var-m-right_xx-small">
+        <c-pq-popover-button title={labels.filter} variant={buttonVariant}>
+            <div slot="popover-body">
+                <template for:each={filters} for:item="filter">
+                    <c-filter-type
+                        key={filter.name}
+                        filter={filter}
+                        onfilterschange={handleFiltersChange}
+                    ></c-filter-type>
+                </template>
+            </div>
+        </c-pq-popover-button>
+    </div>
+</template>

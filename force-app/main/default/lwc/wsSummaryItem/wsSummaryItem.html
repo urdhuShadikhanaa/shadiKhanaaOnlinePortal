@@ -1,0 +1,20 @@
+<template>
+    <div class="ws-sum">
+        <table>
+            <tr>
+                <td class="pq-block">
+                    <div class="ws-sum-circle-large" style={style}></div>
+                </td>
+                <td>
+                    <div class="summary-title slds-text-title_caps">
+                        {label}
+                    </div>
+
+                    <span class="summary-value slds-text-title slds-truncate">
+                        <c-pq-generic-output-field display-type={type} field-value={value}> </c-pq-generic-output-field>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</template>

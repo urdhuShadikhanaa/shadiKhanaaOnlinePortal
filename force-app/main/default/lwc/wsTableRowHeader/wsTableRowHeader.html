@@ -1,0 +1,23 @@
+<template>
+    <div class="ws-row-header-rotate">
+        <div
+            if:true={hasChildren}
+            class={currentStyle}
+            data-row-index={rowIndex}
+            onclick={handleParentHeaderClick}
+            onmouseover={handleMouseOver}
+            onmouseout={handleMouseOut}
+            title={headerObject.name}
+        >
+            <div class="ws-row-header-label" style={labelStyle}>
+                {headerObject.name}
+            </div>
+        </div>
+
+        <div if:false={hasChildren} class={currentStyle} data-row-index={rowIndex} title={headerObject.name}>
+            <div class="ws-row-header-label" style={labelStyle}>
+                {headerObject.name}
+            </div>
+        </div>
+    </div>
+</template>

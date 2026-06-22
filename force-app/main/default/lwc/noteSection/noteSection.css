@@ -1,0 +1,113 @@
+.dummy {
+    color: black;
+}
+.Container {
+    background-color: #ffffff;
+    width: 481px;
+    padding: 8px;
+    height: calc(100vh - 245px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 40px;
+}
+.spinnerContainer {
+    position: absolute;
+    width: 481px;
+    padding: 8px;
+    height: calc(100vh - 245px);
+}
+
+.storeNotes {
+    border: 1px solid #ddd;
+    padding: 10px;
+    min-height: 35px;
+    border-radius: 6px;
+    margin: 15px 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    background-color: #dddbda00;
+}
+.tempstoreNotes {
+    border: 1px solid #ddd;
+    padding: 10px;
+    min-height: 35px;
+    border-radius: 6px;
+    margin: 15px 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    background-color: #dddbda00;
+    position: relative;
+}
+.editButton {
+    padding: 5px;
+    background: #fff;
+    position: absolute;
+    right: 10px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    display: none;
+}
+.notes {
+    height: calc(100vh - 103px);
+    overflow-y: scroll;
+}
+.richText {
+    /* overflow-y: scroll; */
+    height: 208px;
+    padding-top: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.richText::-webkit-scrollbar {
+    display: none;
+}
+.userDate {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.mybtn {
+    border: none;
+    background-color: #c9c7c5;
+    outline: none;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 4px;
+    margin: 6px 4px 10px 0;
+    cursor: pointer;
+    height: 34px;
+    width: 77px;
+}
+.mtbtnDiv {
+    display: flex;
+    justify-content: end;
+}
+.mybtncancel {
+    display: none;
+    border: none;
+    background-color: rgb(234 0 37 / 92%);
+    outline: none;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 4px;
+    margin: 6px 4px 10px 0;
+    cursor: pointer;
+    height: 34px;
+    width: 77px;
+}
+.ql-image {
+    display: none;
+}
+.slds-rich-text-editor__textarea {
+    height: 100px;
+}
+
+.tempstoreNotes:hover {
+    background-color: #dddbda52;
+}
+.tempstoreNotes:hover .editButton {
+    display: block;
+}
+/* .editButton:hover {
+    display: block;
+} */

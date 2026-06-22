@@ -1,0 +1,31 @@
+.stakeholder-box {
+    display: flex;
+    justify-content: space-between;
+    border-style: solid;
+    border-width: 1px;
+    line-height: 25px;
+    background-color: white;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 8px;
+    padding-right: 3px;
+}
+
+.stakeholder-box.draggable {
+    cursor: move;
+}
+
+.stakeholder-matrix-item-label {
+    min-width: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1 1 60%;
+    line-height: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.stakeholder-matrix-item-title {
+    font-size: x-small;
+    color: rgb(100, 100, 100);
+}

@@ -1,0 +1,13 @@
+<template>
+    <lightning-spinner if:true={isLoading}></lightning-spinner>
+    <div class="pq-title-container">
+        <h3 class="pq-title pq-score-child">{title}</h3>
+        <c-pq-chartjs
+            if:true={isLoaded}
+            class="orgChart pq-chart pq-score-child"
+            width="200"
+            height="200"
+            chart-config={config}
+        ></c-pq-chartjs>
+    </div>
+</template>

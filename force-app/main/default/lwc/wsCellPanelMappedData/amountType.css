@@ -1,0 +1,66 @@
+/* ------------------------------------------------ */
+
+.display-element {
+    display: block;
+    padding-bottom: 0.75rem;
+    text-align: left;
+}
+
+.display-subelement {
+    display: block;
+    padding-bottom: 0.25rem;
+    text-align: left;
+    margin-left: 15px;
+    margin-right: 10px;
+}
+
+.field-container {
+    padding: 10px;
+    border-top: 1px solid #dadada;
+    background-image: linear-gradient(to bottom, white, #f8f8f8);
+}
+
+.entry-block {
+    padding: 10px;
+    border: 1px solid #dadada;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+}
+
+.entry-block:hover {
+    border: 1px solid #b0b0b0;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    color: #000;
+}
+
+.display-name {
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.display-value {
+    cursor: pointer;
+    font-size: 1em;
+    line-height: 28px;
+}
+
+.empty-value {
+    font-style: italic;
+}
+
+.amount-type-value-icon {
+    float: right;
+}
+
+.amount-type-value-text {
+    display: inline-block;
+    max-width: calc(100% - 40px);
+    overflow: hidden;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+/* ------------------------------------------------ */

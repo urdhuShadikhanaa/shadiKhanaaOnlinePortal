@@ -1,0 +1,58 @@
+.hidden {
+    display: none;
+}
+
+.footer-button {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.browse-button {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.download-button {
+    margin-top: 4px;
+    display: block;
+}
+
+.file-input {
+    visibility: hidden;
+}
+
+.error-box {
+    height: 40px;
+    width: 100%;
+}
+
+.drop-zone {
+    padding: 20px;
+    background-color: #fff;
+    outline: 2px dashed rgba(0 0 0 0);
+    outline-offset: -10px;
+}
+
+.drop-icon {
+    margin: 20px;
+    opacity: 0.3;
+}
+
+.drop-zone-over {
+    padding: 20px;
+    background-color: #f2f2f2;
+    outline: 2px dashed rgb(27 150 255);
+    outline-offset: -10px;
+}
+
+.image-tools {
+    max-width: 100%;
+}
+
+.drop-zone-instructions {
+    background-color: #f2f2f2;
+    text-align: center;
+    padding: 100px;
+    cursor: pointer;
+    font-size: 1.3em;
+}

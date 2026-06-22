@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>contact__c</fullName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <label>Premise</label>
+    <referenceTo>Premise__c</referenceTo>
+    <relationshipLabel>Contact premises</relationshipLabel>
+    <relationshipName>Contact_premises</relationshipName>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

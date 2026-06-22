@@ -1,0 +1,7 @@
+.pro-layout {
+    word-break: break-word;
+}
+
+.pro-layout-item {
+    min-width: 100px;
+}

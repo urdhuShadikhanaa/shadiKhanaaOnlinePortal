@@ -1,0 +1,47 @@
+<template>
+    <c-ws-table-cell-background
+        row-id={row.id}
+        column-id={column.id}
+        row-index={rowIndex}
+        col-index={colIndex}
+        tile={tile}
+        tile-count={tileCount}
+        is-empty={isEmpty}
+        type={cell.type}
+    >
+        <div class={tileClass}>
+            <div class="ws-tile-header" if:true={showHeader}>
+                <c-ws-table-cell-tile-header header-data={tile.headerData}></c-ws-table-cell-tile-header>
+            </div>
+            <div if:false={hideNote} class="ws-tile-info">{note}</div>
+            <div class="ws-tile-display-fields" if:false={isEmpty}>
+                <template for:each={displayFieldsTrimmed} for:item="field" for:index="fi">
+                    <div key={field.id}>
+                        <template for:each={field.data} for:item="valueObj">
+                            <div class="ws-tile-display-field-item" key={valueObj.objectId}>
+                                <div class="slds-text-title ws-tile-display-field-name">
+                                    {valueObj.displayName}:&nbsp;
+                                </div>
+                                <div class="slds-text-title slds-truncate">
+                                    <c-pq-generic-output-field
+                                        display-type={field.type}
+                                        field-value={valueObj.value}
+                                    ></c-pq-generic-output-field>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+            <div if:true={displayFieldMore} class="ws-tile-display-fields-more">+{displayFieldMoreCount} more...</div>
+            <div class="ws-tile-display-fields">
+                <template for:each={displayDataTypeValues} for:item="dtValue">
+                    <div class="ws-tile-display-field-item" key={dtValue.id}>
+                        <div class="slds-text-title ws-tile-display-field-name">{dtValue.name}:&nbsp;</div>
+                        <div class="slds-text-title slds-truncate">{dtValue.value}</div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </c-ws-table-cell-background>
+</template>

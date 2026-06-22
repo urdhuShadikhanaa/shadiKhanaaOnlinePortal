@@ -1,0 +1,134 @@
+<template>
+    <div class="pq-omni-viewer-pageset">
+        <template if:true={isLoading}>
+            <div class="pq-omni-viewer-tabstrip">
+                <template for:each={pageSetData.tabSets} for:item="tabSet">
+                    <div key={tabSet.id} class="pq-omni-viewer-tabset">
+                        <template for:each={tabSet.tabs} for:item="tab">
+                            <c-pq-omni-viewer-tab
+                                key={tab.id}
+                                tab-data={tab}
+                                onpagesettabchanged={passthroughEvent}
+                            ></c-pq-omni-viewer-tab>
+                        </template>
+                    </div>
+                </template>
+            </div>
+
+            <div class="pq-omni-viewer-page active">
+                <!-- Home Type -->
+                <template if:true={_tabHome}>
+                    <c-pq-omni-viewer-page-home
+                        object-api-name={objectApiName}
+                        object-id={objectId}
+                        map-or-account-plan-id={mapOrAccountPlanId}
+                        map-settings={mapSettings}
+                        rm-org-settings={rmOrgSettings}
+                        selected-tab-id={selectedTabId}
+                        page-set-data={pageSetData}
+                        selected-tab-data={selectedTabData}
+                        person-map-member-data={personMapMemberData}
+                        person-contact-data={personContactData}
+                        person-contact-extended-data={personContactExtendedData}
+                        profile-image-data={profileImageData}
+                        member-influence-data={memberInfluenceData}
+                    ></c-pq-omni-viewer-page-home>
+                </template>
+
+                <!-- Profile Type -->
+                <template if:true={_tabProfile}>
+                    <c-pq-omni-viewer-page-profile
+                        person-map-member-data={personMapMemberData}
+                        person-contact-data={personContactData}
+                        person-contact-extended-data={personContactExtendedData}
+                        profile-image-data={profileImageData}
+                        contact-id={contactId}
+                        onrequestobjectviewer={passthroughEvent}
+                        onrefreshcontactclicked={passthroughEvent}
+                    ></c-pq-omni-viewer-page-profile>
+                </template>
+
+                <!-- Custom Hierarchy -->
+                <template if:true={_tabRelationship}>
+                    <c-pq-omni-viewer-page-relationships
+                        person-map-member-data={personMapMemberData}
+                        person-contact-data={personContactData}
+                        person-contact-extended-data={personContactExtendedData}
+                        profile-image-data={profileImageData}
+                        contact-id={contactId}
+                        map-or-account-plan-id={mapOrAccountPlanId}
+                    ></c-pq-omni-viewer-page-relationships>
+                </template>
+
+                <!-- Standard Hierarchy -->
+                <template if:true={_tabHierarchy}>
+                    <c-pq-omni-viewer-page-hierarchy
+                        person-map-member-data={personMapMemberData}
+                        person-contact-data={personContactData}
+                        person-contact-extended-data={personContactExtendedData}
+                        profile-image-data={profileImageData}
+                        contact-id={contactId}
+                    ></c-pq-omni-viewer-page-hierarchy>
+                </template>
+
+                <!-- Groups -->
+                <template if:true={_tabGroups}>
+                    <c-pq-omni-viewer-page-groups
+                        person-map-member-data={personMapMemberData}
+                        person-contact-data={personContactData}
+                        person-contact-extended-data={personContactExtendedData}
+                        profile-image-data={profileImageData}
+                        contact-id={contactId}
+                    ></c-pq-omni-viewer-page-groups>
+                </template>
+
+                <!-- I&S Type -->
+                <template if:true={_tabInfluenceSupport}>
+                    <c-pq-omni-viewer-page-influence-support
+                        person-map-member-data={personMapMemberData}
+                        person-contact-data={personContactData}
+                        person-contact-extended-data={personContactExtendedData}
+                        profile-image-data={profileImageData}
+                        member-influence-data={memberInfluenceData}
+                        member-influence-data-list={memberInfluenceDataList}
+                    ></c-pq-omni-viewer-page-influence-support>
+                </template>
+
+                <!-- Related Opportunity Type -->
+                <template if:true={_tabRelatedOpportunity}>
+                    <c-pq-omni-viewer-page-related-opportunity
+                        person-map-member-data={personMapMemberData}
+                        person-contact-data={personContactData}
+                        person-contact-extended-data={personContactExtendedData}
+                        profile-image-data={profileImageData}
+                        contact-id={contactId}
+                    ></c-pq-omni-viewer-page-related-opportunity>
+                </template>
+
+                <!-- Related Tasks Type -->
+                <template if:true={_tabRelatedTasks}>
+                    <c-pq-omni-viewer-page-related-tasks
+                        person-map-member-data={personMapMemberData}
+                        person-contact-data={personContactData}
+                        person-contact-extended-data={personContactExtendedData}
+                        profile-image-data={profileImageData}
+                        contact-id={contactId}
+                    ></c-pq-omni-viewer-page-related-tasks>
+                </template>
+
+                <!-- Related Tasks Type -->
+                <template if:true={_tabRelatedCampaigns}>
+                    <c-pq-omni-viewer-page-related-campaigns
+                        person-map-member-data={personMapMemberData}
+                        person-contact-data={personContactData}
+                        person-contact-extended-data={personContactExtendedData}
+                        profile-image-data={profileImageData}
+                        contact-id={contactId}
+                    ></c-pq-omni-viewer-page-related-campaigns>
+                </template>
+            </div>
+        </template>
+
+        <template if:false={isLoading}> loading... </template>
+    </div>
+</template>

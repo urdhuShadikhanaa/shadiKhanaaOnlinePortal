@@ -1,0 +1,28 @@
+<template>
+    <template if:true={shouldRenderNotes}>
+        <section class="login-notes" aria-label="Administrator login notes">
+            <p class="login-notes__kicker">Notes</p>
+            <h2 class="login-notes__title">{heading}</h2>
+            <template if:true={message}>
+                <p class="login-notes__message">{message}</p>
+            </template>
+            <template if:true={hasCredentials}>
+                <dl class="login-notes__credentials">
+                    <div class="login-notes__row">
+                        <dt>Admin username</dt>
+                        <dd>{adminUsername}</dd>
+                    </div>
+                    <template if:true={showPasswordHint}>
+                        <div class="login-notes__row">
+                            <dt>Admin password</dt>
+                            <dd>{adminPassword}</dd>
+                        </div>
+                    </template>
+                    <template if:false={showPasswordHint}>
+                        <p class="login-notes__message">Use your Salesforce administrator password.</p>
+                    </template>
+                </dl>
+            </template>
+        </section>
+    </template>
+</template>

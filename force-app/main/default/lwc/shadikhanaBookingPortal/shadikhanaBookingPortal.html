@@ -1,0 +1,2205 @@
+<template>
+    <div class="portal">
+        <div class="portal-theme-layer" style={portalThemeLayerStyle} aria-hidden="true"></div>
+        <header class="portal-header slds-p-around_medium">
+            <div class="portal-header__backdrop" style={portalHeaderBackdropStyle} aria-hidden="true"></div>
+            <div class="portal-header__content">
+                <div class="portal-header__intro">
+                    <p class="portal-kicker">{portalKickerLabel}</p>
+                    <h1 class="portal-title">Reservation Portal</h1>
+                    <p class="portal-subtitle">
+                        Browse the venue and submit a booking request. Calendar dates are reserved only after admin approval.
+                    </p>
+                </div>
+                <div class="portal-content-header" class:portal-content-header_guest={isGuestUser}>
+                    <template if:false={isGuestUser}>
+                        <div class="portal-content-header__item">
+                            <lightning-icon icon-name="utility:user" size="x-small" class="portal-content-header__icon"></lightning-icon>
+                            <div>
+                                <p class="portal-content-header__label">Signed in as</p>
+                                <p class="portal-content-header__value">{userName}</p>
+                            </div>
+                        </div>
+                        <div class="portal-content-header__divider" role="presentation"></div>
+                    </template>
+                    <div class="portal-content-header__item">
+                        <lightning-icon icon-name="utility:clock" size="x-small" class="portal-content-header__icon"></lightning-icon>
+                        <div>
+                            <p class="portal-content-header__label">Current time · {browserTimeZone}</p>
+                            <p class="portal-content-header__value portal-content-header__time">{currentTimeDisplay}</p>
+                        </div>
+                    </div>
+                    <template if:false={isGuestUser}>
+                        <lightning-button
+                            label="Logout"
+                            title="Sign out of the portal"
+                            icon-name="utility:logout"
+                            variant="neutral"
+                            class="portal-logout-btn"
+                            onclick={handleLogout}>
+                        </lightning-button>
+                    </template>
+                    <template if:true={isGuestUser}>
+                        <lightning-button
+                            label="Login"
+                            title="Sign in to the portal"
+                            icon-name="utility:login"
+                            variant="brand"
+                            class="portal-login-btn"
+                            onclick={handleHeaderLogin}>
+                        </lightning-button>
+                    </template>
+                </div>
+            </div>
+        </header>
+
+        <template if:true={showPriceDropMarquee}>
+            <section class="price-drop-marquee" aria-label="Special pricing offers this month">
+                <div class="price-drop-marquee__glow" aria-hidden="true"></div>
+                <div class="price-drop-marquee__badge">
+                    <span class="price-drop-marquee__badge-pulse" aria-hidden="true"></span>
+                    <span class="price-drop-marquee__badge-text">Special Offer</span>
+                </div>
+                <div class="price-drop-marquee__viewport">
+                    <div class="price-drop-marquee__track">
+                        <div class="price-drop-marquee__group">
+                            <span class="price-drop-marquee__lead">{priceDropMarqueeLead}</span>
+                            <template for:each={priceDropOffers} for:item="offer">
+                                <span key={offer.marqueeKey} class="price-drop-marquee__chip">
+                                    <span class="price-drop-marquee__chip-date">{offer.shortDateLabel}</span>
+                                    <span class="price-drop-marquee__chip-rate">{offer.rateLabel}/day</span>
+                                    <span class="price-drop-marquee__chip-save">Save {offer.savingsLabel}</span>
+                                </span>
+                            </template>
+                            <span class="price-drop-marquee__cta">Book Urdu Shadikhana now — offers end when dates pass!</span>
+                        </div>
+                        <div class="price-drop-marquee__group" aria-hidden="true">
+                            <span class="price-drop-marquee__lead">{priceDropMarqueeLead}</span>
+                            <template for:each={priceDropOffers} for:item="offer">
+                                <span key={offer.marqueeKeyCopy} class="price-drop-marquee__chip">
+                                    <span class="price-drop-marquee__chip-date">{offer.shortDateLabel}</span>
+                                    <span class="price-drop-marquee__chip-rate">{offer.rateLabel}/day</span>
+                                    <span class="price-drop-marquee__chip-save">Save {offer.savingsLabel}</span>
+                                </span>
+                            </template>
+                            <span class="price-drop-marquee__cta">Book Urdu Shadikhana now — offers end when dates pass!</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </template>
+
+        <template if:true={hasCelebrationBanners}>
+            <section class="celebration-wishes" aria-label="Today's wishes">
+                <header class="celebration-wishes__label">
+                    <span class="celebration-wishes__label-dot" aria-hidden="true"></span>
+                    Today's Wishes
+                </header>
+                <div class="celebration-wishes__list">
+                    <template for:each={celebrationBanners} for:item="celebration">
+                        <article key={celebration.key} class={celebration.cssClass}>
+                            <div class="celebration-wish__accent" aria-hidden="true"></div>
+                            <div class="celebration-wish__pattern" aria-hidden="true"></div>
+                            <div class="celebration-wish__shine" aria-hidden="true"></div>
+                            <span class="celebration-wish__deco" aria-hidden="true">{celebration.decoEmoji}</span>
+                            <div class="celebration-wish__body">
+                                <div class="celebration-wish__head">
+                                    <span class="celebration-wish__emoji-wrap" aria-hidden="true">
+                                        <span class="celebration-wish__emoji">{celebration.emoji}</span>
+                                    </span>
+                                    <div class="celebration-wish__meta">
+                                        <span class="celebration-wish__badge">Today · {celebration.badgeLabel}</span>
+                                        <p class="celebration-wish__tagline">{celebration.tagline}</p>
+                                        <p class="celebration-wish__event">{celebration.eventLabel}</p>
+                                    </div>
+                                </div>
+                                <h3 class="celebration-wish__title">{celebration.title}</h3>
+                                <p class="celebration-wish__message">{celebration.message}</p>
+                            </div>
+                        </article>
+                    </template>
+                </div>
+            </section>
+        </template>
+
+        <div class="portal-layout">
+            <aside class="sidebar panel">
+                <p class="sidebar__title">Navigation</p>
+                <nav class="sidebar-nav">
+                    <template for:each={navItems} for:item="item">
+                        <div key={item.id} class="sidebar-nav__group">
+                            <button
+                                class={item.className}
+                                data-tab={item.id}
+                                onclick={handleNavClick}
+                            >
+                                <span class="sidebar-nav__item-content">
+                                    <lightning-icon icon-name={item.iconName} size="x-small"></lightning-icon>
+                                    <span>{item.label}</span>
+                                </span>
+                                <span class="sidebar-nav__item-meta">
+                                    <template if:true={item.locked}>
+                                        <lightning-icon
+                                            icon-name="utility:lock"
+                                            size="xx-small"
+                                            class="sidebar-nav__lock-icon"
+                                            alternative-text="Sign in required"
+                                        ></lightning-icon>
+                                    </template>
+                                    <template if:true={item.showChevron}>
+                                        <lightning-icon
+                                            icon-name={item.chevronIcon}
+                                            size="xx-small"
+                                            class="sidebar-nav__chevron"
+                                            alternative-text="Expand administration menu"
+                                        ></lightning-icon>
+                                    </template>
+                                </span>
+                            </button>
+
+                            <template if:true={item.showSubNav}>
+                                <div
+                                    class={item.subNavClassName}
+                                    aria-hidden={item.subNavHidden}
+                                    aria-label="Administration sections"
+                                >
+                                    <template for:each={adminSubNavItems} for:item="subItem">
+                                        <button
+                                            key={subItem.id}
+                                            class={subItem.className}
+                                            data-admin-section={subItem.id}
+                                            onclick={handleAdminSubNavClick}
+                                        >
+                                            <lightning-icon
+                                                icon-name={subItem.iconName}
+                                                size="xx-small"
+                                                class="sidebar-subnav__icon"
+                                            ></lightning-icon>
+                                            <span>{subItem.label}</span>
+                                        </button>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </nav>
+            </aside>
+
+            <main class="portal-content">
+                <template if:true={isHomeTab}>
+                    <section class="panel venue-review venue-review_themed slds-m-bottom_small">
+                        <div class="venue-review__layout">
+                            <div class="venue-review__hero">
+                                <span class="venue-review__badge">Urdu Shadikhana</span>
+                                <div class="panel__header panel__header_compact venue-review__header">
+                                    <div>
+                                        <h2>Review the Shadikhana</h2>
+                                        <p>Browse the venue photos before you submit your booking request.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <aside class="venue-review__aside">
+                                <div class="address-card address-card_review">
+                                    <div class="address-card__header">
+                                        <lightning-icon icon-name="utility:checkin" size="x-small"></lightning-icon>
+                                        <h3>Venue Address</h3>
+                                    </div>
+                                    <p class="address-card__full">{fullAddress}</p>
+                                    <dl class="address-card__details">
+                                        <template for:each={addressLines} for:item="line">
+                                            <div key={line.id} class="address-line">
+                                                <dt>{line.label}</dt>
+                                                <dd>{line.value}</dd>
+                                            </div>
+                                        </template>
+                                    </dl>
+                                    <a class="address-card__map-link" href={mapsUrl} target="_blank" rel="noopener noreferrer">
+                                        Open location in Google Maps
+                                    </a>
+                                </div>
+                            </aside>
+
+                            <div class="gallery gallery_review venue-review__gallery">
+                                    <div class="gallery-main gallery-main_review">
+                                        <img
+                                            src={selectedVenueImage.url}
+                                            alt={selectedVenueImage.label}
+                                            class="gallery-main__image"
+                                        />
+                                        <div class="gallery-main__caption">
+                                            <strong>{selectedVenueImage.label}</strong>
+                                            <span>{selectedVenueImage.caption}</span>
+                                        </div>
+                                        <div class="gallery-main__nav">
+                                            <lightning-button-icon
+                                                icon-name="utility:chevronleft"
+                                                alternative-text="Previous photo"
+                                                onclick={handlePreviousImage}
+                                            ></lightning-button-icon>
+                                            <lightning-button-icon
+                                                icon-name="utility:chevronright"
+                                                alternative-text="Next photo"
+                                                onclick={handleNextImage}
+                                            ></lightning-button-icon>
+                                        </div>
+                                    </div>
+
+                                    <div class="gallery-thumbs gallery-thumbs_review">
+                                        <template for:each={galleryThumbnails} for:item="image">
+                                            <button
+                                                key={image.id}
+                                                class={image.thumbClass}
+                                                data-index={image.index}
+                                                onclick={handleSelectImage}
+                                                title={image.label}
+                                            >
+                                                <img src={image.url} alt={image.label} />
+                                            </button>
+                                        </template>
+                                    </div>
+                                </div>
+                        </div>
+                    </section>
+
+                    <div class={homeBookingLayoutClass}>
+                        <section class="home-booking-layout__form">
+                            <article class="panel request-form-panel">
+                                <div class="request-form-hero request-form-hero_compact">
+                                    <div class="request-form-hero__intro">
+                                        <span class="request-form-hero__badge">Booking Application</span>
+                                        <h2 class="request-form-hero__title">Request Your Event Date</h2>
+                                    </div>
+                                </div>
+
+                                <div class="request-form-steps request-form-steps_chevron" aria-label="Booking steps">
+                                    <div
+                                        class={bookingWizardStep1ChevronClass}
+                                        data-step="1"
+                                        role="button"
+                                        tabindex="0"
+                                        aria-current={bookingWizardStep1AriaCurrent}
+                                        onclick={handleBookingWizardStepClick}
+                                    >
+                                        <div class="request-form-step-chevron__copy">
+                                            <p class="request-form-step-chevron__title">Dates</p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class={bookingWizardStep2ChevronClass}
+                                        data-step="2"
+                                        role="button"
+                                        tabindex="0"
+                                        aria-current={bookingWizardStep2AriaCurrent}
+                                        onclick={handleBookingWizardStepClick}
+                                    >
+                                        <div class="request-form-step-chevron__copy">
+                                            <p class="request-form-step-chevron__title">Event</p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class={bookingWizardStep3ChevronClass}
+                                        data-step="3"
+                                        role="button"
+                                        tabindex="0"
+                                        aria-current={bookingWizardStep3AriaCurrent}
+                                        onclick={handleBookingWizardStepClick}
+                                    >
+                                        <div class="request-form-step-chevron__copy">
+                                            <p class="request-form-step-chevron__title">Contact</p>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class={bookingWizardStep4ChevronClass}
+                                        data-step="4"
+                                        role="button"
+                                        tabindex="0"
+                                        aria-current={bookingWizardStep4AriaCurrent}
+                                        onclick={handleBookingWizardStepClick}
+                                    >
+                                        <div class="request-form-step-chevron__copy">
+                                            <p class="request-form-step-chevron__title">Preview</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="booking-wizard-step-message">{bookingWizardStepMessage}</p>
+
+                                <div class="request-form-panel__body">
+                                <div class="booking-form slds-form slds-form_stacked">
+                                    <template if:true={isBookingWizardStep1}>
+                                    <div class="form-section-card form-section-card_step form-section-card_compact">
+                                        <div class="form-step-dates-layout">
+                                            <div class="form-step-dates-layout__fields">
+                                                <div class="form-date-picker__summary">
+                                                    <div class="form-date-field">
+                                                        <label class="form-date-field__label" for="booking-from-date">
+                                                            From Date <span class="form-field-required" aria-hidden="true">*</span>
+                                                        </label>
+                                                        <input
+                                                            id="booking-from-date"
+                                                            class="form-date-field__input"
+                                                            type="text"
+                                                            inputmode="numeric"
+                                                            autocomplete="off"
+                                                            placeholder="DD/MM/YYYY"
+                                                            value={fromDateText}
+                                                            data-field="selectedDate"
+                                                            oninput={handleDateTextInput}
+                                                            onchange={handleDateInputChange}
+                                                            onblur={handleDateInputChange}
+                                                            required
+                                                        />
+                                                    </div>
+                                                    <div class="form-date-field">
+                                                        <label class="form-date-field__label" for="booking-to-date">
+                                                            To Date <span class="form-field-required" aria-hidden="true">*</span>
+                                                        </label>
+                                                        <input
+                                                            id="booking-to-date"
+                                                            class="form-date-field__input"
+                                                            type="text"
+                                                            inputmode="numeric"
+                                                            autocomplete="off"
+                                                            placeholder="DD/MM/YYYY"
+                                                            value={toDateText}
+                                                            data-field="selectedEndDate"
+                                                            oninput={handleDateTextInput}
+                                                            onchange={handleDateInputChange}
+                                                            onblur={handleDateInputChange}
+                                                            required
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <template if:true={isDesktopLayout}>
+                                                    <div class="form-row form-row_two-col time-fields time-fields_desktop time-fields_compact">
+                                                        <lightning-input
+                                                            type="time"
+                                                            label="Start time"
+                                                            value={eventStartTime}
+                                                            data-field="eventStartTime"
+                                                            onchange={handleInputChange}
+                                                            required
+                                                        ></lightning-input>
+                                                        <lightning-input
+                                                            type="time"
+                                                            label="End time"
+                                                            value={eventEndTime}
+                                                            data-field="eventEndTime"
+                                                            onchange={handleInputChange}
+                                                            required
+                                                        ></lightning-input>
+                                                    </div>
+                                                </template>
+                                            </div>
+
+                                            <div class="form-date-picker form-date-picker_inline">
+                                                <template if:true={isDateSelectionLoading}>
+                                                    <div class="form-date-picker__loading" role="status" aria-live="polite">
+                                                        <lightning-spinner
+                                                            alternative-text="Updating dates"
+                                                            size="small"
+                                                        ></lightning-spinner>
+                                                    </div>
+                                                </template>
+
+                                                <div class="form-date-picker__nav form-date-picker__nav_compact">
+                                                    <lightning-button-icon
+                                                        icon-name="utility:chevronleft"
+                                                        alternative-text="Previous month"
+                                                        onclick={handlePrevMonth}
+                                                        disabled={isPrevMonthDisabled}
+                                                    ></lightning-button-icon>
+                                                    <span class="calendar-month">{monthLabel}</span>
+                                                    <lightning-button-icon
+                                                        icon-name="utility:chevronright"
+                                                        alternative-text="Next month"
+                                                        onclick={handleNextMonth}
+                                                    ></lightning-button-icon>
+                                                </div>
+
+                                                <div class="form-date-picker__calendar-wrap">
+                                                    <div class="form-calendar-grid calendar-grid calendar-grid_compact calendar-grid_form-inline">
+                                                    <template for:each={weekdayLabels} for:item="weekday">
+                                                        <div key={weekday} class="calendar-weekday">{weekday}</div>
+                                                    </template>
+
+                                                    <template for:each={calendarDays} for:item="day">
+                                                        <button
+                                                            key={day.formKey}
+                                                            class={day.cellClass}
+                                                            data-date={day.isoDate}
+                                                            data-reserved={day.isReserved}
+                                                            data-past={day.isPast}
+                                                            data-beforestart={day.isBeforeStart}
+                                                            data-current={day.isCurrentMonth}
+                                                            aria-label={day.ariaLabel}
+                                                            title={day.hoverTitle}
+                                                            onclick={handleDayClick}
+                                                            disabled={day.isFormDisabled}
+                                                        >
+                                                            <span>{day.label}</span>
+                                                            <template if:true={day.showSidebarDailyRate}>
+                                                                <span class="calendar-day__rate">
+                                                                    <span class="calendar-day__rate-amount calendar-day__rate-amount_full">{day.dailyRateAmount}</span>
+                                                                    <span class="calendar-day__rate-amount calendar-day__rate-amount_compact">{day.dailyRateAmountCompact}</span>
+                                                                    <span class="calendar-day__rate-unit">/day</span>
+                                                                </span>
+                                                            </template>
+                                                            <template if:true={day.isPartialConfirmedEnd}>
+                                                                <span class="calendar-day__badge calendar-day__badge_partial">9 AM</span>
+                                                            </template>
+                                                            <template if:true={day.isConfirmedBlocked}>
+                                                                <span class="calendar-day__badge calendar-day__badge_confirmed">Booked</span>
+                                                            </template>
+                                                            <template if:true={day.isPending}>
+                                                                <span class="calendar-day__badge calendar-day__badge_pending">Pending</span>
+                                                            </template>
+                                                        </button>
+                                                    </template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <template if:false={isDesktopLayout}>
+                                            <div class="form-row form-row_two-col time-fields time-fields_mobile">
+                                                <div class="time-picker">
+                                                    <p class="time-picker__label">Start Time (on from date)</p>
+                                                    <div class="time-picker__controls">
+                                                        <lightning-combobox
+                                                            label="Hour"
+                                                            variant="label-hidden"
+                                                            value={startTimeHour}
+                                                            options={timeHourOptions}
+                                                            data-time-scope="start"
+                                                            data-time-part="hour"
+                                                            onchange={handleTimePartChange}
+                                                        ></lightning-combobox>
+                                                        <span class="time-picker__separator">:</span>
+                                                        <lightning-combobox
+                                                            label="Minute"
+                                                            variant="label-hidden"
+                                                            value={startTimeMinute}
+                                                            options={timeMinuteOptions}
+                                                            data-time-scope="start"
+                                                            data-time-part="minute"
+                                                            onchange={handleTimePartChange}
+                                                        ></lightning-combobox>
+                                                        <lightning-combobox
+                                                            label="AM or PM"
+                                                            variant="label-hidden"
+                                                            value={startTimePeriod}
+                                                            options={timePeriodOptions}
+                                                            data-time-scope="start"
+                                                            data-time-part="period"
+                                                            onchange={handleTimePartChange}
+                                                        ></lightning-combobox>
+                                                    </div>
+                                                    <p class="time-picker__display">{formattedStartTimeDisplay}</p>
+                                                </div>
+                                                <div class="time-picker">
+                                                    <p class="time-picker__label">End Time (on to date)</p>
+                                                    <div class="time-picker__controls">
+                                                        <lightning-combobox
+                                                            label="Hour"
+                                                            variant="label-hidden"
+                                                            value={endTimeHour}
+                                                            options={timeHourOptions}
+                                                            data-time-scope="end"
+                                                            data-time-part="hour"
+                                                            onchange={handleTimePartChange}
+                                                        ></lightning-combobox>
+                                                        <span class="time-picker__separator">:</span>
+                                                        <lightning-combobox
+                                                            label="Minute"
+                                                            variant="label-hidden"
+                                                            value={endTimeMinute}
+                                                            options={timeMinuteOptions}
+                                                            data-time-scope="end"
+                                                            data-time-part="minute"
+                                                            onchange={handleTimePartChange}
+                                                        ></lightning-combobox>
+                                                        <lightning-combobox
+                                                            label="AM or PM"
+                                                            variant="label-hidden"
+                                                            value={endTimePeriod}
+                                                            options={timePeriodOptions}
+                                                            data-time-scope="end"
+                                                            data-time-part="period"
+                                                            onchange={handleTimePartChange}
+                                                        ></lightning-combobox>
+                                                    </div>
+                                                    <p class="time-picker__display">{formattedEndTimeDisplay}</p>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    </template>
+
+                                    <template if:true={isBookingWizardStep2}>
+                                    <div class="form-section-card form-section-card_step form-section-card_clean">
+                                        <div class="hall-info-panel">
+                                            <h3 class="hall-info-panel__title">About the hall</h3>
+                                            <p class="hall-info-panel__text">{hallInfoSummary}</p>
+                                        </div>
+
+                                        <div class="form-event-grid">
+                                            <div class="form-event-grid__field">
+                                                <lightning-combobox
+                                                    label="Event type"
+                                                    value={eventType}
+                                                    options={eventTypeOptions}
+                                                    data-field="eventType"
+                                                    onchange={handleInputChange}
+                                                    required
+                                                ></lightning-combobox>
+                                            </div>
+                                            <div class="form-event-grid__field">
+                                                <lightning-combobox
+                                                    label="Decorations"
+                                                    value={decorationArrangement}
+                                                    options={serviceArrangementOptions}
+                                                    data-field="decorationArrangement"
+                                                    onchange={handleInputChange}
+                                                    required
+                                                ></lightning-combobox>
+                                            </div>
+
+                                            <template if:true={showCustomEventName}>
+                                                <div class="form-event-grid__field form-event-grid__field_full">
+                                                    <lightning-input
+                                                        label="Event name"
+                                                        value={eventName}
+                                                        data-field="eventName"
+                                                        onchange={handleInputChange}
+                                                        required
+                                                    ></lightning-input>
+                                                </div>
+                                            </template>
+
+                                            <div class="form-event-grid__field">
+                                                <lightning-input
+                                                    type="number"
+                                                    label="Expected guest count"
+                                                    value={expectedGuestCount}
+                                                    data-field="expectedGuestCount"
+                                                    onchange={handleInputChange}
+                                                    min="1"
+                                                    max={hallSeatingCapacity}
+                                                    required
+                                                ></lightning-input>
+                                            </div>
+                                            <div class="form-event-grid__field">
+                                                <lightning-combobox
+                                                    label="Catering"
+                                                    value={cateringArrangement}
+                                                    options={serviceArrangementOptions}
+                                                    data-field="cateringArrangement"
+                                                    onchange={handleInputChange}
+                                                    required
+                                                ></lightning-combobox>
+                                            </div>
+
+                                            <div class="form-event-grid__field form-event-grid__field_details">
+                                                <lightning-textarea
+                                                    label="Event details (optional)"
+                                                    value={eventDetails}
+                                                    data-field="eventDetails"
+                                                    onchange={handleInputChange}
+                                                    placeholder="Seating setup, stage, special requirements"
+                                                ></lightning-textarea>
+                                            </div>
+                                            <div class="form-event-grid__field form-event-grid__field_charges">
+                                                <div class="event-charge-panel" aria-live="polite">
+                                                    <h4 class="event-charge-panel__title">Estimated charges</h4>
+                                                    <dl class="event-charge-panel__list">
+                                                        <div class="event-charge-panel__row">
+                                                            <dt>Hall rental</dt>
+                                                            <dd>{bookingPriceHallRentalLabel}</dd>
+                                                        </div>
+                                                        <div class="event-charge-panel__row">
+                                                            <dt>Decoration</dt>
+                                                            <dd>{eventStepDecorationChargeLabel}</dd>
+                                                        </div>
+                                                        <div class="event-charge-panel__row">
+                                                            <dt>Catering</dt>
+                                                            <dd>{eventStepCateringChargeLabel}</dd>
+                                                        </div>
+                                                        <div class="event-charge-panel__row event-charge-panel__row_total">
+                                                            <dt>Estimated total</dt>
+                                                            <dd>{bookingPriceAmountLabel}</dd>
+                                                        </div>
+                                                    </dl>
+                                                    <template if:true={showBookingPriceNote}>
+                                                        <p class="event-charge-panel__note">{bookingPriceNote}</p>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </template>
+
+                                    <template if:true={isBookingWizardStep3}>
+                                    <div class="form-section-card form-section-card_step form-section-card_clean">
+                                        <div class="form-contact-grid">
+                                            <div class="form-contact-grid__field">
+                                                <lightning-input
+                                                    label="Your Name"
+                                                    value={contactName}
+                                                    data-field="contactName"
+                                                    onchange={handleInputChange}
+                                                    required
+                                                ></lightning-input>
+                                            </div>
+                                            <div class="form-contact-grid__field">
+                                                <div class="phone-input-group">
+                                                    <label class="phone-input-group__label" for="contact-phone-input">
+                                                        Mobile Number <span class="form-field-required" aria-hidden="true">*</span>
+                                                    </label>
+                                                    <div class="phone-input-group__control">
+                                                        <span class="phone-input-group__prefix">{defaultCountryCode}</span>
+                                                        <input
+                                                            id="contact-phone-input"
+                                                            class="phone-input-group__input"
+                                                            type="tel"
+                                                            inputmode="numeric"
+                                                            maxlength="10"
+                                                            placeholder="9876543210"
+                                                            value={contactPhoneDigits}
+                                                            oninput={handlePhoneInputChange}
+                                                            required
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-contact-grid__field">
+                                                <lightning-input
+                                                    type="email"
+                                                    label="Email (optional)"
+                                                    value={contactEmail}
+                                                    data-field="contactEmail"
+                                                    onchange={handleInputChange}
+                                                ></lightning-input>
+                                            </div>
+                                            <div class="form-contact-grid__field form-contact-grid__field_notes">
+                                                <lightning-textarea
+                                                    label="Additional Notes (optional)"
+                                                    value={notes}
+                                                    data-field="notes"
+                                                    onchange={handleInputChange}
+                                                    placeholder="Any other information for the admin team"
+                                                ></lightning-textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </template>
+
+                                    <template if:true={isBookingWizardStep4}>
+                                    <div class="form-section-card form-section-card_step form-section-card_clean booking-wizard-preview">
+                                        <div class="preview-summary-card" aria-live="polite">
+                                            <template if:true={showBookingQuoteSpinner}>
+                                                <div class="preview-summary-card__loading" role="status">
+                                                    <lightning-spinner
+                                                        alternative-text="Updating selection"
+                                                        size="small"
+                                                    ></lightning-spinner>
+                                                </div>
+                                            </template>
+
+                                            <div class="preview-dense">
+                                                <div class="preview-dense__cols">
+                                                    <div class="preview-dense__col">
+                                                        <p class="preview-dense__tag">Date &amp; timing</p>
+                                                        <div class="preview-dense__line">
+                                                            <span>Period</span>
+                                                            <span>{selectedDateRangeLabel}</span>
+                                                        </div>
+                                                        <div class="preview-dense__line">
+                                                            <span>From</span>
+                                                            <span>{bookingPreviewEventFromLabel}</span>
+                                                        </div>
+                                                        <div class="preview-dense__line">
+                                                            <span>To</span>
+                                                            <span>{bookingPreviewEventToLabel}</span>
+                                                        </div>
+
+                                                        <p class="preview-dense__tag">Event</p>
+                                                        <div class="preview-dense__line">
+                                                            <span>Type</span>
+                                                            <span>{bookingPreviewEventType}</span>
+                                                        </div>
+                                                        <div class="preview-dense__line">
+                                                            <span>Details</span>
+                                                            <span>{bookingPreviewEventDetails}</span>
+                                                        </div>
+                                                        <div class="preview-dense__line">
+                                                            <span>Guests</span>
+                                                            <span>{bookingPreviewGuestCount}</span>
+                                                        </div>
+                                                        <div class="preview-dense__line">
+                                                            <span>Decorations</span>
+                                                            <span>{bookingPreviewDecorationLabel}</span>
+                                                        </div>
+                                                        <div class="preview-dense__line">
+                                                            <span>Catering</span>
+                                                            <span>{bookingPreviewCateringLabel}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="preview-dense__col preview-dense__col_side">
+                                                        <p class="preview-dense__tag">Contact</p>
+                                                        <div class="preview-dense__line">
+                                                            <span>Name</span>
+                                                            <span>{contactName}</span>
+                                                        </div>
+                                                        <div class="preview-dense__line">
+                                                            <span>Mobile</span>
+                                                            <span>{bookingPreviewContactPhone}</span>
+                                                        </div>
+                                                        <div class="preview-dense__line">
+                                                            <span>Email</span>
+                                                            <span>{bookingPreviewEmail}</span>
+                                                        </div>
+                                                        <div class="preview-dense__line">
+                                                            <span>Notes</span>
+                                                            <span>{bookingPreviewNotes}</span>
+                                                        </div>
+
+                                                        <div class="preview-price-box">
+                                                            <div class="preview-price-box__head">
+                                                                <span class="preview-price-box__label">Estimated total</span>
+                                                                <span class="preview-price-box__amount">{bookingPriceAmountLabel}</span>
+                                                            </div>
+                                                            <template if:true={hasPriceEstimate}>
+                                                                <p class="preview-price-box__summary">{bookingPreviewPriceSummaryLabel}</p>
+                                                            </template>
+                                                            <div class="preview-price-box__breakdown">
+                                                                <div class="preview-price-box__item">
+                                                                    <span>Hall rental</span>
+                                                                    <span>{bookingPriceHallRentalLabel}</span>
+                                                                </div>
+                                                                <template if:true={previewHasDecorationCharge}>
+                                                                    <div class="preview-price-box__item">
+                                                                        <span>Decoration</span>
+                                                                        <span>{bookingPriceDecorationLabel}</span>
+                                                                    </div>
+                                                                </template>
+                                                                <template if:true={previewHasCateringCharge}>
+                                                                    <div class="preview-price-box__item">
+                                                                        <span>Catering</span>
+                                                                        <span>{bookingPriceCateringLabel}</span>
+                                                                    </div>
+                                                                </template>
+                                                                <template if:true={hasPreviewSelfArrangedServices}>
+                                                                    <p class="preview-price-box__self">{bookingPreviewSelfArrangedServicesLabel}</p>
+                                                                </template>
+                                                            </div>
+                                                            <template if:true={showBookingPriceNote}>
+                                                                <p class="preview-price-box__timing">{bookingPriceNote}</p>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="booking-wizard-consent">
+                                            <p class="booking-wizard-consent__text">
+                                                I confirm that the booking details shown above are correct. I understand that this
+                                                booking request is subject to approval by the Management Team, and the dates will not
+                                                be reserved until the booking is officially confirmed.
+                                            </p>
+                                            <lightning-input
+                                                type="checkbox"
+                                                label="I agree and want to submit this booking request"
+                                                checked={bookingWizardConsentAccepted}
+                                                onchange={handleBookingConsentChange}
+                                            ></lightning-input>
+                                        </div>
+                                    </div>
+                                    </template>
+
+                                    <div class="booking-wizard-nav">
+                                        <template if:true={showBookingWizardBack}>
+                                            <lightning-button
+                                                label="Back"
+                                                icon-name="utility:chevronleft"
+                                                variant="neutral"
+                                                onclick={handleBookingWizardBack}
+                                                disabled={isSubmitting}
+                                            ></lightning-button>
+                                        </template>
+                                        <span class="booking-wizard-nav__spacer"></span>
+                                        <template if:true={showBookingWizardNext}>
+                                            <lightning-button
+                                                label="Next"
+                                                icon-name="utility:chevronright"
+                                                icon-position="right"
+                                                variant="brand"
+                                                onclick={handleBookingWizardNext}
+                                            ></lightning-button>
+                                        </template>
+                                        <template if:true={isBookingWizardStep4}>
+                                            <div class="booking-wizard-nav__submit">
+                                                <template if:true={isSubmitting}>
+                                                    <lightning-spinner
+                                                        alternative-text="Submitting booking request"
+                                                        size="small"
+                                                        class="booking-form__submit-spinner"
+                                                    ></lightning-spinner>
+                                                </template>
+                                                <lightning-button
+                                                    variant="brand"
+                                                    label={submitButtonLabel}
+                                                    icon-name="utility:send"
+                                                    onclick={handleSubmit}
+                                                    disabled={isSubmitDisabled}
+                                                    class={submitButtonClass}
+                                                ></lightning-button>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                </div>
+                            </article>
+                        </section>
+
+                        <template if:true={showAvailabilityCalendarPanel}>
+                        <section class="home-booking-layout__calendar">
+                            <article class="panel panel_compact home-calendar-panel">
+                                <div class="panel__header panel__header_compact calendar-header">
+                                    <div>
+                                        <h2>Availability calendar</h2>
+                                        <p class="home-calendar-panel__guide">{calendarSelectionHint}</p>
+                                    </div>
+                                    <div class="calendar-nav">
+                                        <lightning-button-icon
+                                            icon-name="utility:chevronleft"
+                                            alternative-text="Previous month"
+                                            onclick={handlePrevMonth}
+                                            disabled={isPrevMonthDisabled}
+                                        ></lightning-button-icon>
+                                        <span class="calendar-month">{monthLabel}</span>
+                                        <lightning-button-icon
+                                            icon-name="utility:chevronright"
+                                            alternative-text="Next month"
+                                            onclick={handleNextMonth}
+                                        ></lightning-button-icon>
+                                    </div>
+                                </div>
+
+                                <div class="calendar-legend calendar-legend_compact slds-m-bottom_small">
+                                    <span class="legend-item legend-available">Available</span>
+                                    <span class="legend-item legend-pending">Pending</span>
+                                    <span class="legend-item legend-booked">Confirmed</span>
+                                    <span class="legend-item legend-selected">Selected</span>
+                                    <template if:true={hasSelectedDateRange}>
+                                        <span class="legend-item legend-confirmed-blocked">Confirmed blocked</span>
+                                        <span class="legend-item legend-confirmed-partial">Free after 9 AM</span>
+                                        <span class="legend-item legend-end-blocked">End date blocked</span>
+                                    </template>
+                                </div>
+
+                                <div class="calendar-grid-wrap">
+                                    <template if:true={isDateSelectionLoading}>
+                                        <div class="calendar-grid__loading" role="status" aria-live="polite">
+                                            <lightning-spinner
+                                                alternative-text="Updating dates"
+                                                size="small"
+                                            ></lightning-spinner>
+                                        </div>
+                                    </template>
+
+                                    <div class="calendar-grid calendar-grid_compact">
+                                    <template for:each={weekdayLabels} for:item="weekday">
+                                        <div key={weekday} class="calendar-weekday">{weekday}</div>
+                                    </template>
+
+                                    <template for:each={calendarDays} for:item="day">
+                                        <button
+                                            key={day.key}
+                                            class={day.cellClass}
+                                            data-date={day.isoDate}
+                                            data-reserved={day.isReserved}
+                                            data-past={day.isPast}
+                                            data-beforestart={day.isBeforeStart}
+                                            data-current={day.isCurrentMonth}
+                                            data-calendar="sidebar"
+                                            aria-label={day.ariaLabel}
+                                            title={day.hoverTitle}
+                                            onclick={handleDayClick}
+                                            disabled={day.isDisabled}
+                                        >
+                                            <span>{day.label}</span>
+                                            <template if:true={day.showSidebarDailyRate}>
+                                                <span class="calendar-day__rate">
+                                                    <span class="calendar-day__rate-amount calendar-day__rate-amount_full">{day.dailyRateAmount}</span>
+                                                    <span class="calendar-day__rate-amount calendar-day__rate-amount_compact">{day.dailyRateAmountCompact}</span>
+                                                    <span class="calendar-day__rate-unit">/day</span>
+                                                </span>
+                                            </template>
+                                            <template if:true={day.isPending}>
+                                                <span class="calendar-day__badge calendar-day__badge_pending">Pending</span>
+                                            </template>
+                                            <template if:true={day.isPartialConfirmedEnd}>
+                                                <span class="calendar-day__badge calendar-day__badge_partial">After 9 AM</span>
+                                            </template>
+                                            <template if:true={day.isConfirmed}>
+                                                <template if:false={day.isPartialConfirmedEnd}>
+                                                    <span class="calendar-day__badge calendar-day__badge_confirmed">Booked</span>
+                                                </template>
+                                            </template>
+                                        </button>
+                                    </template>
+                                    </div>
+                                </div>
+
+                                <template if:true={selectedBooking}>
+                                    <div class={selectedBooking.noticeClass}>
+                                        <div class="booking-notice__header">
+                                            <div>
+                                                <p class="booking-notice__label">{selectedBooking.statusHeadline}</p>
+                                                <h3 class="booking-notice__event">{selectedBooking.eventName}</h3>
+                                                <p class="booking-notice__message">{selectedBooking.statusMessage}</p>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                class="booking-notice__close"
+                                                title="Close"
+                                                onclick={handleCloseBookingDetail}
+                                            >
+                                                ×
+                                            </button>
+                                        </div>
+                                        <dl class="booking-notice__details">
+                                            <div class="booking-notice__detail">
+                                                <dt>Contact</dt>
+                                                <dd>{selectedBooking.contactName}</dd>
+                                            </div>
+                                            <div class="booking-notice__detail">
+                                                <dt>Dates</dt>
+                                                <dd>{selectedBooking.dateRangeLabel}</dd>
+                                            </div>
+                                            <template if:true={selectedBooking.timeRangeLabel}>
+                                                <div class="booking-notice__detail">
+                                                    <dt>Timing</dt>
+                                                    <dd>{selectedBooking.timeRangeLabel}</dd>
+                                                </div>
+                                            </template>
+                                            <template if:true={selectedBooking.amountLabel}>
+                                                <div class="booking-notice__detail">
+                                                    <dt>Amount</dt>
+                                                    <dd>{selectedBooking.amountLabel}</dd>
+                                                </div>
+                                            </template>
+                                        </dl>
+                                    </div>
+                                </template>
+                            </article>
+                        </section>
+                        </template>
+                    </div>
+                </template>
+
+                <template if:true={isBookingDataTab}>
+                    <template if:true={isSystemAdmin}>
+                    <section class="panel booking-data-panel">
+                        <div class="booking-data-header">
+                            <div class="booking-data-header__intro">
+                                <h2 class="booking-data-header__title">Booking Data</h2>
+                                <p class="booking-data-header__count">{bookingDataCountLabel}</p>
+                            </div>
+
+                            <template if:true={hasBookingData}>
+                                <div class="booking-data-controls">
+                                    <lightning-combobox
+                                        class="booking-data-controls__size"
+                                        label="Per page"
+                                        value={bookingDataPageSizeValue}
+                                        options={bookingDataPageSizeOptions}
+                                        onchange={handleBookingDataPageSizeChange}
+                                        variant="label-hidden"
+                                    ></lightning-combobox>
+                                    <span class="booking-data-controls__page">{bookingDataPageLabel}</span>
+                                    <div class="booking-data-controls__nav">
+                                        <lightning-button-icon
+                                            icon-name="utility:chevronleft"
+                                            alternative-text="Previous page"
+                                            title="Previous page"
+                                            onclick={handleBookingDataPrevPage}
+                                            disabled={isBookingDataFirstPageDisabled}
+                                        ></lightning-button-icon>
+                                        <lightning-button-icon
+                                            icon-name="utility:chevronright"
+                                            alternative-text="Next page"
+                                            title="Next page"
+                                            onclick={handleBookingDataNextPage}
+                                            disabled={isBookingDataLastPageDisabled}
+                                        ></lightning-button-icon>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        <template if:true={hasBookingData}>
+                            <div class="booking-data-table-card">
+                                <table class="booking-data-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Request</th>
+                                            <th scope="col">Period</th>
+                                            <th scope="col">Event / Contact</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Timing</th>
+                                            <th scope="col">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={paginatedBookingDataRows} for:item="row">
+                                            <tr key={row.rowKey} class="booking-data-table__row">
+                                                <td class="booking-data-table__request">{row.bookingNumber}</td>
+                                                <td class="booking-data-table__period">{row.periodLabel}</td>
+                                                <td class="booking-data-table__details">
+                                                    <span class="booking-data-table__event">{row.eventName}</span>
+                                                    <span class="booking-data-table__contact">{row.contactName}</span>
+                                                    <template if:true={row.contactPhone}>
+                                                        <span class="booking-data-table__phone">{row.contactPhone}</span>
+                                                    </template>
+                                                </td>
+                                                <td class="booking-data-table__status">
+                                                    <span class={row.statusClass}>{row.status}</span>
+                                                </td>
+                                                <td class="booking-data-table__timing">{row.timeLabel}</td>
+                                                <td class="booking-data-table__amount">{row.amountLabel}</td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <p class="booking-data-footer">{bookingDataPageSummary}</p>
+                        </template>
+
+                        <template if:false={hasBookingData}>
+                            <div class="booking-data-empty">
+                                <lightning-icon icon-name="utility:event" size="small"></lightning-icon>
+                                <p>No booking data available for the selected period.</p>
+                            </div>
+                        </template>
+                    </section>
+                    </template>
+                </template>
+
+                <template if:true={isAdminTab}>
+                    <template if:true={isSystemAdmin}>
+                    <section class="panel admin-panel">
+                        <template if:true={isAdminReportsSection}>
+                            <div class="admin-section-block">
+                                <div class="admin-section-block__header">
+                                    <h3>Booking Report</h3>
+                                    <p>Generate a monthly or custom date report (up to 6 months). Only days with events are shown. Export as CSV.</p>
+                                </div>
+
+                                <div class="report-controls panel panel_nested">
+                                    <lightning-combobox
+                                        label="Report Type"
+                                        value={reportMode}
+                                        options={reportModeOptions}
+                                        onchange={handleReportModeChange}
+                                    ></lightning-combobox>
+
+                                    <div class="report-controls__row">
+                                        <template if:true={isMonthReportMode}>
+                                            <lightning-input
+                                                type="month"
+                                                label="Report Month"
+                                                value={reportMonthValue}
+                                                onchange={handleReportMonthChange}
+                                            ></lightning-input>
+                                        </template>
+
+                                        <template if:true={isCustomReportMode}>
+                                            <lightning-input
+                                                type="date"
+                                                label="Start Date"
+                                                value={reportStartDate}
+                                                data-field="reportStartDate"
+                                                onchange={handleReportDateChange}
+                                            ></lightning-input>
+                                            <lightning-input
+                                                type="date"
+                                                label="End Date"
+                                                value={reportEndDate}
+                                                data-field="reportEndDate"
+                                                onchange={handleReportDateChange}
+                                            ></lightning-input>
+                                        </template>
+
+                                        <div class="report-controls__actions">
+                                            <lightning-button
+                                                label="Generate Report"
+                                                variant="brand"
+                                                onclick={handleGenerateMonthlyReport}
+                                                disabled={isReportBusy}
+                                            ></lightning-button>
+                                            <lightning-button
+                                                label="Download CSV"
+                                                variant="neutral"
+                                                onclick={handleDownloadMonthlyReport}
+                                                disabled={isDownloadReportDisabled}
+                                            ></lightning-button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <template if:true={isReportLoading}>
+                                    <p class="empty-state">Generating report...</p>
+                                </template>
+
+                                <template if:true={hasMonthlyReport}>
+                                    <div class="report-summary">
+                                        <article class="report-summary__card">
+                                            <p class="report-summary__label">Report Period</p>
+                                            <p class="report-summary__value">{monthlyReport.rangeLabel}</p>
+                                        </article>
+                                        <article class="report-summary__card">
+                                            <p class="report-summary__label">Total Bookings</p>
+                                            <p class="report-summary__value">{monthlyReport.totalBookings}</p>
+                                        </article>
+                                        <article class="report-summary__card">
+                                            <p class="report-summary__label">Confirmed</p>
+                                            <p class="report-summary__value">{monthlyReport.confirmedCount}</p>
+                                        </article>
+                                        <article class="report-summary__card">
+                                            <p class="report-summary__label">Pending</p>
+                                            <p class="report-summary__value">{monthlyReport.pendingCount}</p>
+                                        </article>
+                                        <article class="report-summary__card">
+                                            <p class="report-summary__label">Cancelled</p>
+                                            <p class="report-summary__value">{monthlyReport.cancelledCount}</p>
+                                        </article>
+                                        <article class="report-summary__card">
+                                            <p class="report-summary__label">Total Final Amount</p>
+                                            <p class="report-summary__value">{monthlyReport.totalFinalLabel}</p>
+                                        </article>
+                                    </div>
+
+                                    <template if:true={hasReportDayRows}>
+                                        <div class="report-table-wrap">
+                                            <table class="report-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Request No</th>
+                                                        <th scope="col">From</th>
+                                                        <th scope="col">To</th>
+                                                        <th scope="col">Event</th>
+                                                        <th scope="col">Contact</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Timing</th>
+                                                        <th scope="col">Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <template for:each={monthlyReport.bookingRows} for:item="bookingRow">
+                                                        <tr key={bookingRow.rowKey}>
+                                                            <td>{bookingRow.bookingNumber}</td>
+                                                            <td>{bookingRow.fromDate}</td>
+                                                            <td>{bookingRow.toDate}</td>
+                                                            <td>{bookingRow.eventName}</td>
+                                                            <td>
+                                                                {bookingRow.contactName}
+                                                                <div class="report-table__meta">{bookingRow.contactPhone}</div>
+                                                            </td>
+                                                            <td>
+                                                                <span class={bookingRow.statusClass}>{bookingRow.status}</span>
+                                                            </td>
+                                                            <td>{bookingRow.timeLabel}</td>
+                                                            <td>{bookingRow.amountLabel}</td>
+                                                        </tr>
+                                                    </template>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </template>
+
+                                    <template if:false={hasReportDayRows}>
+                                        <p class="empty-state">No events found for the selected report period.</p>
+                                    </template>
+                                </template>
+                            </div>
+                        </template>
+
+                        <template if:true={isAdminPricingSection}>
+                        <div class="admin-section-block">
+                            <div class="admin-section-block__header">
+                                <h3>Pricing</h3>
+                                <p>
+                                    Choose how to update prices on the calendar. Use the default rate for all dates,
+                                    or select multiple dates and apply a custom rate that overrides the default.
+                                </p>
+                            </div>
+
+                            <div class="banner-form panel panel_nested admin-pricing-panel">
+                                <lightning-radio-group
+                                    name="pricingMode"
+                                    label="Pricing update mode"
+                                    options={pricingModeOptions}
+                                    value={pricingMode}
+                                    type="radio"
+                                    onchange={handlePricingModeChange}
+                                ></lightning-radio-group>
+
+                                <div class="admin-pricing-calendar">
+                                    <div class="admin-pricing-calendar__nav">
+                                        <lightning-button-icon
+                                            icon-name="utility:chevronleft"
+                                            alternative-text="Previous month"
+                                            onclick={handleAdminPricingPrevMonth}
+                                            disabled={isPrevMonthDisabled}
+                                        ></lightning-button-icon>
+                                        <span class="calendar-month">{monthLabel}</span>
+                                        <lightning-button-icon
+                                            icon-name="utility:chevronright"
+                                            alternative-text="Next month"
+                                            onclick={handleAdminPricingNextMonth}
+                                        ></lightning-button-icon>
+                                    </div>
+
+                                    <div class="admin-pricing-calendar__legend">
+                                        <span class="legend-item legend-default-rate">Default rate</span>
+                                        <span class="legend-item legend-custom-rate">Custom rate</span>
+                                        <span class="legend-item legend-pending">Pending booking</span>
+                                        <span class="legend-item legend-booked">Confirmed booking</span>
+                                        <template if:true={isCustomPricingMode}>
+                                            <span class="legend-item legend-pricing-selected">Selected</span>
+                                        </template>
+                                    </div>
+
+                                    <div class="calendar-grid calendar-grid_compact admin-pricing-calendar__grid">
+                                        <template for:each={weekdayLabels} for:item="weekday">
+                                            <div key={weekday} class="calendar-weekday">{weekday}</div>
+                                        </template>
+
+                                        <template for:each={adminPricingCalendarDays} for:item="day">
+                                            <button
+                                                key={day.key}
+                                                class={day.cellClass}
+                                                data-date={day.isoDate}
+                                                data-current={day.isCurrentMonth}
+                                                data-past={day.isPast}
+                                                aria-label={day.ariaLabel}
+                                                onclick={handleAdminPricingDayClick}
+                                                disabled={day.isDisabled}
+                                            >
+                                                <span>{day.label}</span>
+                                                <template if:true={day.showDailyRate}>
+                                                    <span class="calendar-day__rate">
+                                                        <span class="calendar-day__rate-amount calendar-day__rate-amount_full">{day.dailyRateAmount}</span>
+                                                        <span class="calendar-day__rate-amount calendar-day__rate-amount_compact">{day.dailyRateAmountCompact}</span>
+                                                        <span class="calendar-day__rate-unit">/day</span>
+                                                    </span>
+                                                </template>
+                                                <template if:true={day.isPending}>
+                                                    <span class="calendar-day__badge calendar-day__badge_pending">Pending</span>
+                                                </template>
+                                                <template if:true={day.isConfirmed}>
+                                                    <span class="calendar-day__badge calendar-day__badge_confirmed">Booked</span>
+                                                </template>
+                                            </button>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <template if:true={isDefaultPricingMode}>
+                                    <div class="admin-pricing-mode-panel">
+                                        <p class="admin-pricing-mode-panel__hint">
+                                            Set one standard daily rate for open dates. Pending and confirmed booking
+                                            dates keep their existing booking prices and are not changed by the default rate.
+                                            Custom-rate dates keep their custom price until you revert them.
+                                        </p>
+                                        <lightning-input
+                                            type="number"
+                                            label="Default Daily Rate (INR)"
+                                            value={adminDefaultDailyRate}
+                                            data-field="adminDefaultDailyRate"
+                                            onchange={handleSettingsInputChange}
+                                            formatter="currency"
+                                            step="1"
+                                            min="1"
+                                        ></lightning-input>
+                                        <div class="admin-hall-settings">
+                                            <h3 class="admin-hall-settings__title">Hall service charges</h3>
+                                            <div class="admin-hall-settings__grid">
+                                                <lightning-input
+                                                    type="number"
+                                                    label="Decoration service charge (INR)"
+                                                    value={adminHallDecorationCharge}
+                                                    data-field="adminHallDecorationCharge"
+                                                    onchange={handleSettingsInputChange}
+                                                    formatter="currency"
+                                                    step="1"
+                                                    min="0"
+                                                ></lightning-input>
+                                                <lightning-input
+                                                    type="number"
+                                                    label="Catering charge per guest (INR)"
+                                                    value={adminHallCateringChargePerGuest}
+                                                    data-field="adminHallCateringChargePerGuest"
+                                                    onchange={handleSettingsInputChange}
+                                                    formatter="currency"
+                                                    step="1"
+                                                    min="0"
+                                                ></lightning-input>
+                                            </div>
+                                        </div>
+                                        <div class="banner-form__actions">
+                                            <lightning-button
+                                                label="Save Default Rate for All Dates"
+                                                variant="brand"
+                                                onclick={handleSaveDefaultDailyRate}
+                                                disabled={isPricingSaving}
+                                            ></lightning-button>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <template if:true={isCustomPricingMode}>
+                                    <div class="admin-pricing-mode-panel">
+                                        <p class="admin-pricing-mode-panel__hint">
+                                            Tap open dates on the calendar above, then enter a custom daily rate.
+                                            Pending and confirmed booking dates cannot be repriced.
+                                        </p>
+                                        <p class="admin-pricing-selection-label">{selectedPricingDatesLabel}</p>
+                                        <lightning-input
+                                            type="number"
+                                            label="Custom Daily Rate for Selected Dates (INR)"
+                                            value={pricingCustomRate}
+                                            data-field="pricingCustomRate"
+                                            onchange={handleSettingsInputChange}
+                                            formatter="currency"
+                                            step="1"
+                                            min="1"
+                                        ></lightning-input>
+                                        <div class="banner-form__actions admin-pricing-mode-panel__actions">
+                                            <lightning-button
+                                                label="Apply Custom Rate to Selected Dates"
+                                                variant="brand"
+                                                onclick={handleApplyCustomRatesToSelectedDates}
+                                                disabled={isApplyCustomRatesDisabled}
+                                            ></lightning-button>
+                                            <lightning-button
+                                                label="Revert Selected to Default"
+                                                variant="neutral"
+                                                onclick={handleRevertSelectedDatesToDefault}
+                                                disabled={isRevertCustomRatesDisabled}
+                                            ></lightning-button>
+                                            <lightning-button
+                                                label="Clear Selection"
+                                                variant="base"
+                                                onclick={handleClearPricingSelection}
+                                                disabled={isRevertCustomRatesDisabled}
+                                            ></lightning-button>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <template if:true={adminDateRateOverrides.length}>
+                                    <div class="admin-date-rate-list">
+                                        <h4>Custom rates this month</h4>
+                                        <template for:each={adminDateRateOverrides} for:item="rateOverride">
+                                            <div key={rateOverride.isoDate} class="admin-date-rate-list__item">
+                                                <span>{rateOverride.isoDate} · {rateOverride.formattedRate}</span>
+                                                <lightning-button
+                                                    label="Remove"
+                                                    variant="destructive-text"
+                                                    data-date={rateOverride.isoDate}
+                                                    onclick={handleDeleteDateRateOverride}
+                                                    disabled={isPricingSaving}
+                                                ></lightning-button>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        </template>
+
+                        <template if:true={isAdminSmsSection}>
+                        <div class="admin-section-block">
+                            <div class="admin-section-block__header">
+                                <h3>SMS Notifications</h3>
+                                <p>
+                                    Enter your Twilio details below. When a booking request is submitted, an individual
+                                    SMS is sent to each admin number (comma-separated in Admin Mobile Number) and to
+                                    the Additional SMS / Footer Phone, one callout per number.
+                                </p>
+                            </div>
+
+                            <div class="banner-form panel panel_nested">
+                                <lightning-input
+                                    label="Admin Mobile Number"
+                                    value={adminMobileNumber}
+                                    data-field="adminMobileNumber"
+                                    onchange={handleSettingsInputChange}
+                                    placeholder="6364054881, 9849939703"
+                                ></lightning-input>
+                                <lightning-input
+                                    label="Additional SMS / Footer Phone"
+                                    value={footerAdditionalPhone}
+                                    data-field="footerAdditionalPhone"
+                                    onchange={handleSettingsInputChange}
+                                    placeholder="9652741400"
+                                ></lightning-input>
+                                <lightning-input
+                                    label="Portal Site URL"
+                                    value={portalSiteUrl}
+                                    data-field="portalSiteUrl"
+                                    onchange={handleSettingsInputChange}
+                                ></lightning-input>
+                                <lightning-input
+                                    label="Portal Login URL"
+                                    value={portalLoginUrl}
+                                    data-field="portalLoginUrl"
+                                    onchange={handleSettingsInputChange}
+                                ></lightning-input>
+                                <lightning-input
+                                    label="Twilio Account SID"
+                                    value={twilioAccountSid}
+                                    data-field="twilioAccountSid"
+                                    onchange={handleSettingsInputChange}
+                                    placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                                ></lightning-input>
+                                <lightning-input
+                                    label="Twilio Auth Token"
+                                    value={twilioAuthToken}
+                                    data-field="twilioAuthToken"
+                                    onchange={handleSettingsInputChange}
+                                    type="password"
+                                    placeholder="Paste Auth Token"
+                                ></lightning-input>
+                                <p class="notification-help">{twilioAuthTokenHelp}</p>
+                                <lightning-input
+                                    label="Twilio From Number"
+                                    value={twilioFromNumber}
+                                    data-field="twilioFromNumber"
+                                    onchange={handleSettingsInputChange}
+                                    placeholder="+91XXXXXXXXXX or +1XXXXXXXXXX"
+                                ></lightning-input>
+                                <lightning-input
+                                    type="checkbox"
+                                    label="Enable SMS Notifications"
+                                    checked={smsEnabled}
+                                    data-field="smsEnabled"
+                                    onchange={handleSettingsInputChange}
+                                ></lightning-input>
+                                <p class="notification-help">
+                                    Admin mobiles receive alerts for new booking requests on both numbers above.
+                                    Requester mobile receives confirmation SMS after admin approval. SMS includes site
+                                    and login links.
+                                </p>
+                                <div class="banner-form__actions">
+                                    <lightning-button
+                                        label="Save Notification Settings"
+                                        variant="brand"
+                                        onclick={handleSavePortalSettings}
+                                        disabled={isSettingsSaving}
+                                    ></lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                        </template>
+
+                        <template if:true={isAdminEmailSection}>
+                        <div class="admin-section-block">
+                            <div class="admin-section-block__header">
+                                <h3>Email Notifications</h3>
+                                <p>
+                                    Booking emails are sent when a request is submitted and when you confirm or cancel
+                                    a booking. Customer replies are routed to the admin email below.
+                                </p>
+                            </div>
+
+                            <div class="banner-form panel panel_nested">
+                                <lightning-input
+                                    type="email"
+                                    label="Admin Email"
+                                    value={adminEmail}
+                                    data-field="adminEmail"
+                                    onchange={handleSettingsInputChange}
+                                    placeholder="urdhushadikhanaa@gmail.com"
+                                ></lightning-input>
+                                <lightning-input
+                                    type="checkbox"
+                                    label="Enable Email Notifications"
+                                    checked={emailEnabled}
+                                    data-field="emailEnabled"
+                                    onchange={handleSettingsInputChange}
+                                ></lightning-input>
+                                <p class="notification-help">
+                                    Customers with an email address receive a thank-you message when they submit a
+                                    request, plus confirmation or cancellation updates from the manager. The admin email
+                                    receives an alert for every new booking request.
+                                </p>
+                                <div class="banner-form__actions">
+                                    <lightning-button
+                                        label="Save Email Settings"
+                                        variant="brand"
+                                        onclick={handleSavePortalSettings}
+                                        disabled={isSettingsSaving}
+                                    ></lightning-button>
+                                </div>
+                            </div>
+                        </div>
+                        </template>
+
+                        <template if:true={isAdminBrandingSection}>
+                            <div class="admin-section-block">
+                                <div class="admin-section-block__header">
+                                    <h3>Site Branding</h3>
+                                        <p>
+                                            Update venue name, hall capacity, footer contact details, and gallery photos.
+                                            Access requires the branding secret key.
+                                        </p>
+                                </div>
+
+                                <div class="banner-form panel panel_nested">
+                                    <template if:false={isBrandingEditorVisible}>
+                                        <lightning-input
+                                            type="password"
+                                            label="Branding Secret Key"
+                                            value={brandingSecretInput}
+                                            onchange={handleBrandingSecretInputChange}
+                                            placeholder="Enter secret key to unlock branding settings"
+                                        ></lightning-input>
+                                        <div class="banner-form__actions">
+                                            <lightning-button
+                                                label="Unlock Branding Settings"
+                                                variant="brand"
+                                                onclick={handleUnlockBrandingSettings}
+                                            ></lightning-button>
+                                            <lightning-button
+                                                label="Back to Booking Queue"
+                                                variant="neutral"
+                                                onclick={handleExitBrandingSettings}
+                                            ></lightning-button>
+                                        </div>
+                                    </template>
+
+                                    <template if:true={isBrandingEditorVisible}>
+                                        <lightning-input
+                                            label="Venue Name"
+                                            value={venueLocationName}
+                                            data-field="venueLocationName"
+                                            onchange={handleBrandingFieldChange}
+                                        ></lightning-input>
+                                        <lightning-input
+                                            label="Footer Phone"
+                                            value={footerContactNumber}
+                                            data-field="footerContactNumber"
+                                            onchange={handleBrandingFieldChange}
+                                        ></lightning-input>
+                                        <lightning-input
+                                            label="Additional Footer Phone"
+                                            value={footerAdditionalContactNumber}
+                                            data-field="footerAdditionalContactNumber"
+                                            onchange={handleBrandingFieldChange}
+                                        ></lightning-input>
+                                        <lightning-input
+                                            type="email"
+                                            label="Footer Email"
+                                            value={footerEscalationEmail}
+                                            data-field="footerEscalationEmail"
+                                            onchange={handleBrandingFieldChange}
+                                        ></lightning-input>
+                                        <lightning-textarea
+                                            label="Header Address Line"
+                                            value={brandingHeaderAddressLine}
+                                            data-field="brandingHeaderAddressLine"
+                                            onchange={handleBrandingFieldChange}
+                                        ></lightning-textarea>
+                                        <div class="admin-hall-settings admin-hall-settings_branding">
+                                            <h4 class="admin-hall-settings__title">Hall capacity</h4>
+                                            <p class="admin-pricing-mode-panel__hint">
+                                                Shown to guests during event booking (for example, seating capacity and
+                                                comfortable guest count).
+                                            </p>
+                                            <div class="admin-hall-settings__grid">
+                                                <lightning-input
+                                                    type="number"
+                                                    label="Seating capacity"
+                                                    value={hallSeatingCapacity}
+                                                    data-field="hallSeatingCapacity"
+                                                    onchange={handleBrandingFieldChange}
+                                                    min="1"
+                                                    step="1"
+                                                ></lightning-input>
+                                                <lightning-input
+                                                    type="number"
+                                                    label="Comfortable guest count"
+                                                    value={hallComfortableGuests}
+                                                    data-field="hallComfortableGuests"
+                                                    onchange={handleBrandingFieldChange}
+                                                    min="1"
+                                                    step="1"
+                                                ></lightning-input>
+                                            </div>
+                                        </div>
+
+                                        <div class="admin-branding-gallery">
+                                            <h4>Gallery Photos</h4>
+                                            <p class="admin-pricing-mode-panel__hint">
+                                                Upload a new photo for each slot. Images are stored in static resources and
+                                                refresh automatically on the portal.
+                                            </p>
+                                            <template for:each={galleryUploadSlots} for:item="image">
+                                                <div key={image.uploadKey} class="admin-branding-gallery__slot">
+                                                    <p>{image.label}</p>
+                                                    <input
+                                                        type="file"
+                                                        accept="image/png,image/jpeg,image/webp"
+                                                        data-resource={image.resourceName}
+                                                        onchange={handleGalleryUploadChange}
+                                                    />
+                                                </div>
+                                            </template>
+                                        </div>
+
+                                        <div class="banner-form__actions admin-pricing-mode-panel__actions">
+                                            <lightning-button
+                                                label="Save Branding Settings"
+                                                variant="brand"
+                                                onclick={handleSaveBrandingSettings}
+                                                disabled={isBrandingSaving}
+                                            ></lightning-button>
+                                            <lightning-button
+                                                label="Lock &amp; Exit"
+                                                variant="neutral"
+                                                onclick={handleExitBrandingSettings}
+                                                disabled={isBrandingSaving}
+                                            ></lightning-button>
+                                            <lightning-button
+                                                label="Cancel"
+                                                variant="base"
+                                                onclick={handleCancelBrandingSettings}
+                                                disabled={isBrandingSaving}
+                                            ></lightning-button>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+
+                        <template if:true={isAdminPortalLoginSection}>
+                            <div class="admin-section-block">
+                                <div class="admin-section-block__header">
+                                    <h3>Portal Login Notes</h3>
+                                    <p>
+                                        These details appear at the top of the login page for guests who need administrator access.
+                                    </p>
+                                </div>
+
+                                <div class="banner-form panel panel_nested">
+                                    <lightning-textarea
+                                        label="Login Notes Message"
+                                        value={portalLoginNotes}
+                                        data-field="portalLoginNotes"
+                                        onchange={handleSettingsInputChange}
+                                        placeholder="Explain how administrators should sign in."
+                                    ></lightning-textarea>
+                                    <lightning-input
+                                        label="Admin Username"
+                                        value={portalAdminUsername}
+                                        data-field="portalAdminUsername"
+                                        onchange={handleSettingsInputChange}
+                                        placeholder="onlinereservations@shabbirtech.com"
+                                    ></lightning-input>
+                                    <lightning-input
+                                        label="Admin Password"
+                                        value={portalAdminPassword}
+                                        data-field="portalAdminPassword"
+                                        onchange={handleSettingsInputChange}
+                                        type="text"
+                                        placeholder="Enter password shown on login page"
+                                    ></lightning-input>
+                                    <div class="banner-form__actions">
+                                        <lightning-button
+                                            label="Save Login Notes"
+                                            variant="brand"
+                                            onclick={handleSavePortalSettings}
+                                            disabled={isSettingsSaving}
+                                        ></lightning-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <template if:true={isAdminBookingsSection}>
+                        <div class="admin-section-block">
+                            <div class="admin-section-block__header admin-section-block__header_queue">
+                                <div>
+                                    <h3>Booking Queue</h3>
+                                    <p>Pending requests are priority 1. Confirmed bookings are priority 2.</p>
+                                </div>
+                                <template if:true={hasAdminBookings}>
+                                    <div class="booking-data-controls admin-booking-controls">
+                                        <span class="booking-data-controls__page">{adminBookingPageLabel}</span>
+                                        <div class="booking-data-controls__nav">
+                                            <lightning-button-icon
+                                                icon-name="utility:chevronleft"
+                                                alternative-text="Previous page"
+                                                title="Previous page"
+                                                onclick={handleAdminBookingPrevPage}
+                                                disabled={isAdminBookingFirstPageDisabled}
+                                            ></lightning-button-icon>
+                                            <lightning-button-icon
+                                                icon-name="utility:chevronright"
+                                                alternative-text="Next page"
+                                                title="Next page"
+                                                onclick={handleAdminBookingNextPage}
+                                                disabled={isAdminBookingLastPageDisabled}
+                                            ></lightning-button-icon>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+
+                        <template if:true={isAdminLoading}>
+                            <p class="empty-state">Loading admin bookings...</p>
+                        </template>
+
+                        <template if:false={isAdminLoading}>
+                            <template if:true={hasAdminBookings}>
+                                <template if:true={hasPendingAdminBookings}>
+                                    <section class="admin-priority-section admin-priority-section_pending">
+                                        <div class="admin-priority-section__header">
+                                            <h4>Pending — Priority 1</h4>
+                                            <p>Review and confirm these requests first.</p>
+                                        </div>
+                                        <div class="admin-list">
+                                            <template for:each={paginatedPendingAdminBookings} for:item="booking">
+                                                <article key={booking.id} class={booking.adminCardClass} data-booking-focus={booking.id}>
+                                                    <div class="admin-card__main">
+                                                        <div class="admin-card__head">
+                                                            <p class="admin-card__date">{booking.dateRangeLabel}</p>
+                                                            <h3 class="admin-card__title">{booking.eventName}</h3>
+                                                        </div>
+                                                        <div class="admin-card__fields">
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Contact</span>
+                                                                <span class="admin-card__value">{booking.contactName}</span>
+                                                            </div>
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Phone</span>
+                                                                <span class="admin-card__value">{booking.contactPhone}</span>
+                                                            </div>
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Email</span>
+                                                                <span class="admin-card__value">{booking.contactEmail}</span>
+                                                            </div>
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Booked By</span>
+                                                                <span class="admin-card__value">{booking.bookedByName}</span>
+                                                            </div>
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Booking No</span>
+                                                                <span class="admin-card__value">{booking.bookingNumber}</span>
+                                                            </div>
+                                                            <template if:true={booking.timeRangeLabel}>
+                                                                <div class="admin-card__field">
+                                                                    <span class="admin-card__label">Timing</span>
+                                                                    <span class="admin-card__value">{booking.timeRangeLabel}</span>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={booking.estimatedLabel}>
+                                                                <div class="admin-card__field">
+                                                                    <span class="admin-card__label">Estimated</span>
+                                                                    <span class="admin-card__value">{booking.estimatedLabel}</span>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={booking.eventDetails}>
+                                                                <div class="admin-card__field admin-card__field--full">
+                                                                    <span class="admin-card__label">Event Details</span>
+                                                                    <span class="admin-card__value">{booking.eventDetails}</span>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={booking.notes}>
+                                                                <div class="admin-card__field admin-card__field--full">
+                                                                    <span class="admin-card__label">Notes</span>
+                                                                    <span class="admin-card__value">{booking.notes}</span>
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                    <div class="admin-card__actions">
+                                                        <div class="admin-card__actions-grid">
+                                                            <template if:true={booking.showSavePriceButton}>
+                                                                <div class="admin-card__action-field admin-card__action-field--amount">
+                                                                    <lightning-input
+                                                                        type="number"
+                                                                        label="Final Amount (INR)"
+                                                                        value={booking.adminDraftFinalAmount}
+                                                                        data-id={booking.id}
+                                                                        onchange={handleAdminPriceChange}
+                                                                        step="0.01"
+                                                                        min="0"
+                                                                    ></lightning-input>
+                                                                </div>
+                                                            </template>
+                                                            <template if:false={booking.showSavePriceButton}>
+                                                                <div class="admin-card__action-field admin-card__action-field--amount">
+                                                                    <span class="admin-card__label">Final Amount</span>
+                                                                    <span class="admin-card__value">{booking.finalLabel}</span>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={booking.showAdminStatusEditor}>
+                                                                <div class="admin-card__action-field admin-card__action-field--status">
+                                                                    <lightning-combobox
+                                                                        label="Status"
+                                                                        value={booking.status}
+                                                                        options={statusOptions}
+                                                                        data-id={booking.id}
+                                                                        onchange={handleAdminStatusChange}
+                                                                    ></lightning-combobox>
+                                                                </div>
+                                                            </template>
+                                                            <template if:false={booking.showAdminStatusEditor}>
+                                                                <div class="admin-card__action-field admin-card__action-field--status">
+                                                                    <span class="admin-card__label">Status</span>
+                                                                    <span class="admin-card__value">{booking.status}</span>
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                        <template if:true={booking.showSavePriceButton}>
+                                                            <div class="admin-card__actions-save">
+                                                                <lightning-button
+                                                                    class="admin-card__save-btn"
+                                                                    label="Save Price"
+                                                                    variant="brand"
+                                                                    data-id={booking.id}
+                                                                    onclick={handleSaveBookingPrice}
+                                                                    disabled={isPriceSaving}
+                                                                ></lightning-button>
+                                                            </div>
+                                                            <p class="admin-price-help admin-price-help_compact">
+                                                                Admin can reduce the final price below the estimated amount.
+                                                            </p>
+                                                        </template>
+                                                    </div>
+                                                </article>
+                                            </template>
+                                        </div>
+                                    </section>
+                                </template>
+
+                                <template if:true={hasConfirmedAdminBookings}>
+                                    <section class="admin-priority-section admin-priority-section_confirmed">
+                                        <div class="admin-priority-section__header">
+                                            <h4>Confirmed — Priority 2</h4>
+                                            <p>Active confirmed reservations.</p>
+                                        </div>
+                                        <div class="admin-list">
+                                            <template for:each={paginatedConfirmedAdminBookings} for:item="booking">
+                                                <article key={booking.id} class={booking.adminCardClass} data-booking-focus={booking.id}>
+                                                    <div class="admin-card__main">
+                                                        <div class="admin-card__head">
+                                                            <p class="admin-card__date">{booking.dateRangeLabel}</p>
+                                                            <h3 class="admin-card__title">{booking.eventName}</h3>
+                                                        </div>
+                                                        <div class="admin-card__fields">
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Contact</span>
+                                                                <span class="admin-card__value">{booking.contactName}</span>
+                                                            </div>
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Phone</span>
+                                                                <span class="admin-card__value">{booking.contactPhone}</span>
+                                                            </div>
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Email</span>
+                                                                <span class="admin-card__value">{booking.contactEmail}</span>
+                                                            </div>
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Booked By</span>
+                                                                <span class="admin-card__value">{booking.bookedByName}</span>
+                                                            </div>
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Booking No</span>
+                                                                <span class="admin-card__value">{booking.bookingNumber}</span>
+                                                            </div>
+                                                            <template if:true={booking.timeRangeLabel}>
+                                                                <div class="admin-card__field">
+                                                                    <span class="admin-card__label">Timing</span>
+                                                                    <span class="admin-card__value">{booking.timeRangeLabel}</span>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={booking.estimatedLabel}>
+                                                                <div class="admin-card__field">
+                                                                    <span class="admin-card__label">Estimated</span>
+                                                                    <span class="admin-card__value">{booking.estimatedLabel}</span>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={booking.eventDetails}>
+                                                                <div class="admin-card__field admin-card__field--full">
+                                                                    <span class="admin-card__label">Event Details</span>
+                                                                    <span class="admin-card__value">{booking.eventDetails}</span>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={booking.notes}>
+                                                                <div class="admin-card__field admin-card__field--full">
+                                                                    <span class="admin-card__label">Notes</span>
+                                                                    <span class="admin-card__value">{booking.notes}</span>
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                    <div class="admin-card__actions">
+                                                        <div class="admin-card__actions-grid">
+                                                            <template if:true={booking.showSavePriceButton}>
+                                                                <div class="admin-card__action-field admin-card__action-field--amount">
+                                                                    <lightning-input
+                                                                        type="number"
+                                                                        label="Final Amount (INR)"
+                                                                        value={booking.adminDraftFinalAmount}
+                                                                        data-id={booking.id}
+                                                                        onchange={handleAdminPriceChange}
+                                                                        step="0.01"
+                                                                        min="0"
+                                                                    ></lightning-input>
+                                                                </div>
+                                                            </template>
+                                                            <template if:false={booking.showSavePriceButton}>
+                                                                <div class="admin-card__action-field admin-card__action-field--amount">
+                                                                    <span class="admin-card__label">Final Amount</span>
+                                                                    <span class="admin-card__value">{booking.finalLabel}</span>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={booking.showAdminStatusEditor}>
+                                                                <div class="admin-card__action-field admin-card__action-field--status">
+                                                                    <lightning-combobox
+                                                                        label="Status"
+                                                                        value={booking.status}
+                                                                        options={statusOptions}
+                                                                        data-id={booking.id}
+                                                                        onchange={handleAdminStatusChange}
+                                                                    ></lightning-combobox>
+                                                                </div>
+                                                            </template>
+                                                            <template if:false={booking.showAdminStatusEditor}>
+                                                                <div class="admin-card__action-field admin-card__action-field--status">
+                                                                    <span class="admin-card__label">Status</span>
+                                                                    <span class="admin-card__value">{booking.status}</span>
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                        <template if:true={booking.showSavePriceButton}>
+                                                            <div class="admin-card__actions-save">
+                                                                <lightning-button
+                                                                    class="admin-card__save-btn"
+                                                                    label="Save Price"
+                                                                    variant="brand"
+                                                                    data-id={booking.id}
+                                                                    onclick={handleSaveBookingPrice}
+                                                                    disabled={isPriceSaving}
+                                                                ></lightning-button>
+                                                            </div>
+                                                            <p class="admin-price-help admin-price-help_compact">
+                                                                Admin can reduce the final price below the estimated amount.
+                                                            </p>
+                                                        </template>
+                                                    </div>
+                                                </article>
+                                            </template>
+                                        </div>
+                                    </section>
+                                </template>
+
+                                <template if:true={hasOtherAdminBookings}>
+                                    <section class="admin-priority-section admin-priority-section_other">
+                                        <div class="admin-priority-section__header">
+                                            <h4>Cancelled &amp; Other</h4>
+                                        </div>
+                                        <div class="admin-list">
+                                            <template for:each={paginatedOtherAdminBookings} for:item="booking">
+                                                <article key={booking.id} class={booking.adminCardClass} data-booking-focus={booking.id}>
+                                                    <div class="admin-card__main">
+                                                        <div class="admin-card__head">
+                                                            <p class="admin-card__date">{booking.dateRangeLabel}</p>
+                                                            <h3 class="admin-card__title">{booking.eventName}</h3>
+                                                        </div>
+                                                        <div class="admin-card__fields">
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Contact</span>
+                                                                <span class="admin-card__value">{booking.contactName}</span>
+                                                            </div>
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Phone</span>
+                                                                <span class="admin-card__value">{booking.contactPhone}</span>
+                                                            </div>
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Email</span>
+                                                                <span class="admin-card__value">{booking.contactEmail}</span>
+                                                            </div>
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Booked By</span>
+                                                                <span class="admin-card__value">{booking.bookedByName}</span>
+                                                            </div>
+                                                            <div class="admin-card__field">
+                                                                <span class="admin-card__label">Booking No</span>
+                                                                <span class="admin-card__value">{booking.bookingNumber}</span>
+                                                            </div>
+                                                            <template if:true={booking.timeRangeLabel}>
+                                                                <div class="admin-card__field">
+                                                                    <span class="admin-card__label">Timing</span>
+                                                                    <span class="admin-card__value">{booking.timeRangeLabel}</span>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={booking.estimatedLabel}>
+                                                                <div class="admin-card__field">
+                                                                    <span class="admin-card__label">Estimated</span>
+                                                                    <span class="admin-card__value">{booking.estimatedLabel}</span>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={booking.eventDetails}>
+                                                                <div class="admin-card__field admin-card__field--full">
+                                                                    <span class="admin-card__label">Event Details</span>
+                                                                    <span class="admin-card__value">{booking.eventDetails}</span>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={booking.notes}>
+                                                                <div class="admin-card__field admin-card__field--full">
+                                                                    <span class="admin-card__label">Notes</span>
+                                                                    <span class="admin-card__value">{booking.notes}</span>
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                    </div>
+                                                    <div class="admin-card__actions">
+                                                        <div class="admin-card__actions-grid">
+                                                            <template if:true={booking.showSavePriceButton}>
+                                                                <div class="admin-card__action-field admin-card__action-field--amount">
+                                                                    <lightning-input
+                                                                        type="number"
+                                                                        label="Final Amount (INR)"
+                                                                        value={booking.adminDraftFinalAmount}
+                                                                        data-id={booking.id}
+                                                                        onchange={handleAdminPriceChange}
+                                                                        step="0.01"
+                                                                        min="0"
+                                                                    ></lightning-input>
+                                                                </div>
+                                                            </template>
+                                                            <template if:false={booking.showSavePriceButton}>
+                                                                <div class="admin-card__action-field admin-card__action-field--amount">
+                                                                    <span class="admin-card__label">Final Amount</span>
+                                                                    <span class="admin-card__value">{booking.finalLabel}</span>
+                                                                </div>
+                                                            </template>
+                                                            <template if:true={booking.showAdminStatusEditor}>
+                                                                <div class="admin-card__action-field admin-card__action-field--status">
+                                                                    <lightning-combobox
+                                                                        label="Status"
+                                                                        value={booking.status}
+                                                                        options={statusOptions}
+                                                                        data-id={booking.id}
+                                                                        onchange={handleAdminStatusChange}
+                                                                    ></lightning-combobox>
+                                                                </div>
+                                                            </template>
+                                                            <template if:false={booking.showAdminStatusEditor}>
+                                                                <div class="admin-card__action-field admin-card__action-field--status">
+                                                                    <span class="admin-card__label">Status</span>
+                                                                    <span class="admin-card__value">{booking.status}</span>
+                                                                </div>
+                                                            </template>
+                                                        </div>
+                                                        <template if:true={booking.showSavePriceButton}>
+                                                            <div class="admin-card__actions-save">
+                                                                <lightning-button
+                                                                    class="admin-card__save-btn"
+                                                                    label="Save Price"
+                                                                    variant="brand"
+                                                                    data-id={booking.id}
+                                                                    onclick={handleSaveBookingPrice}
+                                                                    disabled={isPriceSaving}
+                                                                ></lightning-button>
+                                                            </div>
+                                                            <p class="admin-price-help admin-price-help_compact">
+                                                                Admin can reduce the final price below the estimated amount.
+                                                            </p>
+                                                        </template>
+                                                    </div>
+                                                </article>
+                                            </template>
+                                        </div>
+                                    </section>
+                                </template>
+
+                                <p class="booking-data-footer admin-booking-footer">{adminBookingPageSummary}</p>
+                            </template>
+
+                            <template if:false={hasAdminBookings}>
+                                <p class="empty-state">No booking records found.</p>
+                            </template>
+                        </template>
+                        </div>
+                        </template>
+                    </section>
+                    </template>
+                </template>
+            </main>
+        </div>
+
+        <footer class="portal-footer">
+            <div class="portal-footer__accent"></div>
+            <div class="portal-footer__inner">
+                <div class="portal-footer__row">
+                    <section class="portal-footer__col">
+                        <div class="portal-footer__heading">
+                            <span class="portal-footer__heading-en">Included per day ({formattedDailyRate})</span>
+                            <span class="portal-footer__heading-te">{footerIncludedTitleTe}</span>
+                        </div>
+                        <ul class="portal-footer__list">
+                            <template for:each={perDayInclusions} for:item="item">
+                                <li key={item.id} class="portal-footer__list-item">
+                                    <span class="portal-footer__list-en">{item.labelEn}</span>
+                                    <span class="portal-footer__list-te">{item.labelTe}</span>
+                                </li>
+                            </template>
+                        </ul>
+                    </section>
+                    <section class="portal-footer__col portal-footer__col_contact">
+                        <div class="portal-footer__heading">
+                            <span class="portal-footer__heading-en">Contact &amp; Escalation</span>
+                            <span class="portal-footer__heading-te">సంప్రదింపు &amp; ఎస్కలేషన్</span>
+                        </div>
+                        <ul class="portal-footer__contact-list">
+                            <li class="portal-footer__contact-item">
+                                <span class="portal-footer__contact-label">Phone · ఫోన్</span>
+                                <a class="portal-footer__contact-value" href={footerContactPhoneHref}>{footerContactNumber}</a>
+                            </li>
+                            <template if:true={hasFooterAdditionalContact}>
+                                <li class="portal-footer__contact-item">
+                                    <span class="portal-footer__contact-label">Additional Phone · అదనపు ఫోన్</span>
+                                    <a class="portal-footer__contact-value" href={footerAdditionalContactPhoneHref}>{footerAdditionalContactNumber}</a>
+                                </li>
+                            </template>
+                            <li class="portal-footer__contact-item">
+                                <span class="portal-footer__contact-label">Email · ఇమెయిల్</span>
+                                <a
+                                    class="portal-footer__contact-value portal-footer__contact-value_email"
+                                    href={footerEscalationMailHref}
+                                >{footerEscalationEmail}</a>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+                <p class="portal-footer__fineprint">
+                    <span class="portal-footer__fineprint-en">Final pricing may vary based on event duration, setup, and admin approval.</span>
+                    <span class="portal-footer__fineprint-te">చివరి ధర ఈవెంట్ వ్యవధి, అమరిక మరియు అడ్మిన్ ఆమోదంపై ఆధారపడి మారవచ్చు.</span>
+                </p>
+            </div>
+        </footer>
+    </div>
+</template>

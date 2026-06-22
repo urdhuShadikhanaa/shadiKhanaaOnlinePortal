@@ -1,0 +1,43 @@
+<template>
+    <c-pq-datatable
+        icon-name="standard:opportunity"
+        key-field="Id"
+        title={title}
+        custom-relative-max-height={customRelativeMaxHeight}
+        use-relative-max-height={useRelativeMaxHeight}
+        sortable-fields={sortableFields}
+        sorted-by={sortedBy}
+        sorted-direction={sortedDirection}
+        filter={filterObj}
+        show-spinner={showSpinner}
+        show-record-count
+        show-refresh-button
+        show-row-number-column
+        show-column-totals
+        onrefresh={handleRefresh}
+        loaded={loaded}
+    >
+        <div class="slds-grid" slot="composedActions">
+            <c-account-opp-filters
+                if:true={filters.length}
+                filters={filters}
+                onfilterschange={handleFiltersChange}
+                is-filtered={isFiltered}
+            ></c-account-opp-filters>
+
+            <lightning-button-menu
+                if:true={showSettingsMenu}
+                icon-name="utility:settings"
+                alternative-text="Actions"
+                menu-alignment="auto"
+                onselect={handleMenuSelect}
+            >
+                <lightning-menu-item
+                    label={labels.showChildAccounts}
+                    value="showDescendantOpps"
+                    checked={showOpportunitiesForDescendentAccounts}
+                ></lightning-menu-item>
+            </lightning-button-menu>
+        </div>
+    </c-pq-datatable>
+</template>

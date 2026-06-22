@@ -1,0 +1,44 @@
+<template>
+    <c-pq-omni-viewer-display-manager
+        header={modalTitle}
+        onclosedialog={handleCancel}
+        ondockomniviewer={passthroughEvent}
+        onundockomniviewer={passthroughEvent}
+    >
+        <div
+            if:true={error}
+            class="error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+        >
+            {error}
+        </div>
+
+        <div class="content-section">
+            <div if:false={loaded} class="loading">loading...</div>
+            <c-pq-omni-viewer-main
+                if:true={loaded}
+                object-api-name={objectApiName}
+                object-id={objectId}
+                contact-id={contactId}
+                map-or-account-plan-id={mapOrAccountPlanId}
+                map-settings={mapSettings}
+                rm-org-settings={rmOrgSettings}
+                page-set-data={pageSetData}
+                selected-tab-id={selectedTabId}
+                selected-tab-data={selectedTabData}
+                person-map-member-data={personMapMemberData}
+                person-contact-data={personContactData}
+                person-contact-extended-data={personContactExtendedData}
+                profile-image-data={profileImageData}
+                member-influence-data={memberInfluenceData}
+                member-influence-data-list={memberInfluenceDataList}
+                onpagesettabchanged={handlePageSetTabChanged}
+                onrequestobjectviewer={passthroughEvent}
+                onrefreshcontactclicked={refreshContactClicked}
+            ></c-pq-omni-viewer-main>
+        </div>
+
+        <div slot="footer" class="pq-omni-view-footer">
+            <button title="Close" class="pq-omni-view-footer-button close" onclick={hideViewer}>Close</button>
+        </div>
+    </c-pq-omni-viewer-display-manager>
+</template>

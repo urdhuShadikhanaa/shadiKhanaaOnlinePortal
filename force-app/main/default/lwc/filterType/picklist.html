@@ -1,0 +1,10 @@
+<template>
+    <lightning-checkbox-group
+        class="slds-border_bottom slds-var-p-vertical_x-small slds-var-p-horizontal_small slds-dropdown_length-5"
+        name={filter.name}
+        label={filter.label}
+        options={filter.values}
+        onchange={handleFiltersChange}
+        value={filter.selectedValues}
+    ></lightning-checkbox-group>
+</template>

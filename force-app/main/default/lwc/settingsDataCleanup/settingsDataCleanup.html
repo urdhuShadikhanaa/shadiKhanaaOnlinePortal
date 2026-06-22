@@ -1,0 +1,121 @@
+<template>
+    <c-pq-card-lwc>
+        <div slot="title">
+            <h3 class="slds-text-heading_large slds-p-horizontal_none">{labels.header}</h3>
+            <h3 class="slds-text-body_small slds-p-horizontal_none slds-text-color_weak">{labels.subheader}</h3>
+        </div>
+        <div class="page-section page-main">
+            <div
+                if:true={errorMessage}
+                class="error-box slds-align_absolute-center slds-theme_shade slds-theme_alert-texture slds-text-color_error"
+            >
+                {errorMessage}
+            </div>
+            <div class="slds-grid slds-grid_vertical pro-grid slds-p-around_medium">
+                <div class="slds-col slds-p-bottom_large">
+                    <lightning-spinner if:true={loading}></lightning-spinner>
+                    <div
+                        if:false={loading}
+                        class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small"
+                    >
+                        <lightning-button
+                            if:false={loading}
+                            label={labels.migrate}
+                            title={labels.migrate}
+                            onclick={doInfluenceSupportMigration}
+                            disabled={migratingInfSuppData}
+                            class="slds-var-p-horizontal_small"
+                        ></lightning-button>
+                        <lightning-formatted-text
+                            if:false={loading}
+                            value={infSuppCountLabel}
+                            class="slds-var-p-horizontal_xx-small"
+                        ></lightning-formatted-text>
+                        <div class="inline-spinner slds-var-p-horizontal_small" if:true={migratingInfSuppData}>
+                            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-border_top slds-p-bottom_large">
+                    <div class="slds-p-around_medium">
+                        <p>{labels.ksMapConversionTitle}</p>
+                    </div>
+                    <lightning-spinner if:true={loading}></lightning-spinner>
+                    <div
+                        if:false={loading}
+                        class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small"
+                    >
+                        <lightning-button
+                            if:false={loading}
+                            label={labels.startConversion}
+                            title={labels.startConversion}
+                            onclick={doKSMapConversion}
+                            disabled={disableConvertKSMap}
+                            class="slds-var-p-horizontal_small"
+                        ></lightning-button>
+                        <lightning-formatted-text
+                            if:false={loading}
+                            value={ksMapConversionCountLabel}
+                            class="slds-var-p-horizontal_xx-small"
+                        ></lightning-formatted-text>
+                        <div class="inline-spinner slds-var-p-horizontal_small" if:true={convertingKSMapData}>
+                            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-border_top slds-p-bottom_large">
+                    <div class="slds-p-around_medium">
+                        <p>
+                            Before migrating, create the fields on the Relationship_Map_Member__c objects to correspond
+                            with the fields in the Key_Stakeholer__c objects. Only fields that don't have values will
+                            get populated.
+                        </p>
+                    </div>
+                    <lightning-spinner if:true={loading}></lightning-spinner>
+                    <div
+                        if:false={loading}
+                        class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small"
+                    >
+                        <lightning-button
+                            if:false={loading}
+                            label={labels.startCopy}
+                            title={labels.startCopy}
+                            onclick={doKStoRMMigration}
+                            disabled={disableMigrateKSFields}
+                            class="slds-var-p-horizontal_small"
+                        ></lightning-button>
+                        
+                        <lightning-formatted-text
+                            if:false={loading}
+                            value={ksMigrationCountLabel}
+                            class="slds-var-p-horizontal_xx-small"
+                        ></lightning-formatted-text>
+                        <div class="inline-spinner slds-var-p-horizontal_small" if:true={migratingKSMigrationData}>
+                            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-border_top slds-p-bottom_large">
+                    <div class="slds-p-around_medium">
+                        <p>
+                            Click on the Relationship count batch button to calculate existing relationship map member counts which corresponds to account plan.
+                        </p>
+                    </div>
+                    <lightning-spinner if:true={loading}></lightning-spinner>
+                    <div
+                        if:false={loading}
+                        class="pro-span-content slds-grid_vertical-align-center slds-p-vertical_xxx-small"
+                    >
+                        <lightning-button
+                            if:false={loading}
+                            label={labels.relationshipCountBatch}
+                            title={labels.relationshipCountBatch}
+                            onclick={handleRelationshipCountBatch}
+                            class="slds-var-p-horizontal_small"
+                        ></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </c-pq-card-lwc>
+</template>

@@ -1,0 +1,36 @@
+<template>
+    <div class="progress-ring-container">
+        <div class="slds-media slds-align_absolute-center">
+            <div class="slds-media__figure slds-m-right_x-small">
+                <c-progress-ring
+                    if:true={showProgress}
+                    value={getProgressValue}
+                    variant={getProgressVariant}
+                    default-content={getStep}
+                ></c-progress-ring>
+            </div>
+            <div class="slds-media__body slds-m-top_xx-small">
+                <h3>{titleDisplay}</h3>
+            </div>
+        </div>
+    </div>
+
+    <template if:false={isEmpty}>
+        <div class={getPreviewClass}>
+            <template for:each={previews} for:item="item">
+                <div key={item.id} class="slds-col slds-has-flexi-truncate cell-container">
+                    <template if:true={isHeaderType}>
+                        <p class="slds-align_absolute-center">{item.value}</p>
+                    </template>
+                    <template if:true={isCellType}>
+                        <div class="slds-truncate preview-tile">
+                            <template for:each={item.displayObjects} for:item="item">
+                                <p key={item.id} class="slds-truncate">{item.value}</p>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </template>
+</template>

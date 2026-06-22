@@ -1,0 +1,71 @@
+.searchSuggestion {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    color: #181818;
+}
+.itemContainer {
+    padding: 1rem 1rem 0 1rem;
+}
+.items {
+    cursor: pointer;
+}
+.messageDiv {
+    display: block;
+    padding: 1rem;
+    color: red;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+/* Change Template CSS */
+.ChangeTemplateContainer {
+    padding: 1rem;
+}
+.outerBorder {
+    border: 1px dashed #c9c9c9;
+}
+.inputIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5px;
+    border: 1px solid #747474;
+}
+.changeTemplateinputField {
+    width: 100%;
+    padding: 0 1rem;
+    line-height: 2rem;
+    border: none;
+    outline: none;
+    color: #181818;
+}
+.changeTemplateinputField:active,
+.changeTemplateinputField:focus {
+    box-shadow: none;
+}
+.changeTemplatedropDownIcon {
+    cursor: pointer;
+}
+.changeTemplatesearchSuggestion {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    color: #181818;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 11.5rem;
+    width: 100%;
+}
+.changeTemplateinputLabel {
+    color: #181818;
+    font-size: 14px;
+    font-weight: 500;
+}
+.changeTemplatebutton-container {
+    display: flex;
+    justify-content: right;
+    gap: 1rem;
+    color: #fff;
+}
+.spinner-preview {
+    position: fixed;
+}
+.slds-modal__container {
+    color: #181818;
+}

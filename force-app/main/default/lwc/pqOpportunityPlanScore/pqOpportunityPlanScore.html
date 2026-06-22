@@ -1,0 +1,16 @@
+<template>
+    <div class="component-container">
+        <c-pq-card-lwc title={title}>
+            <div if:true={loaded} class="slds-p-around_medium">
+                <div class="sub-label">{labels.opportunityScore}</div>
+                <div class="opp-score slds-p-bottom_medium">{opportunityScore}</div>
+                <div class="sub-label">{labels.suggestions}</div>
+                <template for:each={suggestions} for:item="suggestion">
+                    <div key={suggestion.id}>
+                        {suggestion.phrase}
+                    </div>
+                </template>
+            </div>
+        </c-pq-card-lwc>
+    </div>
+</template>

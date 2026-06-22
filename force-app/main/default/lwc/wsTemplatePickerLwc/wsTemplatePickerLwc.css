@@ -1,0 +1,8 @@
+.picker-container {
+    position: relative;
+}
+
+.no-templates-label {
+    padding: 2rem;
+    font-weight: bold;
+}

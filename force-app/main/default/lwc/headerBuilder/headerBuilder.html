@@ -1,0 +1,43 @@
+<template>
+    <div class="slds-form">
+        <lightning-radio-group
+            name="radioGroup"
+            label="Generate With"
+            options={options}
+            value={buildType}
+            onchange={handleTypeChange}
+            type="button"
+            variant="label-stacked"
+            disabled={readOnly}
+        ></lightning-radio-group>
+
+        <div if:true={showRecordsConfig}>
+            <c-configuration-form
+                read-only={readOnly}
+                target-object={targetObject}
+                target-object-options={targetObjectOptions}
+                target-label-field={targetLabelField}
+                target-parent-field={targetParentField}
+                enable-grouping
+                records-are-grouped={recordsAreGrouped}
+                include-parent-field
+                condition-operator={conditionOperator}
+                conditions={conditions}
+                onformchange={handleHeaderFormChange}
+            >
+            </c-configuration-form>
+        </div>
+
+        <div if:true={showPicklistConfig}>
+            <c-picklist-configuration-form
+                read-only={readOnly}
+                target-object={targetObject}
+                target-object-options={targetObjectOptions}
+                target-value-field={targetValueField}
+                use-picklist-dependency={usePicklistDependency}
+                onformchange={handleHeaderFormChange}
+                excluded-fields={excludedFields}
+            ></c-picklist-configuration-form>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,23 @@
+<template>
+    <c-pq-matrix-member-modal onsuccess={handleMatrixMemberSuccess}></c-pq-matrix-member-modal>
+    <c-pq-datatable
+        icon-name="standard:opportunity"
+        key-field="id"
+        title={title}
+        custom-relative-max-height={customRelativeMaxHeight}
+        use-relative-max-height={useRelativeMaxHeight}
+        sortable-fields={sortableFields}
+        sorted-by={sortedBy}
+        sorted-direction={sortedDirection}
+        filter={filterObj}
+        show-spinner={showSpinner}
+        show-record-count
+        show-refresh-button
+        show-row-number-column
+        show-column-totals
+        onrefresh={handleRefresh}
+        loaded={loaded}
+        onrowaction={handleRowAction}
+    >
+    </c-pq-datatable>
+</template>
