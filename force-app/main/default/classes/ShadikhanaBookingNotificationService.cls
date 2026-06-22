@@ -12,7 +12,7 @@ public class ShadikhanaBookingNotificationService {
     public class BookingNotificationQueueable implements Queueable, Database.AllowsCallouts {
         private Id bookingId;
 
-        public BookingNotificationQueueable(Id bookingId) {
+        public BookingNotificationQueueable(Id bookingId){
             this.bookingId = bookingId;
         }
 
