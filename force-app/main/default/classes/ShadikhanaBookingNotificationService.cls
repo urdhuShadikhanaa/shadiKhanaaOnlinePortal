@@ -13,7 +13,7 @@ public class ShadikhanaBookingNotificationService {
         private Id bookingId;
 
         public BookingNotificationQueueable(Id bookingId) {
-            this.bookingId = bookingId; 
+            this.bookingId = bookingId;
         }
 
         public void execute(QueueableContext context) {
